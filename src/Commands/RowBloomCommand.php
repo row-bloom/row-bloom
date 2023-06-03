@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ElaborateCode\RowBloom\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class RowBloomCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'row-bloom';
 
     public $description = 'My command';
 

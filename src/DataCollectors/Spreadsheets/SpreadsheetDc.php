@@ -9,6 +9,8 @@ class SpreadsheetDc implements DcContract
 {
     public function getData(string $path): array
     {
+        // TODO Support composition behavior for folders
+
         $spreadsheet = IOFactory::load($path);
 
         // TODO access all sheets

@@ -32,8 +32,8 @@ it('renders array data and file template', function () {
     $loader = new FilesystemLoader(__DIR__ . '/stubs');
     $twig = new Environment($loader);
 
-    $template = $twig->load('template_name.twig');
+    $template = $twig->load('template_name');
     $html = $template->render($data);
 
-    expect($html)->toBe('<h1>My Page Title</h1>');
+    expect($html)->toBe('<h1>My Page Title</h1><p>Welcome to my website!</p>');
 });

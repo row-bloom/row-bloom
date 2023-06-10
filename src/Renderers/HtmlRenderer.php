@@ -27,6 +27,7 @@ class HtmlRenderer implements RendererContract
             .'</head>'
             .'<body>'.implode('\n', $this->template->toArray()).'</body>'
             .'</html>';
+        // TODO: implode with a special string?
 
         return $this;
     }

@@ -18,12 +18,15 @@ class SpreadsheetDataCollector implements DataCollectorContract
 
         $data = $spreadsheet->getActiveSheet()->toArray();
 
-        $headers = array_shift($data);
+        $labels = array_shift($data);
 
-        // ! headers must not contain empty values
+        if (count($labels) === count(array_flip($labels))) {
+            throw new SpreadsheetException('Duplicate labels'. implode(',', $labels));
+        }
+        // TODO: check empty label?
 
         $data = array_map(
-            fn (array $row) => array_combine($headers, $row),
+            fn (array $row) => array_combine($labels, $row),
             $data
         );
 

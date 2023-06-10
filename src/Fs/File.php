@@ -4,6 +4,10 @@ namespace ElaborateCode\RowBloom\Fs;
 
 class File
 {
+    public static function fromPath(string $path): static {
+        return new static($path);
+    }
+
     public function __construct(protected string $path)
     {
     }

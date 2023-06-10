@@ -10,6 +10,8 @@ class SpreadsheetDataCollector implements DataCollectorContract
 {
     public function getTable(string $path): Table
     {
+        // TODO: wrap path and validate
+
         // TODO Support composition behavior for folders
 
         $spreadsheet = IOFactory::load($path);

@@ -6,14 +6,12 @@ use ElaborateCode\RowBloom\DataCollectorContract;
 
 class DataCollectorFactory
 {
-    public function __construct(
-        protected string $defaultDriver = 'spreadsheet'
-    ) {
-    }
+    const DEFAULT_DRIVER = 'spreadsheet';
 
-    public function make(?string $driver = null): DataCollectorContract
+    // TODO: recheck logic
+    public static function make(?string $driver = null): DataCollectorContract
     {
-        $driver ??= $this->defaultDriver;
+        $driver ??= static::DEFAULT_DRIVER;
         $driver = ucfirst(strtolower($driver));
 
         $class = __NAMESPACE__."\\{$driver}s\\{$driver}DataCollector";

@@ -29,7 +29,7 @@ class File
 
     public function isFile(): bool
     {
-        return !is_dir($this->path);
+        return ! is_dir($this->path);
     }
 
     public function isWritable(): bool
@@ -44,7 +44,7 @@ class File
 
     public function readFileContent(): ?string
     {
-        if (!$this->exists() || $this->isDir()) {
+        if (! $this->exists() || $this->isDir()) {
             return null;
         }
 
@@ -62,23 +62,23 @@ class File
 
     public function startSaving(): WriteStream
     {
-        if (!file_exists($this->dir())) {
+        if (! file_exists($this->dir())) {
             dump([
                 $this->dir(),
-                $this->path
+                $this->path,
             ]);
-            if (!mkdir($this->dir(), 0777, true)) {
+            if (! mkdir($this->dir(), 0777, true)) {
                 throw new Exception(sprintf('Could not create the directory %s.', $this->dir()));
             }
         }
 
         // ? override
         if ($this->exists()) {
-            if (!$this->isWritable()) {
+            if (! $this->isWritable()) {
                 throw new Exception(sprintf('The file %s is not writable.', $this->path));
             }
         } else {
-            if (!$this->touch()) {
+            if (! $this->touch()) {
                 throw new Exception(sprintf('The file %s could not be created.', $this->path));
             }
         }

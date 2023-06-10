@@ -21,6 +21,7 @@ class WriteStream
     public function streamFilterAppend(string $filterName): static
     {
         stream_filter_append($this->file, $filterName);
+
         return $this;
     }
 
@@ -28,7 +29,7 @@ class WriteStream
     {
         if (fwrite($this->file, $content) === false) {
             // ?
-        };
+        }
 
         return fclose($this->file);
     }

@@ -16,7 +16,7 @@ class DataCollectorFactory
         $driver ??= $this->defaultDriver;
         $driver = ucfirst(strtolower($driver));
 
-        $class = __NAMESPACE__ . "\\{$driver}s\\{$driver}DataCollector";
+        $class = __NAMESPACE__."\\{$driver}s\\{$driver}DataCollector";
 
         return new $class;
     }

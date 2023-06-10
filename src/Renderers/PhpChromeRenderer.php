@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom\Renderers;
 
+use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -9,7 +10,6 @@ use HeadlessChromium\BrowserFactory;
 
 /**
  * requires ext-sockets
- * renders to base64. check https://base64.guru/converter/decode/pdf
  */
 class PhpChromeRenderer implements RendererContract
 {
@@ -33,7 +33,7 @@ class PhpChromeRenderer implements RendererContract
         $page->navigate('data:text/html,' . (new HtmlRenderer($this->template, $this->css))->getRendering())
             ->waitForNavigation();
 
-        $this->rendering = $page->pdf()->saveToFile()->getBase64();
+        $this->rendering = $page->pdf()->getBase64();
 
         $browser->close();
 
@@ -45,5 +45,12 @@ class PhpChromeRenderer implements RendererContract
         return $this->rendering;
     }
 
-    // * save() look at HeadlessChromium\PageUtils\AbstractBinaryInput::saveToFile
+    public function save(File $file)
+    {
+        // ! $file must be PDF
+
+        $file->startSaving()
+            ->streamFilterAppend('convert.base64-decode')
+            ->save($this->rendering);
+    }
 }

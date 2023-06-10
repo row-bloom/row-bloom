@@ -12,8 +12,8 @@ class RendererFactory
     public function make(
         InterpolatedTemplate $template,
         Css $css,
-        array $config = []
+        array $options = []
     ): RendererContract {
-        return new HtmlRenderer($template, $css, $config);
+        return new HtmlRenderer($template, $css, $options);
     }
 }

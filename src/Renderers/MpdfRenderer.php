@@ -7,6 +7,18 @@ use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
+/**
+ * https://mpdf.github.io/
+ *
+ * HTML to PDF
+ *
+ * Pros:
+ * - PDF specific attributes
+ *
+ * Cons
+ * - Weak HTML and CSS support
+ * - No js
+ */
 class MpdfRenderer implements RendererContract
 {
     protected string $rendering;
@@ -14,7 +26,7 @@ class MpdfRenderer implements RendererContract
     public function __construct(
         protected InterpolatedTemplate $template,
         protected Css $css,
-        protected array $config = []
+        protected array $options = []
     ) {
         $this->render();
     }

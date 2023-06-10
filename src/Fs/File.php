@@ -33,7 +33,8 @@ class File
         return dirname($this->path);
     }
 
-    public function extension(): string {
+    public function extension(): string
+    {
         return pathinfo($this->path, PATHINFO_EXTENSION);
     }
 
@@ -116,7 +117,7 @@ class File
             }
         }
 
-        // ? override
+        // TODO: handle override file
         if ($this->exists()) {
             if (! $this->isWritable()) {
                 throw new FsException(sprintf('The file %s is not writable.', $this->path));

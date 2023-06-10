@@ -14,7 +14,7 @@ class HtmlRenderer implements RendererContract
     public function __construct(
         protected InterpolatedTemplate $template,
         protected Css $css,
-        protected array $config = []
+        protected array $options = []
     ) {
         $this->render();
     }

@@ -8,8 +8,8 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 interface RendererContract
 {
-    // TODO: config should be an object with getter
-    public function __construct(InterpolatedTemplate $template, Css $css, array $config = []);
+    // TODO: options should be an object with getters?
+    public function __construct(InterpolatedTemplate $template, Css $css, array $options = []);
 
     public function getRendering(): mixed;
 

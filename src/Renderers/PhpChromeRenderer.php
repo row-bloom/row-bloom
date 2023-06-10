@@ -10,7 +10,20 @@ use HeadlessChromium\BrowserFactory;
 
 /**
  * requires ext-sockets
+ *
  * https://github.com/chrome-php/chrome#print-as-pdf
+ * https://github.com/chrome-php/chrome/issues/379
+ *
+ * Chromium browser based converter
+ *
+ * Pros:
+ * - Strong HTML and CSS support
+ * - Js support
+ *
+ * Cons
+ * - requires chromium
+ * - page breaks
+ * - Other PDF specific attributes...
  */
 class PhpChromeRenderer implements RendererContract
 {
@@ -19,7 +32,7 @@ class PhpChromeRenderer implements RendererContract
     public function __construct(
         protected InterpolatedTemplate $template,
         protected Css $css,
-        protected array $config = []
+        protected array $options = []
     ) {
         $this->render();
     }
@@ -31,7 +44,10 @@ class PhpChromeRenderer implements RendererContract
         $browser = $browserFactory->createBrowser();
         $page = $browser->createPage();
 
-        $page->navigate('data:text/html,'.(new HtmlRenderer($this->template, $this->css))->getRendering())
+        $rendering = new HtmlRenderer($this->template, $this->css);
+        // TODO: apply options
+
+        $page->navigate('data:text/html,'.$rendering->getRendering())
             ->waitForNavigation();
 
         $this->rendering = $page->pdf()->getBase64();

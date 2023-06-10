@@ -4,7 +4,7 @@ namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\RendererContract;
 
-class HtmlRenderer implements RendererContract
+class MpdfRenderer implements RendererContract
 {
     protected string $rendering;
 
@@ -17,13 +17,7 @@ class HtmlRenderer implements RendererContract
 
     public function render(): static
     {
-        $this->rendering = '<!DOCTYPE html><html><head>'
-            . '<title>Row bloom</title>'
-            . "<style>{$this->css}</style>"
-            . '</head>'
-            . '<body>' . implode('\n', $this->template) . '</body>'
-            . '</html>';
-
+        // ...
         return $this;
     }
 

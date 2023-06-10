@@ -1,8 +1,8 @@
 <?php
 
-use ElaborateCode\RowBloom\DataCollectors\DcFactory;
-use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDc;
+use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
+use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 
 it('makes', function () {
-    expect((new DcFactory)->make())->toBeInstanceOf(SpreadsheetDc::class);
+    expect((new DataCollectorFactory)->make())->toBeInstanceOf(SpreadsheetDataCollector::class);
 });

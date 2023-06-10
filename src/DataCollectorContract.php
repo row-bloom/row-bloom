@@ -3,7 +3,7 @@
 namespace ElaborateCode\RowBloom;
 
 // DataCollectorContract
-interface DcContract
+interface DataCollectorContract
 {
     public function getData(string $path): array;
 }

@@ -2,10 +2,10 @@
 
 namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
 
-use ElaborateCode\RowBloom\DcContract;
+use ElaborateCode\RowBloom\DataCollectorContract;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class SpreadsheetDc implements DcContract
+class SpreadsheetDataCollector implements DataCollectorContract
 {
     public function getData(string $path): array
     {

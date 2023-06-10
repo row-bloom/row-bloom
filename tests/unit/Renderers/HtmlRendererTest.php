@@ -1,10 +1,13 @@
 <?php
 
+use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
-it('renders', function () {
+it('renders and saves', function () {
+    $saveTo = new File(__DIR__.'./../../temp/foo.html');
+
     $html = (new HtmlRenderer(
         new InterpolatedTemplate([
             '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
@@ -12,6 +15,7 @@ it('renders', function () {
         new Css('p {font-weight: bold;}')
     ));
 
-    // dump($html);
     expect($html->getRendering())->toBeString();
+
+    expect($html->save($saveTo))->toBeTrue();
 });

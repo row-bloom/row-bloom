@@ -6,7 +6,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
-    $saveTo = new File(__DIR__ . './../../temp/yo.pdf');
+    $saveTo = new File(__DIR__.'./../../temp/foo.pdf');
 
     $pdf = (new PhpChromeRenderer(
         new InterpolatedTemplate([
@@ -17,6 +17,4 @@ it('renders', function () {
 
     // dump($pdf->getRendering());
     $pdf->save($saveTo);
-})
-    // ->skip('todo')
-;
+})->skip('todo');

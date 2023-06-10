@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom\Renderers;
 
+use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -21,11 +22,11 @@ class HtmlRenderer implements RendererContract
     protected function render(): static
     {
         $this->rendering = '<!DOCTYPE html><html><head>'
-            . '<title>Row bloom</title>'
-            . "<style>{$this->css}</style>"
-            . '</head>'
-            . '<body>' . implode('\n', $this->template->toArray()) . '</body>'
-            . '</html>';
+            .'<title>Row bloom</title>'
+            ."<style>{$this->css}</style>"
+            .'</head>'
+            .'<body>'.implode('\n', $this->template->toArray()).'</body>'
+            .'</html>';
 
         return $this;
     }
@@ -33,5 +34,13 @@ class HtmlRenderer implements RendererContract
     public function getRendering(): mixed
     {
         return $this->rendering;
+    }
+
+    public function save(File $file): bool
+    {
+        // ! $file must be HTML
+
+        return $file->startSaving()
+            ->save($this->rendering);
     }
 }

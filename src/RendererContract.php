@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom;
 
+use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
@@ -13,7 +14,7 @@ interface RendererContract
 
     public function getRendering(): mixed;
 
-    // public function save(): void;
+    public function save(File $file): bool;
 
     // public function stream(): void;
 }

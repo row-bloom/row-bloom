@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom\Renderers;
 
+use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -27,5 +28,11 @@ class MpdfRenderer implements RendererContract
     public function getRendering(): mixed
     {
         return $this->rendering;
+    }
+
+    public function save(File $file): bool
+    {
+        // ...
+        return false;
     }
 }

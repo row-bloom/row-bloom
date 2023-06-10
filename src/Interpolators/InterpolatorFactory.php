@@ -6,7 +6,7 @@ use ElaborateCode\RowBloom\InterpolatorContract;
 
 class InterpolatorFactory
 {
-    public function make(): InterpolatorContract
+    public static function make(string $driver): InterpolatorContract
     {
         return new TwigInterpolator;
     }

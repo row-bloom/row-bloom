@@ -1,6 +1,6 @@
 <?php
 
-use ElaborateCode\RowBloom\Interpolators\TwigInterpolator;
+use ElaborateCode\RowBloom\Interpolators\InterpolatorFactory;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use ElaborateCode\RowBloom\Types\Table;
 use ElaborateCode\RowBloom\Types\Template;
@@ -18,6 +18,8 @@ it('interpolates', function () {
         '<h1>FOO</h1><p>Bar baz</p>',
     ]);
 
-    expect((new TwigInterpolator)->interpolate(new Template($template), new Table($data)))
-        ->toEqual($expected);
+    expect(
+        InterpolatorFactory::make('')
+            ->interpolate(new Template($template), new Table($data))
+    )->toEqual($expected);
 });

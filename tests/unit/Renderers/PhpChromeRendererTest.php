@@ -15,6 +15,7 @@ it('renders', function () {
         new Css('p {font-weight: bold;}')
     ));
 
-    // dump($pdf->getRendering());
-    $pdf->save($saveTo);
-})->skip('todo');
+    expect($pdf->getRendering())->toBeString();
+
+    expect($pdf->save($saveTo))->toBeTrue();
+});

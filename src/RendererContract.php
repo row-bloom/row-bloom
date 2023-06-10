@@ -2,13 +2,14 @@
 
 namespace ElaborateCode\RowBloom;
 
+use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 interface RendererContract
 {
     // ? decorate HTML inside PDF
     // TODO: config should be an object with getter
-    public function __construct(InterpolatedTemplate $template, string $css, array $config = []);
+    public function __construct(InterpolatedTemplate $template, Css $css, array $config = []);
 
     public function render(): static;
 

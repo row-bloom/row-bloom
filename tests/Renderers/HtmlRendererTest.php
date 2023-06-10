@@ -1,6 +1,7 @@
 <?php
 
 use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
+use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
@@ -8,7 +9,7 @@ it('renders', function () {
         new InterpolatedTemplate([
             '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
         ]),
-        'p {font-weight: bold;}'
+        new Css('p {font-weight: bold;}')
     ))
         ->render();
 

@@ -4,7 +4,8 @@ namespace ElaborateCode\RowBloom\Fs;
 
 class File
 {
-    public static function fromPath(string $path): static {
+    public static function fromPath(string $path): static
+    {
         return new static($path);
     }
 

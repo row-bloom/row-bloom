@@ -38,9 +38,8 @@ class HtmlRenderer implements RendererContract
 
     public function save(File $file): bool
     {
-        // ! $file must be HTML
-
-        return $file->startSaving()
+        return $file->mustBeExtension('html')
+            ->startSaving()
             ->save($this->rendering);
     }
 }

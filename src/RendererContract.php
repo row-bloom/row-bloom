@@ -8,7 +8,6 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 interface RendererContract
 {
-    // ? decorate HTML inside PDF
     // TODO: config should be an object with getter
     public function __construct(InterpolatedTemplate $template, Css $css, array $config = []);
 

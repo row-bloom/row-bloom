@@ -2,19 +2,10 @@
 
 namespace ElaborateCode\RowBloom\Fs;
 
-use Exception;
-
 class File
 {
-    protected string $path;
-
-    public function __construct(string $path)
+    public function __construct(protected string $path)
     {
-        // if (false === $realPath) {
-        //     throw new Exception("Invalid path $path");
-        // }
-
-        $this->path = realpath($path) ?: $path;
     }
 
     public function exists(): bool
@@ -29,7 +20,7 @@ class File
 
     public function isFile(): bool
     {
-        return ! is_dir($this->path);
+        return is_file($this->path);
     }
 
     public function isWritable(): bool
@@ -40,6 +31,10 @@ class File
     public function dir(): string
     {
         return dirname($this->path);
+    }
+
+    public function extension(): string {
+        return pathinfo($this->path, PATHINFO_EXTENSION);
     }
 
     public function readFileContent(): ?string
@@ -56,30 +51,79 @@ class File
         return touch($this->path);
     }
 
-    // delete()
+    public function mustExist(): static
+    {
+        if (! $this->exists()) {
+            throw new FsException("{$this->path} path does not exist");
+        }
 
-    // TODO: add must prefixed methods (mustBeFile, mustBeDir...) return this
+        return $this;
+    }
+
+    public function mustNotExist(): static
+    {
+        if ($this->exists()) {
+            throw new FsException("{$this->path} path does exist");
+        }
+
+        return $this;
+    }
+
+    public function mustBeDir(): static
+    {
+        if (! $this->isDir()) {
+            throw new FsException("{$this->path} is not a directory");
+        }
+
+        return $this;
+    }
+
+    public function mustBeFile(): static
+    {
+        if (! $this->isDir()) {
+            throw new FsException("{$this->path} is not a regular file");
+        }
+
+        return $this;
+    }
+
+    public function mustBeWritable(): static
+    {
+        if (! $this->isWritable()) {
+            throw new FsException("{$this->path} is not writable");
+        }
+
+        return $this;
+    }
+
+    public function mustBeExtension(string $extension): static
+    {
+        // TODO: support array of extensions?
+        if (strcmp(strtolower($this->extension()), strtolower($extension)) !== 0) {
+            throw new FsException("{$this->path} is not writable");
+        }
+
+        return $this;
+    }
+
+    // delete()
 
     public function startSaving(): WriteStream
     {
         if (! file_exists($this->dir())) {
-            dump([
-                $this->dir(),
-                $this->path,
-            ]);
             if (! mkdir($this->dir(), 0777, true)) {
-                throw new Exception(sprintf('Could not create the directory %s.', $this->dir()));
+                throw new FsException(sprintf('Could not create the directory %s.', $this->dir()));
             }
         }
 
         // ? override
         if ($this->exists()) {
             if (! $this->isWritable()) {
-                throw new Exception(sprintf('The file %s is not writable.', $this->path));
+                throw new FsException(sprintf('The file %s is not writable.', $this->path));
             }
         } else {
             if (! $this->touch()) {
-                throw new Exception(sprintf('The file %s could not be created.', $this->path));
+                throw new FsException(sprintf('The file %s could not be created.', $this->path));
             }
         }
 

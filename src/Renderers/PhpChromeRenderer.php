@@ -48,9 +48,8 @@ class PhpChromeRenderer implements RendererContract
 
     public function save(File $file): bool
     {
-        // ! $file must be PDF
-
-        return $file->startSaving()
+        return $file->mustBeExtension('pdf')
+            ->startSaving()
             ->streamFilterAppend('convert.base64-decode')
             ->save($this->rendering);
     }

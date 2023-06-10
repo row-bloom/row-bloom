@@ -2,10 +2,11 @@
 
 namespace ElaborateCode\RowBloom;
 
-// DataCollectorContract
+use ElaborateCode\RowBloom\Types\Table;
+
 interface DataCollectorContract
 {
-    public function getData(string $path): array;
+    public function getTable(string $path): Table;
 }
 
 // READER_XLSX

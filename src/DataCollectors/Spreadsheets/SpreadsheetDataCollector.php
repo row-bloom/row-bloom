@@ -3,11 +3,12 @@
 namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
 
 use ElaborateCode\RowBloom\DataCollectorContract;
+use ElaborateCode\RowBloom\Types\Table;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class SpreadsheetDataCollector implements DataCollectorContract
 {
-    public function getData(string $path): array
+    public function getTable(string $path): Table
     {
         // TODO Support composition behavior for folders
 
@@ -26,7 +27,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
             $data
         );
 
-        return $data;
+        return new Table($data);
     }
 }
 

@@ -1,6 +1,7 @@
 <?php
 
 use ElaborateCode\RowBloom\Interpolators\TwigInterpolator;
+use ElaborateCode\RowBloom\Types\Table;
 
 it('interpolates', function () {
     $data = [
@@ -15,6 +16,6 @@ it('interpolates', function () {
         '<h1>FOO</h1><p>Bar baz</p>',
     ];
 
-    expect((new TwigInterpolator)->interpolate($template, $data))
+    expect((new TwigInterpolator)->interpolate($template, new Table($data)))
         ->toEqual($expected);
 });

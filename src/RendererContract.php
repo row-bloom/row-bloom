@@ -11,8 +11,6 @@ interface RendererContract
     // TODO: config should be an object with getter
     public function __construct(InterpolatedTemplate $template, Css $css, array $config = []);
 
-    public function render(): static;
-
     public function getRendering(): mixed;
 
     // public function save(): void;

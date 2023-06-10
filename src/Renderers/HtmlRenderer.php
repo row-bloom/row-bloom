@@ -15,9 +15,10 @@ class HtmlRenderer implements RendererContract
         protected Css $css,
         protected array $config = []
     ) {
+        $this->render();
     }
 
-    public function render(): static
+    protected function render(): static
     {
         $this->rendering = '<!DOCTYPE html><html><head>'
             . '<title>Row bloom</title>'

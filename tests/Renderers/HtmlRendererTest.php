@@ -10,8 +10,7 @@ it('renders', function () {
             '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
         ]),
         new Css('p {font-weight: bold;}')
-    ))
-        ->render();
+    ));
 
     // dump($html);
     expect($html->getRendering())->toBeString();

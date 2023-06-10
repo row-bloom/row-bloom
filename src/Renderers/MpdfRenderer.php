@@ -15,9 +15,10 @@ class MpdfRenderer implements RendererContract
         protected Css $css,
         protected array $config = []
     ) {
+        $this->render();
     }
 
-    public function render(): static
+    protected function render(): static
     {
         // ...
         return $this;

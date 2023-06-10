@@ -3,6 +3,7 @@
 namespace ElaborateCode\RowBloom\Interpolators;
 
 use ElaborateCode\RowBloom\InterpolatorContract;
+use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use ElaborateCode\RowBloom\Types\Table;
 use ElaborateCode\RowBloom\Types\Template;
 use Twig\Environment;
@@ -10,7 +11,7 @@ use Twig\Loader\ArrayLoader;
 
 class TwigInterpolator implements InterpolatorContract
 {
-    public function interpolate(Template $template, Table $table): array
+    public function interpolate(Template $template, Table $table): InterpolatedTemplate
     {
         $interpolatedRows = [];
 
@@ -22,6 +23,6 @@ class TwigInterpolator implements InterpolatorContract
             $interpolatedRows[] = $template->render($rowData);
         }
 
-        return $interpolatedRows;
+        return new InterpolatedTemplate($interpolatedRows);
     }
 }

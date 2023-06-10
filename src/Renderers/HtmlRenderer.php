@@ -3,13 +3,14 @@
 namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\RendererContract;
+use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 class HtmlRenderer implements RendererContract
 {
     protected string $rendering;
 
     public function __construct(
-        protected array $template,
+        protected InterpolatedTemplate $template,
         protected string $css,
         protected array $config = []
     ) {
@@ -21,7 +22,7 @@ class HtmlRenderer implements RendererContract
             . '<title>Row bloom</title>'
             . "<style>{$this->css}</style>"
             . '</head>'
-            . '<body>' . implode('\n', $this->template) . '</body>'
+            . '<body>' . implode('\n', $this->template->toArray()) . '</body>'
             . '</html>';
 
         return $this;

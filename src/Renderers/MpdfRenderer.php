@@ -3,13 +3,14 @@
 namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\RendererContract;
+use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 class MpdfRenderer implements RendererContract
 {
     protected string $rendering;
 
     public function __construct(
-        protected array $template,
+        protected InterpolatedTemplate $template,
         protected string $css,
         protected array $config = []
     ) {

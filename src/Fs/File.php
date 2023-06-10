@@ -9,7 +9,7 @@ class File
         return new static($path);
     }
 
-    public function __construct(protected string $path)
+    final public function __construct(protected string $path)
     {
     }
 

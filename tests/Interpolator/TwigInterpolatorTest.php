@@ -2,6 +2,7 @@
 
 use ElaborateCode\RowBloom\Interpolators\TwigInterpolator;
 use ElaborateCode\RowBloom\Types\Table;
+use ElaborateCode\RowBloom\Types\Template;
 
 it('interpolates', function () {
     $data = [
@@ -16,6 +17,6 @@ it('interpolates', function () {
         '<h1>FOO</h1><p>Bar baz</p>',
     ];
 
-    expect((new TwigInterpolator)->interpolate($template, new Table($data)))
+    expect((new TwigInterpolator)->interpolate(new Template($template), new Table($data)))
         ->toEqual($expected);
 });

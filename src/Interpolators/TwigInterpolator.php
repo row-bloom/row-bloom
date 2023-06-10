@@ -4,12 +4,13 @@ namespace ElaborateCode\RowBloom\Interpolators;
 
 use ElaborateCode\RowBloom\InterpolatorContract;
 use ElaborateCode\RowBloom\Types\Table;
+use ElaborateCode\RowBloom\Types\Template;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
 class TwigInterpolator implements InterpolatorContract
 {
-    public function interpolate(string $template, Table $table): array
+    public function interpolate(Template $template, Table $table): array
     {
         $interpolatedRows = [];
 

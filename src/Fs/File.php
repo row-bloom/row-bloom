@@ -28,6 +28,40 @@ class File
         $this->path = $realPath;
     }
 
+    public function readFileContent(): ?string
+    {
+        if (! $this->exists() || $this->isDir()) {
+            return null;
+        }
+
+        return file_get_contents($this->path);
+    }
+
+    public function startSaving(): WriteStream
+    {
+        // ! use realpath
+        if (! file_exists($this->dir())) {
+            if (! mkdir($this->dir(), 0777, true)) {
+                throw new FsException(sprintf('Could not create the directory %s.', $this->dir()));
+            }
+        }
+
+        // TODO: handle override file
+        if ($this->exists()) {
+            if (! $this->isWritable()) {
+                throw new FsException(sprintf('The file %s is not writable.', $this->path));
+            }
+        } else {
+            if (! $this->touch()) {
+                throw new FsException(sprintf('The file %s could not be created.', $this->path));
+            }
+        }
+
+        return new WriteStream(fopen($this->path, 'w'));
+    }
+
+    // delete
+
     public function exists(): bool
     {
         return file_exists($this->path);
@@ -43,6 +77,11 @@ class File
         return is_file($this->path);
     }
 
+    public function isReadable(): bool
+    {
+        return is_readable($this->path);
+    }
+
     public function isWritable(): bool
     {
         return is_writable($this->path);
@@ -56,15 +95,6 @@ class File
     public function extension(): string
     {
         return pathinfo($this->path, PATHINFO_EXTENSION);
-    }
-
-    public function readFileContent(): ?string
-    {
-        if (! $this->exists() || $this->isDir()) {
-            return null;
-        }
-
-        return file_get_contents($this->path);
     }
 
     public function touch(): bool
@@ -117,6 +147,15 @@ class File
         return $this;
     }
 
+    public function mustBeReadable(): static
+    {
+        if (! $this->isReadable()) {
+            throw new FsException("{$this->path} is not readable");
+        }
+
+        return $this;
+    }
+
     public function mustBeExtension(string $extension): static
     {
         // TODO: support array of extensions?
@@ -125,30 +164,5 @@ class File
         }
 
         return $this;
-    }
-
-    // delete()
-
-    public function startSaving(): WriteStream
-    {
-        // ! use realpath
-        if (! file_exists($this->dir())) {
-            if (! mkdir($this->dir(), 0777, true)) {
-                throw new FsException(sprintf('Could not create the directory %s.', $this->dir()));
-            }
-        }
-
-        // TODO: handle override file
-        if ($this->exists()) {
-            if (! $this->isWritable()) {
-                throw new FsException(sprintf('The file %s is not writable.', $this->path));
-            }
-        } else {
-            if (! $this->touch()) {
-                throw new FsException(sprintf('The file %s could not be created.', $this->path));
-            }
-        }
-
-        return new WriteStream(fopen($this->path, 'w'));
     }
 }

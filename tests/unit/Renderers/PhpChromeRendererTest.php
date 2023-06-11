@@ -7,7 +7,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
-    $saveTo = new File(__DIR__.'./../../temp/foo.pdf');
+    $saveTo = new File(__DIR__.'/../../temp/foo.pdf');
 
     $renderer = RendererFactory::make(
         'chromium-pdf',

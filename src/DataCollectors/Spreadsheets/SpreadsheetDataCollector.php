@@ -23,7 +23,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
         $labels = array_shift($data);
 
         if (count($labels) > count(array_flip($labels))) {
-            throw new SpreadsheetException('Duplicate labels'.implode(',', $labels));
+            throw new SpreadsheetException('Duplicate labels '.implode(', ', $labels));
         }
         // TODO: check empty label?
 

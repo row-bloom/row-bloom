@@ -4,13 +4,28 @@ namespace ElaborateCode\RowBloom\Fs;
 
 class File
 {
-    public static function fromPath(string $path): static
+    protected string $path;
+
+    public static function fromPath(string $path, bool $real = false): static
     {
         return new static($path);
     }
 
-    final public function __construct(protected string $path)
+    final public function __construct(string $path, bool $real = false)
     {
+        if (! $real) {
+            $this->path = str_replace('/', DIRECTORY_SEPARATOR, str_replace('\\', DIRECTORY_SEPARATOR, $path));
+
+            return;
+        }
+
+        $realPath = realpath($path);
+
+        if (false === $realPath) {
+            throw new FsException("Invalid path format {$path}");
+        }
+
+        $this->path = $realPath;
     }
 
     public function exists(): bool
@@ -116,6 +131,7 @@ class File
 
     public function startSaving(): WriteStream
     {
+        // ! use realpath
         if (! file_exists($this->dir())) {
             if (! mkdir($this->dir(), 0777, true)) {
                 throw new FsException(sprintf('Could not create the directory %s.', $this->dir()));

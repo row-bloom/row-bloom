@@ -9,98 +9,160 @@ use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Table;
 use ElaborateCode\RowBloom\Types\Template;
+use Exception;
 
 class RowBloom
 {
-    protected DataCollectorContract $dataCollector;
+    protected DataCollectorContract $dataCollector; //
 
     protected InterpolatorContract $interpolator;
     // protected InterpolatorContract $renderer;
 
-    protected Template $template;
+    /** @var Table[] */
+    protected array $tables = [];
 
-    protected Css $css;
+    /** @var string[] */
+    protected array $tablePaths = [];
 
-    protected Table $table; // support calculations
+    protected ?Template $template = null;
 
+    protected ?string $templatePath = null;
+
+    /** @var array<Css> */
+    protected array $css = [];
+
+    /** @var string[] */
+    protected array $cssPaths = [];
+
+    protected array $options = [];
     // TODO: $options
-
-    // use pending setter when path given to use after the build ends
+    // * per_page, output_path, pdf_header, pdf_footer, page_numbers, meta(author,...)
 
     public function __construct()
     {
-        // handle config, options, and defaults (drivers ...)
-        // any options ?
-        //      rows_per_page, output_name
-
+        // ? config
         $this->dataCollector = DataCollectorFactory::make();
         $this->interpolator = InterpolatorFactory::make('');
         // $this->renderer = RendererFactory::make();
     }
 
-    public function template(string|Template $content): static
-    {
-        $this->template = $content instanceof Template ? $content : new Template($content);
-
-        return $this;
-    }
-
-    public function css(string|Css $content): static
-    {
-        $this->css = $content instanceof Css ? $content : new Css($content);
-
-        return $this;
-    }
-
-    public function table(array|Table $content): static
-    {
-        $this->table = $content instanceof Table ? $content : new Table($content);
-
-        return $this;
-    }
-
-    public function templateFromFile(string|File $file): static
-    {
-        $file = $file instanceof File ? $file : new File($file);
-
-        $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
-
-        return $this->template(
-            new Template($file->readFileContent())
-        );
-    }
-
-    public function cssFromFile(string|File $file): static
-    {
-        $file = $file instanceof File ? $file : new File($file);
-
-        $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
-
-        return $this->css(
-            new Css($file->readFileContent())
-        );
-    }
-
-    public function tableFrom(string $path): static
-    {
-        $this->table(
-            $this->dataCollector->getTable($path)
-        );
-
-        return $this;
-    }
+    // TODO: save()
 
     public function render()
     {
-        $interpolatedTemplate = $this->interpolator->interpolate(
-            $this->template,
-            $this->table
-        );
+        $finalTable = $this->getFinalTable();
+        $finalTemplate = $this->getFinalTemplate();
+        $finalCss = $this->getFinalCss();
+
+        $interpolatedTemplate = $this->interpolator->interpolate($finalTemplate, $finalTable);
 
         return RendererFactory::make('html')
-            ->getRendering($interpolatedTemplate, $this->css);
+            ->getRendering($interpolatedTemplate, $finalCss);
     }
 
-    // save()
-    // stream
+    protected function getFinalTable(): Table
+    {
+        foreach ($this->tablePaths as $tablePath) {
+            // TODO: each path has its own driver
+            $this->tables[] = $this->dataCollector->getTable($tablePath);
+        }
+        $data = [];
+        foreach ($this->tables as $table) {
+            $data += $table->toArray();
+        }
+
+        return new Table($data);
+    }
+
+    protected function getFinalTemplate(): Template
+    {
+        if (! is_null($this->template) && ! is_null($this->templatePath)) {
+            throw new Exception('TEMPLATE...');
+        }
+
+        if (! is_null($this->templatePath)) {
+            $file = new File($this->templatePath);
+            $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
+
+            return new Template($file->readFileContent());
+        }
+
+        if (! is_null($this->template)) {
+            return $this->template;
+        }
+
+        throw new Exception('TEMPLATE...');
+    }
+
+    protected function getFinalCss(): Css
+    {
+        $finalCss = '';
+
+        // TODO: clarify stylesheets ordering
+        foreach ($this->cssPaths as $cssPath) {
+            $cssFile = new File($cssPath);
+            $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
+
+            $finalCss .= $cssFile->readFileContent();
+        }
+
+        foreach ($this->css as $css) {
+            $finalCss .= $css;
+        }
+
+        return new Css($finalCss);
+    }
+
+    // ============================================================
+    // Fluent build methods
+    // ============================================================
+
+    public function addTable(Table $table): static
+    {
+        $this->tables[] = $table;
+
+        return $this;
+    }
+
+    public function addTablePath(string $tablePath): static
+    {
+        $this->tablePaths[] = $tablePath;
+
+        return $this;
+    }
+
+    public function setTemplate(Template $template): static
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    public function setTemplatePath(string $templatePath): static
+    {
+        $this->templatePath = $templatePath;
+
+        return $this;
+    }
+
+    public function addCss(Css $css): static
+    {
+        $this->css[] = $css;
+
+        return $this;
+    }
+
+    public function addCssPath(string $cssPath): static
+    {
+        $this->cssPaths[] = $cssPath;
+
+        return $this;
+    }
+
+    public function setOption(string $key, mixed $value): static
+    {
+        $this->options[$key] = $value;
+
+        return $this;
+    }
 }

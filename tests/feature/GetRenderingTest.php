@@ -1,15 +1,18 @@
 <?php
 
 use ElaborateCode\RowBloom\RowBloom;
+use ElaborateCode\RowBloom\Types\Css;
+use ElaborateCode\RowBloom\Types\Table;
+use ElaborateCode\RowBloom\Types\Template;
 
 it('renders', function () {
     $rendering = (new RowBloom)
-        ->css('')
-        ->template('<h1>hey {{ name }}</h1>')
-        ->table([
+        ->addCss(new Css(''))
+        ->setTemplate(new Template('<h1>hey {{ name }}</h1>'))
+        ->addTable(new Table([
             ['name' => 'mohamed'],
             ['name' => 'ilies'],
-        ])
+        ]))
         ->render();
 
     expect($rendering)->toBeString()

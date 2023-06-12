@@ -28,4 +28,6 @@ class Table
     {
         return $this->table;
     }
+
+    // TODO: merge()
 }

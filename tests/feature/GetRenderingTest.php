@@ -12,7 +12,6 @@ it('renders', function () {
         ])
         ->render();
 
-    expect($rendering)->toBeString();
-    expect($rendering)->toContain('ilies');
-    expect($rendering)->toContain('mohamed');
+    expect($rendering)->toBeString()
+        ->toContain('ilies', 'mohamed');
 });

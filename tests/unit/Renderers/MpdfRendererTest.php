@@ -9,13 +9,14 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 it('renders', function () {
     // $saveTo = new File(__DIR__.'/../../temp/foo.pdf');
 
-    $renderer = RendererFactory::make(
-        'html-to-pdf',
+    $renderer = RendererFactory::make('html-to-pdf');
+
+    expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
+
+    expect($renderer->getRendering(
         new InterpolatedTemplate([
             '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
         ]),
         new Css('p {font-weight: bold;}')
-    );
-
-    expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
+    ))->toBeString();
 });

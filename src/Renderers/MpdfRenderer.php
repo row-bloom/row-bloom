@@ -23,13 +23,11 @@ class MpdfRenderer implements RendererContract
 {
     protected string $rendering;
 
-    public function __construct(
-        protected InterpolatedTemplate $template,
-        protected Css $css,
-        protected array $options = []
-    ) {
-        $this->render();
-    }
+    protected InterpolatedTemplate $template;
+
+    protected Css $css;
+
+    protected array $options = [];
 
     protected function render(): static
     {
@@ -37,9 +35,9 @@ class MpdfRenderer implements RendererContract
         return $this;
     }
 
-    public function getRendering(): mixed
+    public function getRendering(InterpolatedTemplate $template, Css $css, array $options = []): string
     {
-        return $this->rendering;
+        return '';
     }
 
     public function save(File $file): bool

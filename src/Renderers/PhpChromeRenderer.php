@@ -27,12 +27,21 @@ class PhpChromeRenderer implements RendererContract
 {
     protected string $rendering;
 
-    public function __construct(
-        protected InterpolatedTemplate $template,
-        protected Css $css,
-        protected array $options = []
-    ) {
+    protected InterpolatedTemplate $template;
+
+    protected Css $css;
+
+    protected array $options = [];
+
+    public function getRendering(InterpolatedTemplate $template, Css $css, array $options = []): string
+    {
+        $this->template = $template;
+        $this->css = $css;
+        $this->options = $options;
+
         $this->render();
+
+        return $this->rendering;
     }
 
     protected function render(): static
@@ -42,11 +51,11 @@ class PhpChromeRenderer implements RendererContract
         $browser = $browserFactory->createBrowser();
         $page = $browser->createPage();
 
-        $rendering = new HtmlRenderer($this->template, $this->css);
+        $rendering = (new HtmlRenderer())->getRendering($this->template, $this->css, $this->options);
         // ! use break-after: page; CSS for page break
         // TODO: apply options
 
-        $page->navigate('data:text/html,'.$rendering->getRendering())
+        $page->navigate('data:text/html,'.$rendering)
             ->waitForNavigation();
 
         $this->rendering = $page->pdf()->getBase64();
@@ -54,11 +63,6 @@ class PhpChromeRenderer implements RendererContract
         $browser->close();
 
         return $this;
-    }
-
-    public function getRendering(): mixed
-    {
-        return $this->rendering;
     }
 
     public function save(File $file): bool

@@ -97,8 +97,8 @@ class RowBloom
             $this->table
         );
 
-        return RendererFactory::make('html', $interpolatedTemplate, $this->css)
-            ->getRendering();
+        return RendererFactory::make('html')
+            ->getRendering($interpolatedTemplate, $this->css);
     }
 
     // save()

@@ -9,18 +9,17 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 it('renders and saves', function () {
     $saveTo = new File(__DIR__.'/../../temp/foo.html');
 
-    $renderer = RendererFactory::make(
-        'html',
-        new InterpolatedTemplate([
-            '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
-        ]),
-        new Css('p {font-weight: bold;}')
-    );
+    $renderer = RendererFactory::make('html');
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 
     // TODO: more assertions
-    expect($renderer->getRendering())->toBeString();
+    expect($renderer->getRendering(
+        new InterpolatedTemplate([
+            '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
+        ]),
+        new Css('p {font-weight: bold;}')
+    ))->toBeString();
 
     expect($renderer->save($saveTo))->toBeTrue();
 });

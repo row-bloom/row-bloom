@@ -11,13 +11,11 @@ class HtmlRenderer implements RendererContract
 {
     protected string $rendering;
 
-    public function __construct(
-        protected InterpolatedTemplate $template,
-        protected Css $css,
-        protected array $options = []
-    ) {
-        $this->render();
-    }
+    protected InterpolatedTemplate $template;
+
+    protected Css $css;
+
+    protected array $options = [];
 
     protected function render(): static
     {
@@ -32,8 +30,14 @@ class HtmlRenderer implements RendererContract
         return $this;
     }
 
-    public function getRendering(): mixed
+    public function getRendering(InterpolatedTemplate $template, Css $css, array $options = []): string
     {
+        $this->template = $template;
+        $this->css = $css;
+        $this->options = $options;
+
+        $this->render();
+
         return $this->rendering;
     }
 

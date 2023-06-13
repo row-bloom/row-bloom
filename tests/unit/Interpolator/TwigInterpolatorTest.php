@@ -20,6 +20,6 @@ it('interpolates', function () {
 
     expect(
         InterpolatorFactory::make('')
-            ->interpolate(new Template($template), new Table($data))
+            ->interpolate(new Template($template), Table::fromArray($data))
     )->toEqual($expected);
 });

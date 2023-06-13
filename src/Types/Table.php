@@ -9,7 +9,12 @@ class Table implements Iterator
 {
     protected int $iteratorPosition = 0;
 
-    public function __construct(protected array $table)
+    public static function fromArray(array $table): static
+    {
+        return new static($table);
+    }
+
+    final public function __construct(protected array $table)
     {
         $this->validate();
     }
@@ -47,7 +52,9 @@ class Table implements Iterator
         return $this;
     }
 
+    // ============================================================
     // Iterator interface methods
+    // ============================================================
 
     public function rewind(): void
     {

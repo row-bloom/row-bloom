@@ -9,7 +9,7 @@ it('renders', function () {
     $rendering = (new RowBloom)
         ->addCss(new Css(''))
         ->setTemplate(new Template('<h1>hey {{ name }}</h1>'))
-        ->addTable(new Table([
+        ->addTable(Table::fromArray([
             ['name' => 'mohamed'],
             ['name' => 'ilies'],
         ]))

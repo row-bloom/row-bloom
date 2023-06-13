@@ -32,7 +32,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
             $data
         );
 
-        return new Table($data);
+        return Table::fromArray($data);
     }
 }
 

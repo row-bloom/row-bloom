@@ -71,7 +71,7 @@ class RowBloom
             $data += $table->toArray();
         }
 
-        return new Table($data);
+        return Table::fromArray($data);
     }
 
     protected function template(): Template

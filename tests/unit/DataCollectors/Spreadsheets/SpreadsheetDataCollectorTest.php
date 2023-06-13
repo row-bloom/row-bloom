@@ -9,7 +9,7 @@ it('parses', function () {
     expect($dataCollector)->toBeInstanceOf(SpreadsheetDataCollector::class);
 
     expect(
-        $dataCollector->getTable(__DIR__.'/stubs/csv1.csv')->toArray()
+        $dataCollector->getTable(__DIR__.'/../../../stubs/1csv.csv')->toArray()
     )->toEqual([
         ['a' => '2', 'b' => '2'],
         ['a' => '3', 'b' => '3'],

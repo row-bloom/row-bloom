@@ -4,7 +4,7 @@ use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
 use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 
 it('parses', function () {
-    $dataCollector = DataCollectorFactory::make();
+    $dataCollector = DataCollectorFactory::make('spreadsheet');
 
     expect($dataCollector)->toBeInstanceOf(SpreadsheetDataCollector::class);
 

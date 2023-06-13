@@ -13,10 +13,11 @@ use Exception;
 
 class RowBloom
 {
-    protected DataCollectorContract $dataCollector; //
+    protected InterpolatorContract|string $interpolator;
 
-    protected InterpolatorContract $interpolator;
-    // protected InterpolatorContract $renderer;
+    protected RendererContract|string $renderer;
+
+    // ------------------------------------------------------------
 
     /** @var Table[] */
     protected array $tables = [];
@@ -35,36 +36,39 @@ class RowBloom
     protected array $cssPaths = [];
 
     protected array $options = [];
-    // TODO: $options
+    // TODO: options setters
     // * per_page, output_path, pdf_header, pdf_footer, page_numbers, meta(author,...)
+
+    // ------------------------------------------------------------
 
     public function __construct()
     {
-        // ? config
-        $this->dataCollector = DataCollectorFactory::make();
-        $this->interpolator = InterpolatorFactory::make('');
-        // $this->renderer = RendererFactory::make();
+        // ? config ? default drivers
     }
 
     // TODO: save()
 
     public function render()
     {
+        //TODO: user instance -> set driver -> default driver
+        $interpolator = $this->resolveInterpolator();
+        $renderer = $this->resolveRenderer();
+
         $finalTable = $this->mergeTables();
-        $finalTemplate = $this->template();
-        $finalCss = $this->mergeCss();
+        $finaleTemplate = $this->template();
+        $finalCss = $this->mergeCss(); // ! should be optional
 
-        $interpolatedTemplate = $this->interpolator->interpolate($finalTemplate, $finalTable);
+        $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable);
 
-        return RendererFactory::make('html')
-            ->getRendering($interpolatedTemplate, $finalCss);
+        return $renderer->getRendering($interpolatedTemplate, $finalCss);
     }
 
     protected function mergeTables(): Table
     {
         foreach ($this->tablePaths as $tablePath) {
             // TODO: each path has its own driver
-            $this->tables[] = $this->dataCollector->getTable($tablePath);
+            $this->tables[] = DataCollectorFactory::make('spreadsheet')
+                ->getTable($tablePath);
         }
         $data = [];
         foreach ($this->tables as $table) {
@@ -165,5 +169,50 @@ class RowBloom
         $this->options[$key] = $value;
 
         return $this;
+    }
+
+    public function setInterpolator(InterpolatorContract $interpolator): static
+    {
+        $this->interpolator = $interpolator;
+
+        return $this;
+    }
+
+    public function setRenderer(RendererContract $renderer): static
+    {
+        $this->renderer = $renderer;
+
+        return $this;
+    }
+
+    // ============================================================
+    //
+    // ============================================================
+
+    protected function resolveInterpolator(): InterpolatorContract
+    {
+        if (! isset($this->renderer)) {
+            return InterpolatorFactory::make('twig');
+        }
+
+        if ($this->interpolator instanceof InterpolatorContract) {
+            return $this->interpolator;
+        }
+
+        // TODO: take in consideration if user give class name and try instance if factory?
+        return InterpolatorFactory::make($this->interpolator);
+    }
+
+    protected function resolveRenderer(): RendererContract
+    {
+        if (! isset($this->renderer)) {
+            return RendererFactory::make('html');
+        }
+
+        if ($this->renderer instanceof RendererContract) {
+            return $this->renderer;
+        }
+
+        return RendererFactory::make($this->renderer);
     }
 }

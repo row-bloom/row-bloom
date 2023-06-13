@@ -171,14 +171,14 @@ class RowBloom
         return $this;
     }
 
-    public function setInterpolator(InterpolatorContract $interpolator): static
+    public function setInterpolator(InterpolatorContract|string $interpolator): static
     {
         $this->interpolator = $interpolator;
 
         return $this;
     }
 
-    public function setRenderer(RendererContract $renderer): static
+    public function setRenderer(RendererContract|string $renderer): static
     {
         $this->renderer = $renderer;
 
@@ -191,7 +191,7 @@ class RowBloom
 
     protected function resolveInterpolator(): InterpolatorContract
     {
-        if (! isset($this->renderer)) {
+        if (! isset($this->interpolator)) {
             return InterpolatorFactory::make('twig');
         }
 

@@ -15,5 +15,17 @@ class Css implements Stringable
         return $this->css;
     }
 
-    // TODO: append prepend
+    public function prepend(string|Css $css): static
+    {
+        $this->css = $css.$this->css;
+
+        return $this;
+    }
+
+    public function append(string|Css $css): static
+    {
+        $this->css = $this->css.$css;
+
+        return $this;
+    }
 }

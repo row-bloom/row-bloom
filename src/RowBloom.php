@@ -50,9 +50,9 @@ class RowBloom
 
     public function render()
     {
-        $finalTable = $this->getFinalTable();
-        $finalTemplate = $this->getFinalTemplate();
-        $finalCss = $this->getFinalCss();
+        $finalTable = $this->mergeTables();
+        $finalTemplate = $this->template();
+        $finalCss = $this->mergeCss();
 
         $interpolatedTemplate = $this->interpolator->interpolate($finalTemplate, $finalTable);
 
@@ -60,7 +60,7 @@ class RowBloom
             ->getRendering($interpolatedTemplate, $finalCss);
     }
 
-    protected function getFinalTable(): Table
+    protected function mergeTables(): Table
     {
         foreach ($this->tablePaths as $tablePath) {
             // TODO: each path has its own driver
@@ -74,7 +74,7 @@ class RowBloom
         return new Table($data);
     }
 
-    protected function getFinalTemplate(): Template
+    protected function template(): Template
     {
         if (! is_null($this->template) && ! is_null($this->templatePath)) {
             throw new Exception('TEMPLATE...');
@@ -94,28 +94,29 @@ class RowBloom
         throw new Exception('TEMPLATE...');
     }
 
-    protected function getFinalCss(): Css
+    protected function mergeCss(): Css
     {
-        $finalCss = '';
+        $finalCss = new Css('');
 
-        // TODO: clarify stylesheets ordering
         foreach ($this->cssPaths as $cssPath) {
             $cssFile = new File($cssPath);
             $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
 
-            $finalCss .= $cssFile->readFileContent();
+            $finalCss->append($cssFile->readFileContent());
         }
-
+        // TODO: clarify stylesheets ordering
         foreach ($this->css as $css) {
-            $finalCss .= $css;
+            $finalCss->append($css);
         }
 
-        return new Css($finalCss);
+        return $finalCss;
     }
 
     // ============================================================
     // Fluent build methods
     // ============================================================
+
+    // TODO: allow setting contracts custom strategies
 
     public function addTable(Table $table): static
     {

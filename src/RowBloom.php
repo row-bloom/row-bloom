@@ -35,14 +35,14 @@ class RowBloom
     /** @var string[] */
     protected array $cssPaths = [];
 
-    protected array $options = [];
-    // TODO: options setters
-    // * per_page, output_path, pdf_header, pdf_footer, page_numbers, meta(author,...)
+    protected Options $options;
 
     // ------------------------------------------------------------
 
     public function __construct()
     {
+        $this->options = new Options;
+
         // ? config ? default drivers
     }
 

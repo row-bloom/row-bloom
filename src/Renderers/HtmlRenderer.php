@@ -3,6 +3,7 @@
 namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -11,28 +12,44 @@ class HtmlRenderer implements RendererContract
 {
     protected string $rendering;
 
-    protected InterpolatedTemplate $template;
+    protected InterpolatedTemplate $interpolatedTemplate;
 
     protected Css $css;
 
-    protected array $options = [];
+    protected ?Options $options = null;
 
     protected function render(): static
     {
+        $body = '';
+        if (! is_null($this->options?->perPage)) {
+            foreach ($this->interpolatedTemplate->toArray() as $i => $t) {
+                $body .= "\n{$t}";
+
+                if (
+                    ($i + 1) % $this->options->perPage === 0 &&
+                    ($i + 1) !== count($this->interpolatedTemplate->toArray())
+                ) {
+                    $body .= '<div style="page-break-before: always;"></div>';
+                }
+            }
+        } else {
+            // TODO: implode with a special string?
+            $body = implode('\n', $this->interpolatedTemplate->toArray());
+        }
+
         $this->rendering = '<!DOCTYPE html><html><head>'
             .'<title>Row bloom</title>'
             ."<style>{$this->css}</style>"
             .'</head>'
-            .'<body>'.implode('\n', $this->template->toArray()).'</body>'
+            ."<body>{$body}</body>"
             .'</html>';
-        // TODO: implode with a special string?
 
         return $this;
     }
 
-    public function getRendering(InterpolatedTemplate $template, Css $css, array $options = []): string
+    public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, ?Options $options = null): string
     {
-        $this->template = $template;
+        $this->interpolatedTemplate = $interpolatedTemplate;
         $this->css = $css;
         $this->options = $options;
 

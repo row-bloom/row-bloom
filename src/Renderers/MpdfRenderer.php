@@ -3,6 +3,7 @@
 namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -27,7 +28,7 @@ class MpdfRenderer implements RendererContract
 
     protected Css $css;
 
-    protected array $options = [];
+    protected ?Options $options = null;
 
     protected function render(): static
     {
@@ -35,7 +36,7 @@ class MpdfRenderer implements RendererContract
         return $this;
     }
 
-    public function getRendering(InterpolatedTemplate $template, Css $css, array $options = []): string
+    public function getRendering(InterpolatedTemplate $template, Css $css, ?Options $options = null): string
     {
         return '';
     }

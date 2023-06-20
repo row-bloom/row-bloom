@@ -11,15 +11,15 @@ it('renders', function () {
 
     $renderer = RendererFactory::make('chromium-pdf');
 
+    $css = new Css('p {font-weight: bold;}');
+    $interpolatedTemplate = new InterpolatedTemplate([
+        '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
+    ]);
+
     expect($renderer)->toBeInstanceOf(PhpChromeRenderer::class);
 
     // TODO: more assertions
-    expect($renderer->getRendering(
-        new InterpolatedTemplate([
-            '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
-        ]),
-        new Css('p {font-weight: bold;}')
-    ))->toBeString();
+    expect($renderer->getRendering($interpolatedTemplate, $css))->toBeString();
 
     expect($renderer->save($saveTo))->toBeTrue();
 });

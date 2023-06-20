@@ -3,6 +3,7 @@
 namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -27,15 +28,15 @@ class PhpChromeRenderer implements RendererContract
 {
     protected string $rendering;
 
-    protected InterpolatedTemplate $template;
+    protected InterpolatedTemplate $interpolatedTemplate;
 
     protected Css $css;
 
-    protected array $options = [];
+    protected ?Options $options = null;
 
-    public function getRendering(InterpolatedTemplate $template, Css $css, array $options = []): string
+    public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, ?Options $options = null): string
     {
-        $this->template = $template;
+        $this->interpolatedTemplate = $interpolatedTemplate;
         $this->css = $css;
         $this->options = $options;
 
@@ -51,9 +52,8 @@ class PhpChromeRenderer implements RendererContract
         $browser = $browserFactory->createBrowser();
         $page = $browser->createPage();
 
-        $rendering = (new HtmlRenderer())->getRendering($this->template, $this->css, $this->options);
-        // ! use break-after: page; CSS for page break
-        // TODO: apply options
+        // TODO: use private logic for html rendering
+        $rendering = (new HtmlRenderer())->getRendering($this->interpolatedTemplate, $this->css, $this->options);
 
         $page->navigate('data:text/html,'.$rendering)
             ->waitForNavigation();

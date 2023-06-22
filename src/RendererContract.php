@@ -8,8 +8,8 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 interface RendererContract
 {
-    // TODO: options should be an object with getters?
-    public function getRendering(InterpolatedTemplate $template, Css $css, ?Options $options = null): string;
+    // TODO: render()->save|get()
+    public function getRendering(InterpolatedTemplate $template, Css $css, Options $options): string;
 
     public function save(File $file): bool;
 

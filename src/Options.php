@@ -15,7 +15,7 @@ class Options
         public ?int $perPage = null,
 
         public string $paperSize = 'A4',
-        public string $layout = 'P',
+        public string $layout = 'portrait', // landscape|portrait
 
         public array $margins = [1],
 

@@ -16,7 +16,7 @@ class HtmlRenderer implements RendererContract
 
     protected Css $css;
 
-    protected ?Options $options = null;
+    protected Options $options;
 
     protected function render(): static
     {
@@ -47,7 +47,7 @@ class HtmlRenderer implements RendererContract
         return $this;
     }
 
-    public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, ?Options $options = null): string
+    public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): string
     {
         $this->interpolatedTemplate = $interpolatedTemplate;
         $this->css = $css;

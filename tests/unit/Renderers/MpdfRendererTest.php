@@ -1,6 +1,7 @@
 <?php
 
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\MpdfRenderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
@@ -17,6 +18,7 @@ it('renders', function () {
         new InterpolatedTemplate([
             '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
         ]),
-        new Css('p {font-weight: bold;}')
+        new Css('p {font-weight: bold;}'),
+        new Options
     ))->toBeString();
 });

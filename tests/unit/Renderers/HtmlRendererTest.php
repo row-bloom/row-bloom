@@ -1,6 +1,7 @@
 <?php
 
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
@@ -18,7 +19,8 @@ it('renders and saves', function () {
         new InterpolatedTemplate([
             '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
         ]),
-        new Css('p {font-weight: bold;}')
+        new Css('p {font-weight: bold;}'),
+        new Options
     ))->toBeString();
 
     expect($renderer->save($saveTo))->toBeTrue();

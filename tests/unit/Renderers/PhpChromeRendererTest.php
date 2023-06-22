@@ -1,6 +1,7 @@
 <?php
 
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\PhpChromeRenderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
@@ -19,7 +20,8 @@ it('renders', function () {
     expect($renderer)->toBeInstanceOf(PhpChromeRenderer::class);
 
     // TODO: more assertions
-    expect($renderer->getRendering($interpolatedTemplate, $css))->toBeString();
+    expect($renderer->getRendering($interpolatedTemplate, $css, new Options))->toBeString();
 
+    // TODO: stop testing with IO
     expect($renderer->save($saveTo))->toBeTrue();
 });

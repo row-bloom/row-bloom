@@ -5,7 +5,7 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\RendererContract;
 use Exception;
 
-class RendererFactory
+final class RendererFactory
 {
     // TODO: fix factory => only take driver as input
     public static function make(string $driver): RendererContract

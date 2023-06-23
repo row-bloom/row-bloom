@@ -79,7 +79,7 @@ class MpdfRenderer implements RendererContract
 
     private function getHtmlBody(): string
     {
-        if (is_null($this->options?->perPage)) {
+        if (is_null($this->options->perPage)) {
             return implode('', $this->interpolatedTemplate->toArray());
         }
 

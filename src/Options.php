@@ -2,15 +2,16 @@
 
 namespace ElaborateCode\RowBloom;
 
-/**
- * .
- *
- * @var array $margin
- * - Like Css number number,number number,number,number,number.
- * - Unit in millimeter
- */
 class Options
 {
+
+    /**
+     * .
+     *
+     * @param array $margins
+     * - Like Css number number,number number,number,number,number.
+     * - Unit in millimeter
+     */
     public function __construct(
         public ?int $perPage = null,
 

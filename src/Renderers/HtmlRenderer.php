@@ -21,7 +21,7 @@ class HtmlRenderer implements RendererContract
     protected function render(): static
     {
         $body = '';
-        if (! is_null($this->options?->perPage)) {
+        if (! is_null($this->options->perPage)) {
             foreach ($this->interpolatedTemplate->toArray() as $i => $t) {
                 $body .= "\n{$t}";
 

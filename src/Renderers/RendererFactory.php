@@ -15,12 +15,12 @@ class RendererFactory
         return new $renderer();
     }
 
-    protected static function resolveDriver(string $driver): string
+    private static function resolveDriver(string $driver): string
     {
         return match ($driver) {
             'html' => HtmlRenderer::class,
             'chromium-pdf' => PhpChromeRenderer::class,
-            'html-to-pdf' => MpdfRenderer::class,
+            '*mpdf' => MpdfRenderer::class,
             // TODO: tcpdf
             default => throw new Exception("Unrecognized rendering driver {$driver}"),
         };

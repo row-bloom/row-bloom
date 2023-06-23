@@ -6,7 +6,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Table;
 use ElaborateCode\RowBloom\Types\Template;
 
-it('renders using Twig and HtmlRenderer', function ($r) {
+it('renders using Twig and HtmlRenderer', function (RowBloom $r) {
     $css = new Css('');
     $template = new Template('<h1>hey {{ name }}</h1>');
     $table = Table::fromArray([['name' => 'mohamed'], ['name' => 'ilies']]);

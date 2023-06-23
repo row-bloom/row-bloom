@@ -17,7 +17,7 @@ class Options
         public string $paperSize = 'A4',
         public string $layout = 'portrait', // landscape|portrait
 
-        public array $margins = [1],
+        public array $margins = [16, 15, 16, 15],
 
         public ?string $headerLeft = null,
         public ?string $headerCenter = null,
@@ -34,6 +34,7 @@ class Options
         public ?string $metadataSubject = null,
         public ?string $metadataKeywords = null,
 
+        // font
         // security ?
         // compression ?
     ) {

@@ -10,7 +10,7 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 it('renders', function () {
     // $saveTo = new File(__DIR__.'/../../temp/foo.pdf');
 
-    $renderer = RendererFactory::make('html-to-pdf');
+    $renderer = RendererFactory::make('*mpdf');
 
     expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
 

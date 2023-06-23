@@ -60,7 +60,7 @@ class RowBloom
 
         $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable);
 
-        return $renderer->getRendering($interpolatedTemplate, $finalCss);
+        return $renderer->getRendering($interpolatedTemplate, $finalCss, $this->options);
     }
 
     protected function mergeTables(): Table

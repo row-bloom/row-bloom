@@ -60,8 +60,8 @@ class MpdfRenderer implements RendererContract
 
     private function render(): static
     {
-        $this->mpdf->_setPageSize($this->options->paperSize, $this->options->layout);
 
+        $this->setPageFormat();
         $this->setMargins();
         $this->setHeaderAndFooter();
         $this->setMetadata();
@@ -98,6 +98,29 @@ class MpdfRenderer implements RendererContract
         return $body;
     }
 
+    private function setPageFormat(): void
+    {
+        if (isset($this->options->format)) {
+            $orientation = isset($this->options->landscape) && $this->options->landscape ? 'L' : 'P';
+
+            $this->mpdf->_setPageSize(
+                $this->options->format,
+                $orientation
+            );
+
+            return;
+        }
+
+        if (isset($this->options->width) && isset($this->options->height)) {
+            $this->mpdf->_setPageSize(
+                [$this->options->width, $this->options->height],
+                'p'
+            );
+
+            return;
+        }
+    }
+
     private function setMargins(): void
     {
         // TODO: how to set margin_bottom?
@@ -124,17 +147,8 @@ class MpdfRenderer implements RendererContract
         // TODO: replace | with another character
         // TODO: handle page numbering and date here
 
-        $this->mpdf->SetHeader(implode('|', [
-            $this->options->headerLeft,
-            $this->options->headerCenter,
-            $this->options->headerRight,
-        ]));
-
-        $this->mpdf->SetFooter(implode('|', [
-            $this->options->footerLeft,
-            $this->options->footerCenter,
-            $this->options->footerRight,
-        ]));
+        $this->mpdf->SetHeader($this->options->rawHeader);
+        $this->mpdf->SetFooter($this->options->rawFooter);
 
         // $this->mpdf->AliasNbPages();
         // $this->mpdf->SetFooter('{PAGENO}');

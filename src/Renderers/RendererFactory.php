@@ -10,7 +10,7 @@ final class RendererFactory
     // TODO: fix factory => only take driver as input
     public static function make(string $driver): RendererContract
     {
-        $renderer = static::resolveDriver($driver);
+        $renderer = self::resolveDriver($driver);
 
         return new $renderer();
     }

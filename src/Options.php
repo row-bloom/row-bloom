@@ -4,11 +4,10 @@ namespace ElaborateCode\RowBloom;
 
 class Options
 {
-
     /**
      * .
      *
-     * @param array $margins
+     * @param  array  $margins
      * - Like Css number number,number number,number,number,number.
      * - Unit in millimeter
      */

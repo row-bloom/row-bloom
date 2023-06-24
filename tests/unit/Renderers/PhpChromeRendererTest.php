@@ -10,7 +10,7 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 it('renders', function () {
     $saveTo = new File(__DIR__.'/../../temp/foo.pdf');
 
-    $renderer = RendererFactory::make('chromium-pdf');
+    $renderer = RendererFactory::make('*headless chrome');
 
     $css = new Css('p {font-weight: bold;}');
     $interpolatedTemplate = new InterpolatedTemplate([

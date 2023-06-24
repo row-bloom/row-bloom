@@ -159,6 +159,7 @@ class MpdfRenderer implements RendererContract
         $this->mpdf->SetTitle($this->options->metadataTitle);
         $this->mpdf->SetAuthor($this->options->metadataAuthor);
         $this->mpdf->SetSubject($this->options->metadataSubject);
+        $this->mpdf->SetCreator($this->options->metadataCreator);
         $this->mpdf->SetKeywords($this->options->metadataKeywords);
     }
 }

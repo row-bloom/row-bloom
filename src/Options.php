@@ -28,7 +28,7 @@ class Options
         public ?string $width = null,
         public ?string $height = null,
 
-        public array $margins = [16, 15, 16, 15],
+        public array $margins = [16, 15, 16, 15], // TODO: singular
 
         public ?string $metadataTitle = null,
         public ?string $metadataAuthor = null,

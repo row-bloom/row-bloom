@@ -177,22 +177,9 @@ class PhpChromeRenderer implements RendererContract
 
     private function setMargins(): void
     {
-        // TODO: when handling units
-        if (count($this->options->margins) === 1) {
-            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginRight'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginBottom'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginLeft'] = $this->options->margins[0] / 10;
-        } elseif (count($this->options->margins) === 2) {
-            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginRight'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginBottom'] = $this->options->margins[1] / 10;
-            $this->phpChromeOptions['marginLeft'] = $this->options->margins[1] / 10;
-        } elseif (count($this->options->margins) === 4) {
-            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginRight'] = $this->options->margins[1] / 10;
-            $this->phpChromeOptions['marginBottom'] = $this->options->margins[2] / 10;
-            $this->phpChromeOptions['marginLeft'] = $this->options->margins[3] / 10;
-        }
+        $margin = Margin::fromOptions($this->options);
+
+        // in inches
+        $this->phpChromeOptions = $margin->all() + $this->phpChromeOptions;
     }
 }

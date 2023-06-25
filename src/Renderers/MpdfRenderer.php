@@ -127,23 +127,12 @@ class MpdfRenderer implements RendererContract
 
     private function setMargins(): void
     {
-        // TODO: how to set margin_bottom?
-        if (count($this->options->margins) === 1) {
-            $this->mpdf->SetTopMargin($this->options->margins[0]);
-            $this->mpdf->SetRightMargin($this->options->margins[0]);
-            // $this->mpdf->SetBottomMargin($this->options->margins[0]);
-            $this->mpdf->SetLeftMargin($this->options->margins[0]);
-        } elseif (count($this->options->margins) === 2) {
-            $this->mpdf->SetTopMargin($this->options->margins[0]);
-            $this->mpdf->SetRightMargin($this->options->margins[0]);
-            // $this->mpdf->SetBottomMargin($this->options->margins[1]);
-            $this->mpdf->SetLeftMargin($this->options->margins[1]);
-        } elseif (count($this->options->margins) >= 4) {
-            $this->mpdf->SetTopMargin($this->options->margins[0]);
-            $this->mpdf->SetRightMargin($this->options->margins[1]);
-            // $this->mpdf->SetBottomMargin($this->options->margins[2]);
-            $this->mpdf->SetLeftMargin($this->options->margins[3]);
-        }
+        $margin = Margin::fromOptions($this->options);
+
+        $this->mpdf->SetTopMargin($margin->get('marginTop'));
+        $this->mpdf->SetRightMargin($margin->get('marginRight'));
+        // $this->mpdf->SetBottomMargin($margin->get('marginBottom')); // TODO
+        $this->mpdf->SetLeftMargin($margin->get('marginLeft'));
     }
 
     private function setHeaderAndFooter(): void

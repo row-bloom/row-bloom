@@ -34,6 +34,22 @@ class PhpChromeRenderer implements RendererContract
 
     protected Options $options;
 
+    protected array $phpChromeOptions = [
+        // 'landscape'           => true,             // default to false
+        // 'printBackground'     => true,             // default to false
+        // 'displayHeaderFooter' => true,             // default to false
+        // 'preferCSSPageSize'   => true,             // default to false (reads parameters directly from @page)
+        // 'marginTop'           => 0.0,              // defaults to ~0.4 (must be a float, value in inches)
+        // 'marginRight'         => 1.0,              // defaults to ~0.4 (must be a float, value in inches)
+        // 'marginBottom'        => 1.4,              // defaults to ~0.4 (must be a float, value in inches)
+        // 'marginLeft'          => 5.0,              // defaults to ~0.4 (must be a float, value in inches)
+        // 'paperWidth'          => 6.0,              // defaults to 8.5 (must be a float, value in inches)
+        // 'paperHeight'         => 6.0,              // defaults to 11.0 (must be a float, value in inches)
+        // 'headerTemplate'      => '<div>foo</div>', // see details above
+        // 'footerTemplate'      => '<div>foo</div>', // see details above
+        // 'scale'               => 1.2,              // defaults to 1.0 (must be a float)
+    ];
+
     public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): string
     {
         $this->interpolatedTemplate = $interpolatedTemplate;
@@ -43,6 +59,14 @@ class PhpChromeRenderer implements RendererContract
         $this->render();
 
         return $this->rendering;
+    }
+
+    public function save(File $file): bool
+    {
+        return $file->mustBeExtension('pdf')
+            ->startSaving()
+            ->streamFilterAppend('convert.base64-decode')
+            ->save($this->rendering);
     }
 
     protected function render(): static
@@ -55,71 +79,42 @@ class PhpChromeRenderer implements RendererContract
         $page->navigate('data:text/html,'.$this->html())
             ->waitForNavigation();
 
-        $options = [
-            'landscape' => true,             // default to false
-            // 'paperWidth' => 6.0,              // defaults to 8.5 (must be a float, value in inches)
-            // 'paperHeight' => 6.0,              // defaults to 11.0 (must be a float, value in inches)
+        $this->setPageFormat();
+        $this->setMargins();
+        $this->setHeaderAndFooter();
+        $this->phpChromeOptions['displayHeaderFooter'] = $this->options->displayHeaderFooter;
+        $this->phpChromeOptions['printBackground'] = $this->options->printBackground;
+        $this->phpChromeOptions['preferCSSPageSize'] = $this->options->preferCSSPageSize;
 
-            // 'marginTop' => 0.0,              // defaults to ~0.4 (must be a float, value in inches)
-            // 'marginBottom' => 1.4,              // defaults to ~0.4 (must be a float, value in inches)
-            // 'marginLeft' => 1.0,              // defaults to ~0.4 (must be a float, value in inches)
-            // 'marginRight' => 1.0,              // defaults to ~0.4 (must be a float, value in inches)
-
-            'printBackground' => true,             // default to false
-
-            'preferCSSPageSize' => true,             // default to false (reads parameters directly from @page)
-
-            'displayHeaderFooter' => true,             // default to false
-            'headerTemplate' => ''.
-            '<div class="header" style="font-size:10px">'.
-                '<div class="date"></div> '.
-                '<div class="title"></div> '.
-                // '<div class="url"></div> '.
-            '</div>',
-            'footerTemplate' => '
-            <div class="footer" style="font-size:10px">
-                <span class="pageNumber"></span> of <span class="totalPages"></span>
-            </div>',
-
-            'scale' => 1.2,              // defaults to 1.0 (must be a float)
-        ];
-
-        // ! PHP Fatal error:  Uncaught HeadlessChromium\Exception\PdfFailed: Cannot make a PDF. Reason : -32000 - Printing failed in C:\Dev\row-bloom\vendor\chrome-php\chrome\src\PageUtils\PagePdf.php:119
-        // happens when page sizings isn't correct
-
-        // ! style="font-size:10px" needs to be specified on header and footer
-
-        $this->rendering = $page->pdf($options)->getBase64();
+        $this->rendering = $page->pdf($this->phpChromeOptions)->getBase64();
+        // ! PHP Fatal error:  Uncaught HeadlessChromium\Exception\PdfFailed: Cannot make a PDF. Reason : -32000 - Printing failed in vendor\chrome-php\chrome\src\PageUtils\PagePdf.php:119
+        //      happens when page sizings isn't correct (margin left overlaps on margin right ...)
 
         $browser->close();
 
         return $this;
     }
 
-    public function save(File $file): bool
-    {
-        return $file->mustBeExtension('pdf')
-            ->startSaving()
-            ->streamFilterAppend('convert.base64-decode')
-            ->save($this->rendering);
-    }
+    // ============================================================
+    // Html
+    // ============================================================
 
     private function html(): string
     {
         $body = $this->getHtmlBody();
 
         return <<<_HTML
-        <!DOCTYPE html>
-        <head>
-            <style>
-                $this->css
-            </style>
-            <title>Row bloom</title>
-        </head>
-        <body>
-            $body
-        </body>
-        </html>
+            <!DOCTYPE html>
+            <head>
+                <style>
+                    $this->css
+                </style>
+                <title>Row bloom</title>
+            </head>
+            <body>
+                $body
+            </body>
+            </html>
         _HTML;
     }
 
@@ -142,5 +137,62 @@ class PhpChromeRenderer implements RendererContract
         }
 
         return $body;
+    }
+
+    // ============================================================
+    // Options
+    // ============================================================
+
+    private function setPageFormat(): void
+    {
+        if (isset($this->options->format)) {
+            // TODO: format translate to sizes
+
+            $this->phpChromeOptions['paperWidth'] = 6.0;
+            $this->phpChromeOptions['paperHeight'] = 6.0;
+            // invert if landscape
+
+            return;
+        }
+
+        if (isset($this->options->width) && isset($this->options->height)) {
+            $this->phpChromeOptions['paperWidth'] = $this->options->width;
+            $this->phpChromeOptions['paperHeight'] = $this->options->height;
+
+            return;
+        }
+    }
+
+    private function setHeaderAndFooter(): void
+    {
+        // TODO: handle special classes
+        // TODO: handle units
+        // ! style="font-size:10px" needs to be specified on header and footer
+
+        if ($this->options->displayHeaderFooter) {
+            $this->phpChromeOptions['headerTemplate'] = $this->options->rawHeader;
+            $this->phpChromeOptions['footerTemplate'] = $this->options->rawFooter;
+        }
+    }
+
+    private function setMargins(): void
+    {
+        // TODO: when handling units
+        if (count($this->options->margins) === 1) {
+            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
+            $this->phpChromeOptions['marginRight'] = $this->options->margins[0] / 10;
+            $this->phpChromeOptions['marginBottom'] = $this->options->margins[0] / 10;
+            $this->phpChromeOptions['marginLeft'] = $this->options->margins[0] / 10;
+        } elseif (count($this->options->margins) === 2) {
+            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
+            $this->phpChromeOptions['marginRight'] = $this->options->margins[0] / 10;
+            $this->phpChromeOptions['marginBottom'] = $this->options->margins[1] / 10;
+            $this->phpChromeOptions['marginLeft'] = $this->options->margins[1] / 10;
+        } elseif (count($this->options->margins) === 4) {
+            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
+            $this->phpChromeOptions['marginRight'] = $this->options->margins[1] / 10;
+            $this->phpChromeOptions['marginBottom'] = $this->options->margins[2] / 10;
+            $this->phpChromeOptions['marginLeft'] = $this->options->margins[3] / 10;
+        }
     }
 }

@@ -98,6 +98,10 @@ class MpdfRenderer implements RendererContract
         return $body;
     }
 
+    // ============================================================
+    // Options
+    // ============================================================
+
     private function setPageFormat(): void
     {
         if (isset($this->options->format)) {
@@ -147,8 +151,10 @@ class MpdfRenderer implements RendererContract
         // TODO: replace | with another character
         // TODO: handle page numbering and date here
 
-        $this->mpdf->SetHeader($this->options->rawHeader);
-        $this->mpdf->SetFooter($this->options->rawFooter);
+        if ($this->options->displayHeaderFooter) {
+            $this->mpdf->SetHeader($this->options->rawHeader);
+            $this->mpdf->SetFooter($this->options->rawFooter);
+        }
 
         // $this->mpdf->AliasNbPages();
         // $this->mpdf->SetFooter('{PAGENO}');

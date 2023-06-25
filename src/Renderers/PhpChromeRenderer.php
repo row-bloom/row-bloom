@@ -87,8 +87,8 @@ class PhpChromeRenderer implements RendererContract
         $this->phpChromeOptions['preferCSSPageSize'] = $this->options->preferCSSPageSize;
 
         $this->rendering = $page->pdf($this->phpChromeOptions)->getBase64();
-        // ! PHP Fatal error:  Uncaught HeadlessChromium\Exception\PdfFailed: Cannot make a PDF. Reason : -32000 - Printing failed in C:\Dev\row-bloom\vendor\chrome-php\chrome\src\PageUtils\PagePdf.php:119
-        // happens when page sizings isn't correct
+        // ! PHP Fatal error:  Uncaught HeadlessChromium\Exception\PdfFailed: Cannot make a PDF. Reason : -32000 - Printing failed in vendor\chrome-php\chrome\src\PageUtils\PagePdf.php:119
+        //      happens when page sizings isn't correct (margin left overlaps on margin right ...)
 
         $browser->close();
 

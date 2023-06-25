@@ -7,7 +7,7 @@ class Options
     /**
      * .
      *
-     * @param  array  $margins
+     * @param  int[]|string[]  $margins
      * - Like Css number number,number number,number,number,number.
      * - Unit in millimeter
      */
@@ -42,4 +42,6 @@ class Options
         // compression ?
     ) {
     }
+
+    // TODO: margins and size must have units; default to px
 }

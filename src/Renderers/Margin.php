@@ -7,7 +7,7 @@ use Exception;
 
 final class Margin
 {
-    public static $defaultUnit = 'px';
+    private static $defaultUnit = 'px';
 
     private string $unit;
 
@@ -51,9 +51,8 @@ final class Margin
 
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
             $value = $value;
-        } elseif (preg_match('/^\d+(\.\d+)?\s+[[:alpha:]]+$/', $value)) {
-            // TODO: convert
-            $value = $value;
+        } elseif (preg_match('/^(?<val>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
+            $value = UnitManager::convertAbs($parsed['unit'], $this->unit, $parsed['value']);
         } else {
             throw new Exception('Invalid margin');
         }
@@ -71,7 +70,11 @@ final class Margin
         return $this->value;
     }
 
-    // ! relative values cannot be converted
-
-    // TODO: add unit support getIn(), allIn() ... Or add convert()
+    public function allIn(string $to): array
+    {
+        return array_map(
+            fn($v) => UnitManager::convertAbs($this->unit, $to, $v),
+            $this->value
+        );
+    }
 }

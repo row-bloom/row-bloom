@@ -148,8 +148,8 @@ class PhpChromeRenderer implements RendererContract
         if (isset($this->options->format)) {
             // TODO: format translate to sizes
 
-            $this->phpChromeOptions['paperWidth'] = 6.0;
-            $this->phpChromeOptions['paperHeight'] = 6.0;
+            $this->phpChromeOptions['paperWidth'] = 8.5;
+            $this->phpChromeOptions['paperHeight'] = 11.0;
             // invert if landscape
 
             return;

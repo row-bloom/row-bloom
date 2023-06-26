@@ -50,7 +50,6 @@ final class Margin
         $value = trim($value);
 
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
-            $value = $value;
         } elseif (preg_match('/^(?<val>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
             $value = UnitManager::convertAbs($parsed['unit'], $this->unit, $parsed['value']);
         } else {
@@ -73,7 +72,7 @@ final class Margin
     public function allIn(string $to): array
     {
         return array_map(
-            fn($v) => UnitManager::convertAbs($this->unit, $to, $v),
+            fn ($v) => UnitManager::convertAbs($this->unit, $to, $v),
             $this->value
         );
     }

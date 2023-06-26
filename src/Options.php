@@ -24,7 +24,6 @@ class Options
 
         public bool $landscape = false,
         public string $format = 'A4', // takes priority over width or height
-        // check Mpdf\PageFormat::getSizeFromName
         public ?string $width = null,
         public ?string $height = null,
 

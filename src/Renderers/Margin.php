@@ -59,9 +59,18 @@ final class Margin
         $this->value[$key] = (float) $value;
     }
 
-    public function get(string $key): string
+    public function get(string $key): ?float
     {
-        return $this->value[$key] ?? '';
+        return $this->value[$key] ?? null;
+    }
+
+    public function getIn(string $key, string $to): ?float
+    {
+        if (! isset($this->value[$key])) {
+            return null;
+        }
+
+        return UnitManager::convertAbs($this->unit, $to, $this->value[$key]);
     }
 
     public function all(): array

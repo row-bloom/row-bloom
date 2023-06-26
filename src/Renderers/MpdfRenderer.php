@@ -129,10 +129,10 @@ class MpdfRenderer implements RendererContract
     {
         $margin = Margin::fromOptions($this->options);
 
-        $this->mpdf->SetTopMargin($margin->get('marginTop'));
-        $this->mpdf->SetRightMargin($margin->get('marginRight'));
-        // $this->mpdf->SetBottomMargin($margin->get('marginBottom')); // TODO
-        $this->mpdf->SetLeftMargin($margin->get('marginLeft'));
+        $this->mpdf->SetTopMargin($margin->getIn('marginTop', UnitManager::MILLIMETER_UNIT));
+        $this->mpdf->SetRightMargin($margin->getIn('marginRight', UnitManager::MILLIMETER_UNIT));
+        // $this->mpdf->SetBottomMargin($margin->getIn('marginBottom', UnitManager::MILLIMETER_UNIT)); // TODO
+        $this->mpdf->SetLeftMargin($margin->getIn('marginLeft', UnitManager::MILLIMETER_UNIT));
     }
 
     private function setHeaderAndFooter(): void

@@ -11,7 +11,7 @@ final class Margin
 
     private string $unit;
 
-    /** @var float[]|int[] */
+    /** @var (float|int|string)[] */
     private array $value = [];
 
     public static function fromOptions(Options $options, ?string $unit = null)
@@ -32,8 +32,8 @@ final class Margin
             $this->set('marginLeft', $margin[0]);
         } elseif ($count === 2) {
             $this->set('marginTop', $margin[0]);
-            $this->set('marginRight', $margin[0]);
-            $this->set('marginBottom', $margin[1]);
+            $this->set('marginRight', $margin[1]);
+            $this->set('marginBottom', $margin[0]);
             $this->set('marginLeft', $margin[1]);
         } elseif ($count === 4) {
             $this->set('marginTop', $margin[0]);
@@ -45,12 +45,12 @@ final class Margin
         }
     }
 
-    private function set($key, $value): void
+    private function set(string $key, int|float|string $value): void
     {
         $value = trim($value);
 
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
-        } elseif (preg_match('/^(?<val>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
+        } elseif (preg_match('/^(?<value>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
             $value = UnitManager::convertAbs($parsed['unit'], $this->unit, $parsed['value']);
         } else {
             throw new Exception('Invalid margin');
@@ -73,6 +73,7 @@ final class Margin
         return UnitManager::convertAbs($this->unit, $to, $this->value[$key]);
     }
 
+    // TODO: rename this to allRaw()? all() returns string of "<val> <unit>"
     public function all(): array
     {
         return $this->value;

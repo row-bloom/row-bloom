@@ -7,11 +7,16 @@ use Exception;
 final class UnitManager
 {
     const PIXEL_UNIT = 'px';
+
     const CENTIMETER_UNIT = 'cm';
+
     const MILLIMETER_UNIT = 'mm';
+
     const INCH_UNIT = 'in';
+
     const POINT_UNIT = 'pt';
-    const PICA_UNIT = 'pt';
+
+    const PICA_UNIT = 'pc';
 
     private static $instance;
 
@@ -83,7 +88,7 @@ final class UnitManager
         $from = strtolower(trim($from));
         $to = strtolower(trim($to));
 
-        if($to === $from) {
+        if ($to === $from) {
             return $value;
         }
 

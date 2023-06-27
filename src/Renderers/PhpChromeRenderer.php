@@ -146,7 +146,7 @@ class PhpChromeRenderer implements RendererContract
     private function setPageFormat(): void
     {
         if (isset($this->options->format)) {
-            $size = PageSize::getIn($this->options->format, UnitManager::INCH_UNIT);
+            $size = Paper::getIn($this->options->format, UnitManager::INCH_UNIT);
 
             $this->phpChromeOptions['paperWidth'] = $this->options->landscape ? $size[1] : $size[0];
             $this->phpChromeOptions['paperHeight'] = $this->options->landscape ? $size[0] : $size[1];

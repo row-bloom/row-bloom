@@ -18,12 +18,10 @@ final class UnitManager
 
     const PICA_UNIT = 'pc';
 
-    private static $instance;
-
     /**
      * @var (int|float)[][] Absolute units only
      */
-    private array $ratiosTable = [
+    private const RATIOS_TABLE = [
         'px' => [
             'cm' => 0.02646,
             'mm' => 0.2646,
@@ -68,23 +66,8 @@ final class UnitManager
         ],
     ];
 
-    private function __construct()
-    {
-    }
-
-    public static function getInstance(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
     public static function convertAbs(string $from, string $to, float $value): float
     {
-        $instance = self::getInstance();
-
         $from = strtolower(trim($from));
         $to = strtolower(trim($to));
 
@@ -92,11 +75,11 @@ final class UnitManager
             return $value;
         }
 
-        if (! isset($instance->ratiosTable[$from]) || ! isset($instance->ratiosTable[$from][$to])) {
+        if (! isset(self::RATIOS_TABLE[$from]) || ! isset(self::RATIOS_TABLE[$from][$to])) {
             throw new Exception("Invalid conversion from {$from} to {$to}");
         }
 
-        return $value * $instance->ratiosTable[$from][$to];
+        return $value * self::RATIOS_TABLE[$from][$to];
     }
 
     /**

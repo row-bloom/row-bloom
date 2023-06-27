@@ -4,8 +4,10 @@ namespace ElaborateCode\RowBloom\Renderers\Sizing;
 
 use Exception;
 
-// ? turn to data object
-class Paper
+/**
+ * Sizes in mm
+ */
+final class Paper
 {
     public const FORMAT_4A0 = [1682, 2378];
 

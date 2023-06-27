@@ -7,7 +7,7 @@ use Exception;
 
 final class Margin
 {
-    private static $defaultUnit = 'px';
+    private static string $defaultUnit = 'px';
 
     private string $unit;
 
@@ -19,9 +19,15 @@ final class Margin
         return new self($options->margins, $unit);
     }
 
-    public function __construct(array $margin, ?string $unit = null)
+    public function __construct(array|string $margin, ?string $unit = null)
     {
         $this->unit = $unit ?? self::$defaultUnit;
+
+        $margin = is_string($margin) ? preg_split('/\s/', $margin) : $margin;
+
+        if ($margin === false) {
+            throw new Exception('Invalid margin');
+        }
 
         $count = count($margin);
 

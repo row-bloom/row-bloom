@@ -5,6 +5,9 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
+use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
+use ElaborateCode\RowBloom\Renderers\Sizing\Paper;
+use ElaborateCode\RowBloom\Renderers\Sizing\UnitManager;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use HeadlessChromium\BrowserFactory;
@@ -155,6 +158,7 @@ class PhpChromeRenderer implements RendererContract
         }
 
         if (isset($this->options->width) && isset($this->options->height)) {
+            // todo handle units
             $this->phpChromeOptions['paperWidth'] = $this->options->width;
             $this->phpChromeOptions['paperHeight'] = $this->options->height;
 

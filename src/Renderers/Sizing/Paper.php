@@ -1,6 +1,6 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Renderers;
+namespace ElaborateCode\RowBloom\Renderers\Sizing;
 
 use Exception;
 

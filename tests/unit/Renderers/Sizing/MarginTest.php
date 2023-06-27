@@ -1,7 +1,7 @@
 <?php
 
-use ElaborateCode\RowBloom\Renderers\Margin;
-use ElaborateCode\RowBloom\Renderers\UnitManager;
+use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
+use ElaborateCode\RowBloom\Renderers\Sizing\UnitManager;
 
 it('constructs', function (array|string $input, array $expected, string $unit = UnitManager::PIXEL_UNIT) {
     $margin = new Margin($input, $unit);

@@ -68,22 +68,45 @@ final class Margin
         $this->value[$key] = $value;
     }
 
-    public function get(string $key): ?float
+    // ============================================================
+    // Getters
+    // ============================================================
+    // TODO: use a formatter class (Length collection?)
+
+    public function get(string $key): ?Length
     {
-        return $this->value[$key]->value() ?? null;
+        return $this->value[$key] ?? null;
     }
 
-    public function getIn(string $key, string $to): ?float
+    public function getIn(string $key, string $to): ?Length
     {
-        if (! isset($this->value[$key])) {
-            return null;
-        }
-
-        return $this->value[$key]->convert($to)->value();
+        return $this->get($key)?->convert($to);
     }
 
-    // TODO: rename this to allRaw()? all() returns string of "<val> <unit>"
+    public function getRaw(string $key): ?float
+    {
+        return $this->get($key)?->value();
+    }
+
+    public function getRawIn(string $key, string $to): ?float
+    {
+        return $this->get($key)?->convert($to)->value();
+    }
+
     public function all(): array
+    {
+        return $this->value;
+    }
+
+    public function allIn(string $to): array
+    {
+        return array_map(
+            fn (Length $v) => $v->convert($to),
+            $this->value
+        );
+    }
+
+    public function allRaw(): array
     {
         return array_map(
             fn (Length $v) => $v->value(),
@@ -91,7 +114,7 @@ final class Margin
         );
     }
 
-    public function allIn(string $to): array
+    public function allRawIn(string $to): array
     {
         return array_map(
             fn (Length $v) => $v->convert($to)->value(),

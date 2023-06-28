@@ -6,7 +6,7 @@ use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 it('constructs', function (array|string $input, array $expected, string $unit = Length::PIXEL_UNIT) {
     $margin = new Margin($input, $unit);
 
-    expect($margin->all())->toEqual($expected);
+    expect($margin->allRaw())->toEqual($expected);
 })->with([
     'Single value' => [
         'input' => '5',
@@ -50,7 +50,7 @@ it('constructs', function (array|string $input, array $expected, string $unit = 
 it('constructs mixed units', function (array $input, array $expected, string $unit = Length::PIXEL_UNIT) {
     $margin = new Margin($input, $unit);
 
-    expect($margin->all())->toEqual($expected);
+    expect($margin->allRaw())->toEqual($expected);
 })->with([
     'cm,in,pt,pc' => [
         'input' => ['1 cm', '1 in', '1 pt', '1 pc'],
@@ -66,7 +66,7 @@ it('constructs mixed units', function (array $input, array $expected, string $un
 it('converts', function (array $input, array $expected, string $unit, string $outputUnit) {
     $margin = new Margin($input, $unit);
 
-    expect($margin->allIn($outputUnit))->toEqual($expected);
+    expect($margin->allRawIn($outputUnit))->toEqual($expected);
 })->with([
     'pc -> pc' => [
         'input' => [1],

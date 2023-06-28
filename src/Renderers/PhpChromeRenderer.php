@@ -166,7 +166,7 @@ class PhpChromeRenderer implements RendererContract
     private function setMargins(): void
     {
         $this->phpChromeOptions =
-            Margin::fromOptions($this->options, Length::INCH_UNIT)->all() +
+            Margin::fromOptions($this->options, Length::INCH_UNIT)->allRaw() +
             $this->phpChromeOptions;
     }
 }

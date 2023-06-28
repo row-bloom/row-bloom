@@ -119,9 +119,9 @@ class MpdfRenderer implements RendererContract
         $margin = Margin::fromOptions($this->options, Length::MILLIMETER_UNIT);
 
         $this->mpdf->SetMargins(
-            $margin->get('marginLeft'),
-            $margin->get('marginRight'),
-            $margin->get('marginTop')
+            $margin->getRaw('marginLeft'),
+            $margin->getRaw('marginRight'),
+            $margin->getRaw('marginTop')
             // TODO: bottom ?
         );
     }

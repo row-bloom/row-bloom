@@ -15,7 +15,7 @@ it('renders using Twig and HtmlRenderer', function (RowBloom $r) {
         ->toBeString()->toContain('ilies', 'mohamed');
 })->with([
     'basic' => new RowBloom,
-    'twig' => (new RowBloom)->setInterpolator('twig'),
-    'html' => (new RowBloom)->setRenderer('html'),
+    'twig' => (new RowBloom)->setInterpolator('*twig'),
+    'html' => (new RowBloom)->setRenderer('*html'),
     'HtmlRenderer instance' => (new RowBloom)->setRenderer(new HtmlRenderer),
 ]);

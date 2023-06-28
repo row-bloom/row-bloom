@@ -10,7 +10,7 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 it('renders and saves', function () {
     $saveTo = new File(__DIR__.'/../../temp/foo.html');
 
-    $renderer = RendererFactory::make('html');
+    $renderer = RendererFactory::make('*html');
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 

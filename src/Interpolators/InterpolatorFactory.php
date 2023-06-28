@@ -7,7 +7,7 @@ use Exception;
 
 class InterpolatorFactory
 {
-    public static $defaultDriver = 'twig';
+    public static $defaultDriver = '*twig';
 
     public static function make(?string $driver = null): InterpolatorContract
     {
@@ -29,7 +29,7 @@ class InterpolatorFactory
     private static function resolveDriver(string $driver): ?string
     {
         return match ($driver) {
-            'twig' => TwigInterpolator::class,
+            '*twig' => TwigInterpolator::class,
             default => null,
         };
     }

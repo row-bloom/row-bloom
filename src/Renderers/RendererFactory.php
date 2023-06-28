@@ -7,7 +7,7 @@ use Exception;
 
 final class RendererFactory
 {
-    public static $defaultDriver = 'html';
+    public static $defaultDriver = '*html';
 
     public static function make(?string $driver = null): RendererContract
     {
@@ -29,7 +29,7 @@ final class RendererFactory
     private static function resolveDriver(string $driver): ?string
     {
         return match ($driver) {
-            'html' => HtmlRenderer::class,
+            '*html' => HtmlRenderer::class,
             '*php chrome' => PhpChromeRenderer::class,
             '*mpdf' => MpdfRenderer::class,
             // ? tcpdf

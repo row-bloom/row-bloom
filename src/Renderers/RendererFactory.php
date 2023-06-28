@@ -19,9 +19,9 @@ final class RendererFactory
     {
         return match ($driver) {
             'html' => HtmlRenderer::class,
-            '*headless chrome' => PhpChromeRenderer::class,
+            '*php chrome' => PhpChromeRenderer::class,
             '*mpdf' => MpdfRenderer::class,
-            // TODO: tcpdf
+            // ? tcpdf
             default => throw new Exception("Unrecognized rendering driver {$driver}"),
         };
     }

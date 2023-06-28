@@ -9,18 +9,22 @@ class Options
     /**
      * .
      *
+     * **Default unit** for `$margin`, `$width`, and `$height` is millimeter (mm)
+     *
      * @param  (float|int|string)[]|string  $margins
-     * - Like Css number number,number number,number,number,number.
-     * - Unit in millimeter
+     * - Format like CSS (number)|(number number)|(number number number number).
+     * - Only string types support adding unit, numerical types fallback to *default unit*.
+     *
      * @param  ?PaperFormat  $format
      * - Takes precedence over `$width` and `$height`
      * - Affected by `$landscape`
+     * - If no size indicator is given, A4 paper format will be used.
      */
     public function __construct(
-        public bool $displayHeaderFooter = false,
-        // * special classes: date, url, title, pageNumber, totalPages
+        public bool $displayHeaderFooter = true,
         public ?string $rawHeader = null,
         public ?string $rawFooter = null,
+        // * special classes: date, url, title, pageNumber, totalPages
 
         public bool $printBackground = false,
         public bool $preferCSSPageSize = false,
@@ -28,7 +32,7 @@ class Options
         public ?int $perPage = null,
 
         public bool $landscape = false,
-        public ?PaperFormat $format = null, // takes priority over width or height
+        public ?PaperFormat $format = null,
         public ?string $width = null,
         public ?string $height = null,
 
@@ -57,8 +61,6 @@ class Options
         }
 
         if (isset($this->width) && isset($this->height)) {
-            // todo handle units
-            // !default is mm?
             return [$this->width, $this->height];
         }
 

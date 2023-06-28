@@ -82,7 +82,7 @@ class PhpChromeRenderer implements RendererContract
             ->waitForNavigation();
 
         $this->setPageFormat();
-        $this->setMargins();
+        $this->setMargin();
         $this->setHeaderAndFooter();
         $this->phpChromeOptions['displayHeaderFooter'] = $this->options->displayHeaderFooter;
         $this->phpChromeOptions['printBackground'] = $this->options->printBackground;
@@ -161,7 +161,7 @@ class PhpChromeRenderer implements RendererContract
         }
     }
 
-    private function setMargins(): void
+    private function setMargin(): void
     {
         $this->phpChromeOptions =
             Margin::fromOptions($this->options, LengthUnit::INCH_UNIT)->allRaw() +

@@ -63,7 +63,7 @@ class MpdfRenderer implements RendererContract
     private function render(): static
     {
         $this->setPageFormat();
-        $this->setMargins();
+        $this->setMargin();
         $this->setHeaderAndFooter();
         $this->setMetadata();
 
@@ -114,7 +114,7 @@ class MpdfRenderer implements RendererContract
         $this->mpdf->_setPageSize($size, $orientation);
     }
 
-    private function setMargins(): void
+    private function setMargin(): void
     {
         $margin = Margin::fromOptions($this->options, LengthUnit::MILLIMETER_UNIT);
 

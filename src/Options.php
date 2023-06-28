@@ -12,7 +12,7 @@ class Options
      *
      * **Default unit** for `$margin`, `$width`, and `$height` is millimeter (mm)
      *
-     * @param  (float|int|string)[]|string  $margins
+     * @param  (float|int|string)[]|string  $margin
      * - Format like CSS (all_sides)|(top_bottom right_left)|(top right_left bottom)|(number number number number).
      * - Only string types support adding unit, numerical types fallback to *default unit*.
      * @param  ?PaperFormat  $format
@@ -37,7 +37,7 @@ class Options
         public ?string $height = null,
 
         // ! same value does not give same rendering on different drivers
-        public array|string $margins = '1 in', // TODO: singular
+        public array|string $margin = '1 in',
 
         public ?string $metadataTitle = null,
         public ?string $metadataAuthor = null,

@@ -16,7 +16,7 @@ final class Margin
 
     public static function fromOptions(Options $options, ?LengthUnit $unit = null)
     {
-        return new self($options->margins, $unit);
+        return new self($options->margin, $unit);
     }
 
     public function __construct(array|string $margin, ?LengthUnit $unit = null)

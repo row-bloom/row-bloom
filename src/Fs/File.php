@@ -2,13 +2,15 @@
 
 namespace ElaborateCode\RowBloom\Fs;
 
-class File
+use Stringable;
+
+class File implements Stringable
 {
-    protected string $path;
+    private string $path;
 
     public static function fromPath(string $path, bool $real = false): static
     {
-        return new static($path);
+        return new static($path, $real);
     }
 
     final public function __construct(string $path, bool $real = false)
@@ -27,6 +29,15 @@ class File
 
         $this->path = $realPath;
     }
+
+    public function __toString(): string
+    {
+        return $this->path;
+    }
+
+    // ============================================================
+    // IO
+    // ============================================================
 
     public function readFileContent(): ?string
     {
@@ -60,7 +71,11 @@ class File
         return new WriteStream(fopen($this->path, 'w'));
     }
 
-    // delete
+    // TODO: delete()
+
+    // ============================================================
+    //
+    // ============================================================
 
     public function exists(): bool
     {
@@ -101,6 +116,10 @@ class File
     {
         return touch($this->path);
     }
+
+    // ============================================================
+    // Must be...
+    // ============================================================
 
     public function mustExist(): static
     {

@@ -82,7 +82,7 @@ class RowBloom
         }
 
         if (! is_null($this->templatePath)) {
-            $file = new File($this->templatePath);
+            $file = File::fromPath($this->templatePath);
             $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
 
             return new Template($file->readFileContent());
@@ -100,7 +100,7 @@ class RowBloom
         $finalCss = new Css('');
 
         foreach ($this->cssPaths as $cssPath) {
-            $cssFile = new File($cssPath);
+            $cssFile = File::fromPath($cssPath);
             $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
 
             $finalCss->append($cssFile->readFileContent());

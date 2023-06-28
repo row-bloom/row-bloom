@@ -8,7 +8,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders and saves', function () {
-    $saveTo = new File(__DIR__.'/../../temp/foo.html');
+    $saveTo = File::fromPath(__DIR__.'/../../temp/foo.html');
 
     $renderer = RendererFactory::make('*html');
 

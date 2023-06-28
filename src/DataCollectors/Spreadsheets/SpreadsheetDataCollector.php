@@ -3,6 +3,7 @@
 namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
 
 use ElaborateCode\RowBloom\DataCollectorContract;
+use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Types\Table;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -10,7 +11,9 @@ class SpreadsheetDataCollector implements DataCollectorContract
 {
     public function getTable(string $path): Table
     {
-        // TODO: wrap path and validate
+        // XLSX, XLS, XML, ODS, SLK, GNUMERIC, HTML, CSV
+        $path = File::fromPath($path)
+            ->mustExist()->mustBeReadable();
 
         // TODO Support composition behavior for folders
 
@@ -35,12 +38,3 @@ class SpreadsheetDataCollector implements DataCollectorContract
         return Table::fromArray($data);
     }
 }
-
-// READER_XLSX
-// READER_XLS
-// READER_XML
-// READER_ODS
-// READER_SLK
-// READER_GNUMERIC
-// READER_HTML
-// READER_CSV

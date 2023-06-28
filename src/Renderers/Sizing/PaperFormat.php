@@ -76,7 +76,7 @@ enum PaperFormat: string
         ];
     }
 
-    // TODO: pxSizes ...
+    // ? pxSizes ...
 
     public function mmSize(): array
     {

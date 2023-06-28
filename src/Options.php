@@ -2,20 +2,29 @@
 
 namespace ElaborateCode\RowBloom;
 
+use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
+use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
+
 class Options
 {
     /**
      * .
      *
-     * @param  int[]|string[]  $margins
-     * - Like Css number number,number number,number,number,number.
-     * - Unit in millimeter
+     * **Default unit** for `$margin`, `$width`, and `$height` is millimeter (mm)
+     *
+     * @param  (float|int|string)[]|string  $margins
+     * - Format like CSS (all_sides)|(top_bottom right_left)|(top right_left bottom)|(number number number number).
+     * - Only string types support adding unit, numerical types fallback to *default unit*.
+     * @param  ?PaperFormat  $format
+     * - Takes precedence over `$width` and `$height`
+     * - Affected by `$landscape`
+     * - If no size indicator is given, A4 paper format will be used.
      */
     public function __construct(
-        public bool $displayHeaderFooter = false,
-        // * special classes: date, url, title, pageNumber, totalPages
+        public bool $displayHeaderFooter = true,
         public ?string $rawHeader = null,
         public ?string $rawFooter = null,
+        // TODO: handle special classes: date, url, title, pageNumber, totalPages [, header, footer]
 
         public bool $printBackground = false,
         public bool $preferCSSPageSize = false,
@@ -23,12 +32,12 @@ class Options
         public ?int $perPage = null,
 
         public bool $landscape = false,
-        public string $format = 'A4', // takes priority over width or height
-        // check Mpdf\PageFormat::getSizeFromName
+        public ?PaperFormat $format = null,
         public ?string $width = null,
         public ?string $height = null,
 
-        public array $margins = [16, 15, 16, 15],
+        // ! same value does not give same rendering on different drivers
+        public array|string $margins = '1 in', // TODO: singular
 
         public ?string $metadataTitle = null,
         public ?string $metadataAuthor = null,
@@ -43,5 +52,20 @@ class Options
     ) {
     }
 
-    // TODO: margins and size must have units; default to px
+    public function resolvePaperSize(LengthUnit $unit)
+    {
+        if (isset($this->format)) {
+            $size = $this->format->size($unit);
+
+            return $this->landscape ? [$size[1], $size[0]] : $size;
+        }
+
+        if (isset($this->width) && isset($this->height)) {
+            return [$this->width, $this->height];
+        }
+
+        $size = PaperFormat::FORMAT_A4->size($unit);
+
+        return $this->landscape ? [$size[1], $size[0]] : $size;
+    }
 }

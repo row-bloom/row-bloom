@@ -5,6 +5,8 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
+use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
+use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use Mpdf\HTMLParserMode;
@@ -60,7 +62,6 @@ class MpdfRenderer implements RendererContract
 
     private function render(): static
     {
-
         $this->setPageFormat();
         $this->setMargins();
         $this->setHeaderAndFooter();
@@ -72,10 +73,13 @@ class MpdfRenderer implements RendererContract
         $this->mpdf->WriteHTML($this->css, HTMLParserMode::HEADER_CSS);
 
         $this->rendering = base64_encode($this->mpdf->OutputBinaryData());
-        // ...
 
         return $this;
     }
+
+    // ============================================================
+    // Html
+    // ============================================================
 
     private function getHtmlBody(): string
     {
@@ -104,60 +108,32 @@ class MpdfRenderer implements RendererContract
 
     private function setPageFormat(): void
     {
-        if (isset($this->options->format)) {
-            $orientation = isset($this->options->landscape) && $this->options->landscape ? 'L' : 'P';
+        $size = $this->options->resolvePaperSize(LengthUnit::MILLIMETER_UNIT);
+        $orientation = 'p';
 
-            $this->mpdf->_setPageSize(
-                $this->options->format,
-                $orientation
-            );
-
-            return;
-        }
-
-        if (isset($this->options->width) && isset($this->options->height)) {
-            $this->mpdf->_setPageSize(
-                [$this->options->width, $this->options->height],
-                'p'
-            );
-
-            return;
-        }
+        $this->mpdf->_setPageSize($size, $orientation);
     }
 
     private function setMargins(): void
     {
-        // TODO: how to set margin_bottom?
-        if (count($this->options->margins) === 1) {
-            $this->mpdf->SetTopMargin($this->options->margins[0]);
-            $this->mpdf->SetRightMargin($this->options->margins[0]);
-            // $this->mpdf->SetBottomMargin($this->options->margins[0]);
-            $this->mpdf->SetLeftMargin($this->options->margins[0]);
-        } elseif (count($this->options->margins) === 2) {
-            $this->mpdf->SetTopMargin($this->options->margins[0]);
-            $this->mpdf->SetRightMargin($this->options->margins[0]);
-            // $this->mpdf->SetBottomMargin($this->options->margins[1]);
-            $this->mpdf->SetLeftMargin($this->options->margins[1]);
-        } elseif (count($this->options->margins) >= 4) {
-            $this->mpdf->SetTopMargin($this->options->margins[0]);
-            $this->mpdf->SetRightMargin($this->options->margins[1]);
-            // $this->mpdf->SetBottomMargin($this->options->margins[2]);
-            $this->mpdf->SetLeftMargin($this->options->margins[3]);
-        }
+        $margin = Margin::fromOptions($this->options, LengthUnit::MILLIMETER_UNIT);
+
+        $this->mpdf->SetMargins(
+            $margin->getRaw('marginLeft'),
+            $margin->getRaw('marginRight'),
+            $margin->getRaw('marginTop')
+            // TODO: bottom ?
+        );
     }
 
     private function setHeaderAndFooter(): void
     {
         // TODO: replace | with another character
-        // TODO: handle page numbering and date here
 
         if ($this->options->displayHeaderFooter) {
             $this->mpdf->SetHeader($this->options->rawHeader);
             $this->mpdf->SetFooter($this->options->rawFooter);
         }
-
-        // $this->mpdf->AliasNbPages();
-        // $this->mpdf->SetFooter('{PAGENO}');
     }
 
     private function setMetadata(): void

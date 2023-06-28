@@ -5,6 +5,8 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
+use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
+use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use HeadlessChromium\BrowserFactory;
@@ -145,54 +147,24 @@ class PhpChromeRenderer implements RendererContract
 
     private function setPageFormat(): void
     {
-        if (isset($this->options->format)) {
-            // TODO: format translate to sizes
-
-            $this->phpChromeOptions['paperWidth'] = 6.0;
-            $this->phpChromeOptions['paperHeight'] = 6.0;
-            // invert if landscape
-
-            return;
-        }
-
-        if (isset($this->options->width) && isset($this->options->height)) {
-            $this->phpChromeOptions['paperWidth'] = $this->options->width;
-            $this->phpChromeOptions['paperHeight'] = $this->options->height;
-
-            return;
-        }
+        [$this->phpChromeOptions['paperWidth'], $this->phpChromeOptions['paperHeight']]
+            = $this->options->resolvePaperSize(LengthUnit::INCH_UNIT);
     }
 
     private function setHeaderAndFooter(): void
     {
-        // TODO: handle special classes
-        // TODO: handle units
         // ! style="font-size:10px" needs to be specified on header and footer
 
         if ($this->options->displayHeaderFooter) {
-            $this->phpChromeOptions['headerTemplate'] = $this->options->rawHeader;
-            $this->phpChromeOptions['footerTemplate'] = $this->options->rawFooter;
+            $this->phpChromeOptions['headerTemplate'] = $this->options->rawHeader ?? '';
+            $this->phpChromeOptions['footerTemplate'] = $this->options->rawFooter ?? '';
         }
     }
 
     private function setMargins(): void
     {
-        // TODO: when handling units
-        if (count($this->options->margins) === 1) {
-            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginRight'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginBottom'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginLeft'] = $this->options->margins[0] / 10;
-        } elseif (count($this->options->margins) === 2) {
-            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginRight'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginBottom'] = $this->options->margins[1] / 10;
-            $this->phpChromeOptions['marginLeft'] = $this->options->margins[1] / 10;
-        } elseif (count($this->options->margins) === 4) {
-            $this->phpChromeOptions['marginTop'] = $this->options->margins[0] / 10;
-            $this->phpChromeOptions['marginRight'] = $this->options->margins[1] / 10;
-            $this->phpChromeOptions['marginBottom'] = $this->options->margins[2] / 10;
-            $this->phpChromeOptions['marginLeft'] = $this->options->margins[3] / 10;
-        }
+        $this->phpChromeOptions =
+            Margin::fromOptions($this->options, LengthUnit::INCH_UNIT)->allRaw() +
+            $this->phpChromeOptions;
     }
 }

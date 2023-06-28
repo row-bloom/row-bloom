@@ -20,7 +20,7 @@ it('renders', function () {
     expect($renderer)->toBeInstanceOf(PhpChromeRenderer::class);
 
     // ? more assertions
-    expect($renderer->getRendering($interpolatedTemplate, $css, new Options))->toBeString();
+    expect($renderer->render($interpolatedTemplate, $css, new Options)->get())->toBeString();
 
     // TODO: stop testing with IO
     expect($renderer->save($saveTo))->toBeTrue();

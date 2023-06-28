@@ -14,11 +14,13 @@ it('renders', function () {
 
     expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
 
-    expect($renderer->getRendering(
-        new InterpolatedTemplate([
-            '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
-        ]),
-        new Css('p {font-weight: bold;}'),
-        new Options
-    ))->toBeString();
+    expect(
+        $renderer->render(
+            new InterpolatedTemplate([
+                '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
+            ]),
+            new Css('p {font-weight: bold;}'),
+            new Options
+        )->get()
+    )->toBeString();
 });

@@ -18,8 +18,24 @@ class HtmlRenderer implements RendererContract
 
     protected Options $options;
 
-    protected function render(): static
+    public function get(): string
     {
+        return $this->rendering;
+    }
+
+    public function save(File $file): bool
+    {
+        return $file->mustBeExtension('html')
+            ->startSaving()
+            ->save($this->rendering);
+    }
+
+    public function render(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): static
+    {
+        $this->interpolatedTemplate = $interpolatedTemplate;
+        $this->css = $css;
+        $this->options = $options;
+
         $body = '';
         if (! is_null($this->options->perPage)) {
             foreach ($this->interpolatedTemplate->toArray() as $i => $t) {
@@ -45,23 +61,5 @@ class HtmlRenderer implements RendererContract
             .'</html>';
 
         return $this;
-    }
-
-    public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): string
-    {
-        $this->interpolatedTemplate = $interpolatedTemplate;
-        $this->css = $css;
-        $this->options = $options;
-
-        $this->render();
-
-        return $this->rendering;
-    }
-
-    public function save(File $file): bool
-    {
-        return $file->mustBeExtension('html')
-            ->startSaving()
-            ->save($this->rendering);
     }
 }

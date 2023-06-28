@@ -11,7 +11,7 @@ it('renders using Twig and HtmlRenderer', function (RowBloom $r) {
     $template = new Template('<h1>hey {{ name }}</h1>');
     $table = Table::fromArray([['name' => 'mohamed'], ['name' => 'ilies']]);
 
-    expect($r->addCss($css)->setTemplate($template)->addTable($table)->render())
+    expect($r->addCss($css)->setTemplate($template)->addTable($table)->get())
         ->toBeString()->toContain('ilies', 'mohamed');
 })->with([
     'basic' => new RowBloom,

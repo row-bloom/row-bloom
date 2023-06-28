@@ -46,7 +46,7 @@ class RowBloom
 
     // TODO: save()
 
-    public function render()
+    public function get()
     {
         // TODO: user instance -> set driver -> default driver (I don't remember what I meant)
         $interpolator = $this->resolveInterpolator();
@@ -58,7 +58,7 @@ class RowBloom
 
         $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable);
 
-        return $renderer->getRendering($interpolatedTemplate, $finalCss, $this->options);
+        return $renderer->render($interpolatedTemplate, $finalCss, $this->options)->get();
     }
 
     protected function mergeTables(): Table

@@ -41,14 +41,8 @@ class MpdfRenderer implements RendererContract
         $this->mpdf = new Mpdf;
     }
 
-    public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): string
+    public function get(): string
     {
-        $this->interpolatedTemplate = $interpolatedTemplate;
-        $this->css = $css;
-        $this->options = $options;
-
-        $this->render();
-
         return $this->rendering;
     }
 
@@ -60,8 +54,12 @@ class MpdfRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    private function render(): static
+    public function render(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): static
     {
+        $this->interpolatedTemplate = $interpolatedTemplate;
+        $this->css = $css;
+        $this->options = $options;
+
         $this->setPageFormat();
         $this->setMargin();
         $this->setHeaderAndFooter();

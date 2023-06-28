@@ -15,13 +15,15 @@ it('renders and saves', function () {
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 
     // ? more assertions
-    expect($renderer->getRendering(
-        new InterpolatedTemplate([
-            '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
-        ]),
-        new Css('p {font-weight: bold;}'),
-        new Options
-    ))->toBeString();
+    expect(
+        $renderer->render(
+            new InterpolatedTemplate([
+                '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',
+            ]),
+            new Css('p {font-weight: bold;}'),
+            new Options
+        )->get()
+    )->toBeString();
 
     expect($renderer->save($saveTo))->toBeTrue();
 });

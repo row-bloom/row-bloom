@@ -52,14 +52,8 @@ class PhpChromeRenderer implements RendererContract
         // 'scale'               => 1.2,              // defaults to 1.0 (must be a float)
     ];
 
-    public function getRendering(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): string
+    public function get(): string
     {
-        $this->interpolatedTemplate = $interpolatedTemplate;
-        $this->css = $css;
-        $this->options = $options;
-
-        $this->render();
-
         return $this->rendering;
     }
 
@@ -71,8 +65,12 @@ class PhpChromeRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    protected function render(): static
+    public function render(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): static
     {
+        $this->interpolatedTemplate = $interpolatedTemplate;
+        $this->css = $css;
+        $this->options = $options;
+
         $browserFactory = new BrowserFactory();
         // Start a new browser and create a new page
         $browser = $browserFactory->createBrowser();

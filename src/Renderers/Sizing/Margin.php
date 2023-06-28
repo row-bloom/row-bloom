@@ -11,7 +11,7 @@ final class Margin
 
     private string $unit;
 
-    /** @var (float|int|string)[] */
+    /** @var Length[] */
     private array $value = [];
 
     public static function fromOptions(Options $options, ?string $unit = null)
@@ -58,19 +58,19 @@ final class Margin
         $value = trim($value);
 
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
+            $value = Length::fromNumber($value, $this->unit);
         } elseif (preg_match('/^(?<value>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
-            $value = (new Length($parsed['value'], $parsed['unit']))
-                ->convert($this->unit)->value();
+            $value = Length::fromNumber($parsed['value'], $parsed['unit'])->convert($this->unit);
         } else {
             throw new Exception('Invalid margin');
         }
 
-        $this->value[$key] = (float) $value;
+        $this->value[$key] = $value;
     }
 
     public function get(string $key): ?float
     {
-        return $this->value[$key] ?? null;
+        return $this->value[$key]->value() ?? null;
     }
 
     public function getIn(string $key, string $to): ?float
@@ -79,20 +79,22 @@ final class Margin
             return null;
         }
 
-        return (new Length($this->value[$key], $to))
-            ->convert($this->unit)->value();
+        return $this->value[$key]->convert($to)->value();
     }
 
     // TODO: rename this to allRaw()? all() returns string of "<val> <unit>"
     public function all(): array
     {
-        return $this->value;
+        return array_map(
+            fn (Length $v) => $v->value(),
+            $this->value
+        );
     }
 
     public function allIn(string $to): array
     {
         return array_map(
-            fn ($v) => (new Length($v, $this->unit))->convert($to)->value(),
+            fn (Length $v) => $v->convert($to)->value(),
             $this->value
         );
     }

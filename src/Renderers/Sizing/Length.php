@@ -87,7 +87,11 @@ final class Length
     private float $value;
 
     // public static function fromString(){}
-    // public static function fromNumber(){}
+
+    public static function fromNumber(float|int|string $value, string $unit): self
+    {
+        return new self($value, $unit);
+    }
 
     public function __construct(float|int|string $value, private string $unit)
     {

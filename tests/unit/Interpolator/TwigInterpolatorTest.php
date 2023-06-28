@@ -5,7 +5,7 @@ use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use ElaborateCode\RowBloom\Types\Table;
 use ElaborateCode\RowBloom\Types\Template;
 
-it('interpolates', function () {
+it('default interpolator', function () {
     $data = [
         ['title' => 'lorem', 'content' => 'Lorem ipsum delorme'],
         ['title' => 'FOO', 'content' => 'Bar baz'],
@@ -19,7 +19,7 @@ it('interpolates', function () {
     ]);
 
     expect(
-        InterpolatorFactory::make('')
+        InterpolatorFactory::make()
             ->interpolate(new Template($template), Table::fromArray($data))
     )->toEqual($expected);
 });

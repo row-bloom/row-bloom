@@ -48,7 +48,6 @@ class RowBloom
 
     public function get()
     {
-        // TODO: user instance -> set driver -> default driver (I don't remember what I meant)
         $interpolator = $this->resolveInterpolator();
         $renderer = $this->resolveRenderer();
 
@@ -188,11 +187,10 @@ class RowBloom
     protected function resolveInterpolator(): InterpolatorContract
     {
         if (! isset($this->interpolator)) {
-            return InterpolatorFactory::make('twig');
+            return InterpolatorFactory::make();
         }
 
         if ($this->interpolator instanceof InterpolatorContract) {
-            // ? delegate logic to factory
             return $this->interpolator;
         }
 
@@ -202,11 +200,10 @@ class RowBloom
     protected function resolveRenderer(): RendererContract
     {
         if (! isset($this->renderer)) {
-            return RendererFactory::make('html');
+            return RendererFactory::make();
         }
 
         if ($this->renderer instanceof RendererContract) {
-            // ? delegate logic to factory
             return $this->renderer;
         }
 

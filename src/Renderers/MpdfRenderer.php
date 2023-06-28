@@ -62,7 +62,6 @@ class MpdfRenderer implements RendererContract
 
     private function render(): static
     {
-
         $this->setPageFormat();
         $this->setMargins();
         $this->setHeaderAndFooter();
@@ -73,13 +72,14 @@ class MpdfRenderer implements RendererContract
 
         $this->mpdf->WriteHTML($this->css, HTMLParserMode::HEADER_CSS);
 
-        // $this->mpdf->SetDisplayMode('none');
-
         $this->rendering = base64_encode($this->mpdf->OutputBinaryData());
-        // ...
 
         return $this;
     }
+
+    // ============================================================
+    // Html
+    // ============================================================
 
     private function getHtmlBody(): string
     {
@@ -129,15 +129,11 @@ class MpdfRenderer implements RendererContract
     private function setHeaderAndFooter(): void
     {
         // TODO: replace | with another character
-        // TODO: handle page numbering and date here
 
         if ($this->options->displayHeaderFooter) {
             $this->mpdf->SetHeader($this->options->rawHeader);
             $this->mpdf->SetFooter($this->options->rawFooter);
         }
-
-        // $this->mpdf->AliasNbPages();
-        // $this->mpdf->SetFooter('{PAGENO}');
     }
 
     private function setMetadata(): void

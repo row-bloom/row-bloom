@@ -69,7 +69,6 @@ enum PaperFormat: string
         } elseif ($to === Length::INCH_UNIT) {
             return $this->inSize();
         }
-        // TODO: pxSizes ...
 
         $size = $this->mmSize();
 
@@ -78,6 +77,8 @@ enum PaperFormat: string
             (new Length($size[1], Length::MILLIMETER_UNIT))->convert($to)->value(),
         ];
     }
+
+    // TODO: pxSizes ...
 
     public function mmSize(): array
     {

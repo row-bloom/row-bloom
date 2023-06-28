@@ -153,8 +153,6 @@ class PhpChromeRenderer implements RendererContract
 
     private function setHeaderAndFooter(): void
     {
-        // TODO: handle special classes
-        // TODO: handle units
         // ! style="font-size:10px" needs to be specified on header and footer
 
         if ($this->options->displayHeaderFooter) {

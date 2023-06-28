@@ -12,7 +12,7 @@ class Options
      * **Default unit** for `$margin`, `$width`, and `$height` is millimeter (mm)
      *
      * @param  (float|int|string)[]|string  $margins
-     * - Format like CSS (number)|(number number)|(number number number number).
+     * - Format like CSS (all_sides)|(top_bottom right_left)|(top right_left bottom)|(number number number number).
      * - Only string types support adding unit, numerical types fallback to *default unit*.
      * @param  ?PaperFormat  $format
      * - Takes precedence over `$width` and `$height`
@@ -23,7 +23,7 @@ class Options
         public bool $displayHeaderFooter = true,
         public ?string $rawHeader = null,
         public ?string $rawFooter = null,
-        // * special classes: date, url, title, pageNumber, totalPages
+        // TODO: handle special classes: date, url, title, pageNumber, totalPages [, header, footer]
 
         public bool $printBackground = false,
         public bool $preferCSSPageSize = false,
@@ -35,7 +35,7 @@ class Options
         public ?string $width = null,
         public ?string $height = null,
 
-        // ! problem with reflecting it on print
+        // ! same value does not give same rendering on different drivers
         public array|string $margins = '1 in', // TODO: singular
 
         public ?string $metadataTitle = null,

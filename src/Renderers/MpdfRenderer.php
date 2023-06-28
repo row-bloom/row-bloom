@@ -73,6 +73,8 @@ class MpdfRenderer implements RendererContract
 
         $this->mpdf->WriteHTML($this->css, HTMLParserMode::HEADER_CSS);
 
+        // $this->mpdf->SetDisplayMode('none');
+
         $this->rendering = base64_encode($this->mpdf->OutputBinaryData());
         // ...
 

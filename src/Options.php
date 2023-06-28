@@ -35,6 +35,7 @@ class Options
         public ?string $width = null,
         public ?string $height = null,
 
+        // ! problem with reflecting it on print
         public array|string $margins = '1 in', // TODO: singular
 
         public ?string $metadataTitle = null,

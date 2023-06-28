@@ -69,6 +69,22 @@ final class Length
         ],
     ];
 
+    /**
+     * Relative:
+     * - To font:
+     *   - em: Relative to the font-size of the parent element.
+     *   - rem: Relative to the font-size of the root element (usually the <html> element).
+     *   - ex: Relative to the x-height of the current font. The x-height is typically the height of lowercase letters.
+     *   - ch: Relative to the width of the "0" (zero) character of the current font.
+     * - To screen:
+     *   - vw: Relative to 1% of the viewport's width.
+     *   - vh: Relative to 1% of the viewport's height.
+     *   - vmin: Relative to 1% of the viewport's smaller dimension (width or height).
+     *   - vmax: Relative to 1% of the viewport's larger dimension (width or height).
+     * - To page size:
+     *   - percent: Represents a percentage relative to the parent element.
+     */
+
     private float $value;
 
     // public static function fromString(){}
@@ -76,6 +92,8 @@ final class Length
 
     public function __construct(float|int|string $value, private string $unit)
     {
+        // TODO: if relative unit require a reference
+
         if (! isset(self::RATIOS_TABLE[$this->unit])) {
             throw new Exception("Invalid unit {$this->unit}");
         }
@@ -103,25 +121,5 @@ final class Length
     public function value()
     {
         return $this->value;
-    }
-
-    /**
-     * Relative:
-     * - To font:
-     *   - em: Relative to the font-size of the parent element.
-     *   - rem: Relative to the font-size of the root element (usually the <html> element).
-     *   - ex: Relative to the x-height of the current font. The x-height is typically the height of lowercase letters.
-     *   - ch: Relative to the width of the "0" (zero) character of the current font.
-     * - To screen:
-     *   - vw: Relative to 1% of the viewport's width.
-     *   - vh: Relative to 1% of the viewport's height.
-     *   - vmin: Relative to 1% of the viewport's smaller dimension (width or height).
-     *   - vmax: Relative to 1% of the viewport's larger dimension (width or height).
-     * - To page size:
-     *   - percent: Represents a percentage relative to the parent element.
-     */
-    public function convertRel(string $from, string $to, float $value, $reference)
-    {
-        // TODO: reference shape?
     }
 }

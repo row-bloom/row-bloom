@@ -9,9 +9,12 @@ class Options
     /**
      * .
      *
-     * @param  int[]|string[]  $margins
+     * @param  (float|int|string)[]|string  $margins
      * - Like Css number number,number number,number,number,number.
      * - Unit in millimeter
+     * @param  ?PaperFormat  $format
+     * - Takes precedence over `$width` and `$height`
+     * - Affected by `$landscape`
      */
     public function __construct(
         public bool $displayHeaderFooter = false,
@@ -25,11 +28,11 @@ class Options
         public ?int $perPage = null,
 
         public bool $landscape = false,
-        public PaperFormat $format = PaperFormat::FORMAT_A4, // takes priority over width or height
+        public ?PaperFormat $format = null, // takes priority over width or height
         public ?string $width = null,
         public ?string $height = null,
 
-        public array $margins = [57, 57, 57, 57], // TODO: singular
+        public array|string $margins = [57, 57, 57, 57], // TODO: singular
 
         public ?string $metadataTitle = null,
         public ?string $metadataAuthor = null,
@@ -44,5 +47,23 @@ class Options
     ) {
     }
 
-    // TODO: margins and size must have units; default to px
+    // TODO: enum unit or object scale
+    public function resolvePaperSize(string $unit)
+    {
+        if (isset($this->format)) {
+            $size = $this->format->size($unit);
+
+            return $this->landscape ? [$size[1], $size[0]] : $size;
+        }
+
+        if (isset($this->width) && isset($this->height)) {
+            // todo handle units
+            // !default is mm?
+            return [$this->width, $this->height];
+        }
+
+        $size = PaperFormat::FORMAT_A4->size($unit);
+
+        return $this->landscape ? [$size[1], $size[0]] : $size;
+    }
 }

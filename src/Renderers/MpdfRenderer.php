@@ -106,26 +106,10 @@ class MpdfRenderer implements RendererContract
 
     private function setPageFormat(): void
     {
-        if (isset($this->options->format)) {
-            $orientation = isset($this->options->landscape) && $this->options->landscape ? 'L' : 'P';
+        $size = $this->options->resolvePaperSize(UnitManager::MILLIMETER_UNIT);
+        $orientation = 'p';
 
-            $this->mpdf->_setPageSize(
-                $this->options->format->value,
-                $orientation
-            );
-
-            return;
-        }
-
-        if (isset($this->options->width) && isset($this->options->height)) {
-            // todo handle units
-            $this->mpdf->_setPageSize(
-                [$this->options->width, $this->options->height],
-                'p'
-            );
-
-            return;
-        }
+        $this->mpdf->_setPageSize($size, $orientation);
     }
 
     private function setMargins(): void

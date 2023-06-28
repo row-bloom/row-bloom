@@ -147,22 +147,8 @@ class PhpChromeRenderer implements RendererContract
 
     private function setPageFormat(): void
     {
-        if (isset($this->options->format)) {
-            $size = $this->options->format->size(UnitManager::INCH_UNIT);
-
-            $this->phpChromeOptions['paperWidth'] = $this->options->landscape ? $size[1] : $size[0];
-            $this->phpChromeOptions['paperHeight'] = $this->options->landscape ? $size[0] : $size[1];
-
-            return;
-        }
-
-        if (isset($this->options->width) && isset($this->options->height)) {
-            // todo handle units
-            $this->phpChromeOptions['paperWidth'] = $this->options->width;
-            $this->phpChromeOptions['paperHeight'] = $this->options->height;
-
-            return;
-        }
+        [$this->phpChromeOptions['paperWidth'], $this->phpChromeOptions['paperHeight']]
+            = $this->options->resolvePaperSize(UnitManager::INCH_UNIT);
     }
 
     private function setHeaderAndFooter(): void

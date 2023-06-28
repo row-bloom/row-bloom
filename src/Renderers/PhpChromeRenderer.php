@@ -5,8 +5,8 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
-use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Renderers\Sizing\Length;
+use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use HeadlessChromium\BrowserFactory;
@@ -166,7 +166,7 @@ class PhpChromeRenderer implements RendererContract
     private function setMargins(): void
     {
         $this->phpChromeOptions =
-            Margin::fromOptions($this->options)->allIn(Length::INCH_UNIT) +
+            Margin::fromOptions($this->options, Length::INCH_UNIT)->all() +
             $this->phpChromeOptions;
     }
 }

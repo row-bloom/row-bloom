@@ -5,8 +5,8 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
-use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Renderers\Sizing\Length;
+use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use Mpdf\HTMLParserMode;
@@ -114,12 +114,14 @@ class MpdfRenderer implements RendererContract
 
     private function setMargins(): void
     {
-        $margin = Margin::fromOptions($this->options);
+        $margin = Margin::fromOptions($this->options, Length::MILLIMETER_UNIT);
 
-        $this->mpdf->SetTopMargin($margin->getIn('marginTop', Length::MILLIMETER_UNIT));
-        $this->mpdf->SetRightMargin($margin->getIn('marginRight', Length::MILLIMETER_UNIT));
-        // $this->mpdf->SetBottomMargin($margin->getIn('marginBottom', Length::MILLIMETER_UNIT)); // TODO
-        $this->mpdf->SetLeftMargin($margin->getIn('marginLeft', Length::MILLIMETER_UNIT));
+        $this->mpdf->SetMargins(
+            $margin->get('marginLeft'),
+            $margin->get('marginRight'),
+            $margin->get('marginTop')
+            // TODO: bottom ?
+        );
     }
 
     private function setHeaderAndFooter(): void

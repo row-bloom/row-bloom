@@ -20,6 +20,9 @@ final class Length
 
     /**
      * @var (int|float)[][] Absolute units only
+     *
+     * ! multiple conversions cause small value infidelity
+     * Example: 1 in -> 25.4mm -> 1.00076 in
      */
     private const RATIOS_TABLE = [
         'px' => [

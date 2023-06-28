@@ -14,7 +14,6 @@ class Options
      * @param  (float|int|string)[]|string  $margins
      * - Format like CSS (number)|(number number)|(number number number number).
      * - Only string types support adding unit, numerical types fallback to *default unit*.
-     *
      * @param  ?PaperFormat  $format
      * - Takes precedence over `$width` and `$height`
      * - Affected by `$landscape`

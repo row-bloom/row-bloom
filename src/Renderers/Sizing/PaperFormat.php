@@ -60,14 +60,28 @@ enum PaperFormat: string
     case FORMAT_Y = 'Y';
     case FORMAT_ROYAL = 'ROYAL';
 
-    /**
-     * Sizes in mm
-     */
     public function size(string $to = Length::MILLIMETER_UNIT): array
     {
         $to = strtolower(trim($to));
 
-        $size = match ($this) {
+        if ($to === Length::MILLIMETER_UNIT) {
+            return $this->mmSize();
+        } elseif ($to === Length::INCH_UNIT) {
+            return $this->inSize();
+        }
+        // TODO: pxSizes ...
+
+        $size = $this->mmSize();
+
+        return [
+            (new Length($size[0], Length::MILLIMETER_UNIT))->convert($to)->value(),
+            (new Length($size[1], Length::MILLIMETER_UNIT))->convert($to)->value(),
+        ];
+    }
+
+    public function mmSize(): array
+    {
+        return match ($this) {
             self::FORMAT_4A0 => [1682, 2378],
             self::FORMAT_2A0 => [1189, 1682],
             self::FORMAT_A0 => [841, 1189],
@@ -124,10 +138,66 @@ enum PaperFormat: string
             self::FORMAT_Y => [330, 430],
             self::FORMAT_ROYAL => [432, 559],
         };
+    }
 
-        return [
-            (new Length($size[0], Length::MILLIMETER_UNIT))->convert($to)->value(),
-            (new Length($size[1], Length::MILLIMETER_UNIT))->convert($to)->value(),
-        ];
+    public function inSize(): array
+    {
+        return match ($this) {
+            self::FORMAT_4A0 => [66.14, 93.70],
+            self::FORMAT_2A0 => [46.81, 66.14],
+            self::FORMAT_A0 => [33.11, 46.81],
+            self::FORMAT_A1 => [23.39, 33.11],
+            self::FORMAT_A2 => [16.54, 23.39],
+            self::FORMAT_A3 => [11.69, 16.54],
+            self::FORMAT_A4 => [8.27, 11.69],
+            self::FORMAT_A5 => [5.83, 8.27],
+            self::FORMAT_A6 => [4.13, 5.83],
+            self::FORMAT_A7 => [2.91, 4.13],
+            self::FORMAT_A8 => [2.05, 2.91],
+            self::FORMAT_A9 => [1.46, 2.05],
+            self::FORMAT_A10 => [1.02, 1.46],
+            self::FORMAT_B0 => [39.37, 55.67],
+            self::FORMAT_B1 => [27.83, 39.37],
+            self::FORMAT_B2 => [19.69, 27.83],
+            self::FORMAT_B3 => [13.90, 19.69],
+            self::FORMAT_B4 => [9.84, 13.90],
+            self::FORMAT_B5 => [6.93, 9.84],
+            self::FORMAT_B6 => [4.92, 6.93],
+            self::FORMAT_B7 => [3.46, 4.92],
+            self::FORMAT_B8 => [2.44, 3.46],
+            self::FORMAT_B9 => [1.73, 2.44],
+            self::FORMAT_B10 => [1.22, 1.73],
+            self::FORMAT_C0 => [36.10, 51.06],
+            self::FORMAT_C1 => [25.51, 36.10],
+            self::FORMAT_C2 => [18.03, 25.51],
+            self::FORMAT_C3 => [12.76, 18.03],
+            self::FORMAT_C4 => [9.02, 12.76],
+            self::FORMAT_C5 => [6.38, 9.02],
+            self::FORMAT_C6 => [4.49, 6.38],
+            self::FORMAT_C7 => [3.19, 4.49],
+            self::FORMAT_C8 => [2.24, 3.19],
+            self::FORMAT_C9 => [1.57, 2.24],
+            self::FORMAT_C10 => [1.10, 1.57],
+            self::FORMAT_RA0 => [33.86, 48.03],
+            self::FORMAT_RA1 => [24.02, 33.86],
+            self::FORMAT_RA2 => [16.93, 24.02],
+            self::FORMAT_RA3 => [12.01, 16.93],
+            self::FORMAT_RA4 => [8.46, 12.01],
+            self::FORMAT_SRA0 => [35.43, 49.21],
+            self::FORMAT_SRA1 => [25.20, 35.43],
+            self::FORMAT_SRA2 => [17.72, 25.20],
+            self::FORMAT_SRA3 => [12.60, 17.72],
+            self::FORMAT_SRA4 => [8.86, 12.60],
+            self::FORMAT_LETTER => [8.50, 11.00],
+            self::FORMAT_LEGAL => [8.50, 14.00],
+            self::FORMAT_LEDGER => [11.00, 17.00],
+            self::FORMAT_TABLOID => [17.00, 11.00],
+            self::FORMAT_EXECUTIVE => [7.25, 10.50],
+            self::FORMAT_FOLIO => [8.27, 13.00],
+            self::FORMAT_B => [19.69, 27.83],
+            self::FORMAT_ADEM => [8.50, 14.00],
+            self::FORMAT_Y => [13.00, 16.93],
+            self::FORMAT_ROYAL => [17.00, 22.01]
+        };
     }
 }

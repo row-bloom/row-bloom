@@ -32,7 +32,7 @@ class Options
         public ?string $width = null,
         public ?string $height = null,
 
-        public array|string $margins = ['1 in'], // TODO: singular
+        public array|string $margins = '1 in', // TODO: singular
 
         public ?string $metadataTitle = null,
         public ?string $metadataAuthor = null,

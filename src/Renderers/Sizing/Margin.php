@@ -23,10 +23,12 @@ final class Margin
     {
         $this->unit = $unit ?? self::$defaultUnit;
 
-        $margin = is_string($margin) ? preg_split('/\s/', $margin) : $margin;
+        if(is_string($margin)) {
+            if (preg_match('/\d+(?:\.\d+)?(?:\s+[[:alpha:]]+)?/', $margin, $parsedMargin) === false) {
+                throw new Exception("Invalid margin {$margin}");
+            }
 
-        if ($margin === false) {
-            throw new Exception('Invalid margin');
+            $margin = $parsedMargin;
         }
 
         $count = count($margin);

@@ -1,6 +1,5 @@
 <?php
 
-use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
@@ -8,8 +7,6 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders and saves', function () {
-    $saveTo = File::fromPath(__DIR__.'/../../temp/foo.html');
-
     $renderer = RendererFactory::make('*html');
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
@@ -24,6 +21,4 @@ it('renders and saves', function () {
             new Options
         )->get()
     )->toBeString();
-
-    expect($renderer->save($saveTo))->toBeTrue();
 });

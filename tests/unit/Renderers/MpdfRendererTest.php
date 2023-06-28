@@ -1,6 +1,5 @@
 <?php
 
-use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\MpdfRenderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
@@ -8,8 +7,6 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
-    // $saveTo = File::fromPath(__DIR__.'/../../temp/foo.pdf');
-
     $renderer = RendererFactory::make('*mpdf');
 
     expect($renderer)->toBeInstanceOf(MpdfRenderer::class);

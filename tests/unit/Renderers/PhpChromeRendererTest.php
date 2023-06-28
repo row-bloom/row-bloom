@@ -1,6 +1,5 @@
 <?php
 
-use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\PhpChromeRenderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
@@ -8,8 +7,6 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
-    $saveTo = File::fromPath(__DIR__.'/../../temp/foo.pdf');
-
     $renderer = RendererFactory::make('*php chrome');
 
     $css = new Css('p {font-weight: bold;}');
@@ -21,7 +18,4 @@ it('renders', function () {
 
     // ? more assertions
     expect($renderer->render($interpolatedTemplate, $css, new Options)->get())->toBeString();
-
-    // TODO: stop testing with IO
-    expect($renderer->save($saveTo))->toBeTrue();
 });

@@ -13,29 +13,29 @@ use Exception;
 
 class RowBloom
 {
-    protected InterpolatorContract|string $interpolator;
+    private InterpolatorContract|string $interpolator;
 
-    protected RendererContract|string $renderer;
+    private RendererContract|string $renderer;
 
     // ------------------------------------------------------------
 
     /** @var Table[] */
-    protected array $tables = [];
+    private array $tables = [];
 
     /** @var string[] */
-    protected array $tablePaths = [];
+    private array $tablePaths = [];
 
-    protected ?Template $template = null;
+    private ?Template $template = null;
 
-    protected ?string $templatePath = null;
+    private ?string $templatePath = null;
 
     /** @var array<Css> */
-    protected array $css = [];
+    private array $css = [];
 
     /** @var string[] */
-    protected array $cssPaths = [];
+    private array $cssPaths = [];
 
-    protected Options $options;
+    private Options $options;
 
     // ------------------------------------------------------------
 
@@ -44,9 +44,17 @@ class RowBloom
         $this->options = new Options;
     }
 
-    // TODO: save()
+    public function save(File $file): bool
+    {
+        return $this->render()->save($file);
+    }
 
-    public function get()
+    public function get(): string
+    {
+        return $this->render()->get();
+    }
+
+    private function render(): RendererContract
     {
         $interpolator = $this->resolveInterpolator();
         $renderer = $this->resolveRenderer();
@@ -57,10 +65,12 @@ class RowBloom
 
         $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable);
 
-        return $renderer->render($interpolatedTemplate, $finalCss, $this->options)->get();
+        return $renderer->render($interpolatedTemplate, $finalCss, $this->options);
     }
 
-    protected function mergeTables(): Table
+    // ------------------------------------------------------------
+
+    private function mergeTables(): Table
     {
         foreach ($this->tablePaths as $tablePath) {
             // TODO: each path should be handled with its adequate driver
@@ -75,7 +85,7 @@ class RowBloom
         return Table::fromArray($data);
     }
 
-    protected function template(): Template
+    private function template(): Template
     {
         if (! is_null($this->template) && ! is_null($this->templatePath)) {
             throw new Exception('TEMPLATE...');
@@ -95,7 +105,7 @@ class RowBloom
         throw new Exception('TEMPLATE...');
     }
 
-    protected function mergeCss(): Css
+    private function mergeCss(): Css
     {
         $finalCss = new Css('');
 
@@ -184,7 +194,7 @@ class RowBloom
     //
     // ============================================================
 
-    protected function resolveInterpolator(): InterpolatorContract
+    private function resolveInterpolator(): InterpolatorContract
     {
         if (! isset($this->interpolator)) {
             return InterpolatorFactory::make();
@@ -197,7 +207,7 @@ class RowBloom
         return InterpolatorFactory::make($this->interpolator);
     }
 
-    protected function resolveRenderer(): RendererContract
+    private function resolveRenderer(): RendererContract
     {
         if (! isset($this->renderer)) {
             return RendererFactory::make();

@@ -33,7 +33,7 @@ class HtmlRenderer implements RendererContract
                 }
             }
         } else {
-            // TODO: implode with a special string?
+            // ? implode with a special string
             $body = implode('\n', $this->interpolatedTemplate->toArray());
         }
 

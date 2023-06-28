@@ -19,7 +19,7 @@ it('renders', function () {
 
     expect($renderer)->toBeInstanceOf(PhpChromeRenderer::class);
 
-    // TODO: more assertions
+    // ? more assertions
     expect($renderer->getRendering($interpolatedTemplate, $css, new Options))->toBeString();
 
     // TODO: stop testing with IO

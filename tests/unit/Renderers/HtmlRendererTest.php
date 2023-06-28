@@ -14,7 +14,7 @@ it('renders and saves', function () {
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 
-    // TODO: more assertions
+    // ? more assertions
     expect($renderer->getRendering(
         new InterpolatedTemplate([
             '<h1>Title</h1><p>Bold text</p><div>Normal text</div>',

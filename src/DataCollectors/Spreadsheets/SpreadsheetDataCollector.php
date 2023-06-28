@@ -25,7 +25,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
         if (count($labels) > count(array_flip($labels))) {
             throw new SpreadsheetException('Duplicate labels '.implode(', ', $labels));
         }
-        // TODO: check empty label?
+        // ? check empty label
 
         $data = array_map(
             fn (array $row) => array_combine($labels, $row),

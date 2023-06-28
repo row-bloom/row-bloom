@@ -12,7 +12,7 @@ final class Length
      * ! multiple conversions cause small value infidelity
      * Example: 1 in -> 25.4mm -> 1.00076 in
      *
-     * TODO: enum keys?
+     * ? enum keys
      */
     private const RATIOS_TABLE = [
         'px' => [
@@ -70,7 +70,7 @@ final class Length
     {
         // TODO: if relative unit require a reference
 
-        // TODO: handle string?
+        // ? do I need to handle string in a special way
 
         $this->value = (float) $value;
     }

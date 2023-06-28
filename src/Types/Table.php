@@ -26,9 +26,7 @@ class Table implements Iterator
                 throw new Exception("Row $i must be an array");
             }
 
-            // TODO: throw if not primitive or serialize
-            // foreach ($row as $j => $cell) {
-            // }
+            // ? is every cell value, a string
         }
     }
 

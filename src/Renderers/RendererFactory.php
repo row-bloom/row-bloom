@@ -7,7 +7,7 @@ use Exception;
 
 final class RendererFactory
 {
-    // TODO: fix factory => only take driver as input
+    // TODO: handle other classes if exist
     public static function make(string $driver): RendererContract
     {
         $renderer = self::resolveDriver($driver);

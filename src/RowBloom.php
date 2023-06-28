@@ -42,15 +42,13 @@ class RowBloom
     public function __construct()
     {
         $this->options = new Options;
-
-        // ? config ? default drivers
     }
 
     // TODO: save()
 
     public function render()
     {
-        //TODO: user instance -> set driver -> default driver
+        // TODO: user instance -> set driver -> default driver (I don't remember what I meant)
         $interpolator = $this->resolveInterpolator();
         $renderer = $this->resolveRenderer();
 
@@ -66,7 +64,7 @@ class RowBloom
     protected function mergeTables(): Table
     {
         foreach ($this->tablePaths as $tablePath) {
-            // TODO: each path has its own driver
+            // TODO: each path should be handled with its adequate driver
             $this->tables[] = DataCollectorFactory::make('spreadsheet')
                 ->getTable($tablePath);
         }
@@ -108,7 +106,7 @@ class RowBloom
 
             $finalCss->append($cssFile->readFileContent());
         }
-        // TODO: clarify stylesheets ordering
+        // TODO: clarify stylesheets ordering or allow setting priority
         foreach ($this->css as $css) {
             $finalCss->append($css);
         }
@@ -119,8 +117,6 @@ class RowBloom
     // ============================================================
     // Fluent build methods
     // ============================================================
-
-    // TODO: allow setting contracts custom strategies
 
     public function addTable(Table $table): static
     {
@@ -196,10 +192,10 @@ class RowBloom
         }
 
         if ($this->interpolator instanceof InterpolatorContract) {
+            // ? delegate logic to factory
             return $this->interpolator;
         }
 
-        // TODO: take in consideration if user give class name and try instance if factory?
         return InterpolatorFactory::make($this->interpolator);
     }
 
@@ -210,6 +206,7 @@ class RowBloom
         }
 
         if ($this->renderer instanceof RendererContract) {
+            // ? delegate logic to factory
             return $this->renderer;
         }
 

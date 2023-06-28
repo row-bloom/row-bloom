@@ -39,7 +39,7 @@ class File
 
     public function startSaving(): WriteStream
     {
-        // ! use realpath
+        // ? use realpath
         if (! file_exists($this->dir())) {
             if (! mkdir($this->dir(), 0777, true)) {
                 throw new FsException(sprintf('Could not create the directory %s.', $this->dir()));
@@ -158,7 +158,7 @@ class File
 
     public function mustBeExtension(string $extension): static
     {
-        // TODO: support array of extensions?
+        // ? support array of extensions
         if (strcmp(strtolower($this->extension()), strtolower($extension)) !== 0) {
             throw new FsException("{$this->path} is not writable");
         }

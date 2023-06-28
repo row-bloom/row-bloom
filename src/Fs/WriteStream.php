@@ -28,7 +28,7 @@ class WriteStream
     public function save(string $content): bool
     {
         if (fwrite($this->file, $content) === false) {
-            // TODO: should everything be true here?
+            // ? should everything be true here
         }
 
         return fclose($this->file);

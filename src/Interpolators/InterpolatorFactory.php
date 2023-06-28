@@ -8,7 +8,6 @@ class InterpolatorFactory
 {
     public static function make(string $driver): InterpolatorContract
     {
-        // TODO
         return new TwigInterpolator;
     }
 }

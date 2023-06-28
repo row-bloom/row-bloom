@@ -57,7 +57,7 @@ final class Margin
 
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
         } elseif (preg_match('/^(?<value>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
-            $value = UnitManager::convertAbs($parsed['unit'], $this->unit, $parsed['value']);
+            $value = UnitConverter::convertAbs($parsed['unit'], $this->unit, $parsed['value']);
         } else {
             throw new Exception('Invalid margin');
         }
@@ -76,7 +76,7 @@ final class Margin
             return null;
         }
 
-        return UnitManager::convertAbs($this->unit, $to, $this->value[$key]);
+        return UnitConverter::convertAbs($this->unit, $to, $this->value[$key]);
     }
 
     // TODO: rename this to allRaw()? all() returns string of "<val> <unit>"
@@ -88,7 +88,7 @@ final class Margin
     public function allIn(string $to): array
     {
         return array_map(
-            fn ($v) => UnitManager::convertAbs($this->unit, $to, $v),
+            fn ($v) => UnitConverter::convertAbs($this->unit, $to, $v),
             $this->value
         );
     }

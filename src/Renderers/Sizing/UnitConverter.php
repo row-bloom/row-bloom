@@ -4,7 +4,7 @@ namespace ElaborateCode\RowBloom\Renderers\Sizing;
 
 use Exception;
 
-final class UnitManager
+final class UnitConverter
 {
     const PIXEL_UNIT = 'px';
 

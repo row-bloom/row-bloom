@@ -6,7 +6,7 @@ use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
-use ElaborateCode\RowBloom\Renderers\Sizing\UnitManager;
+use ElaborateCode\RowBloom\Renderers\Sizing\UnitConverter;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 use Mpdf\HTMLParserMode;
@@ -106,7 +106,7 @@ class MpdfRenderer implements RendererContract
 
     private function setPageFormat(): void
     {
-        $size = $this->options->resolvePaperSize(UnitManager::MILLIMETER_UNIT);
+        $size = $this->options->resolvePaperSize(UnitConverter::MILLIMETER_UNIT);
         $orientation = 'p';
 
         $this->mpdf->_setPageSize($size, $orientation);
@@ -116,10 +116,10 @@ class MpdfRenderer implements RendererContract
     {
         $margin = Margin::fromOptions($this->options);
 
-        $this->mpdf->SetTopMargin($margin->getIn('marginTop', UnitManager::MILLIMETER_UNIT));
-        $this->mpdf->SetRightMargin($margin->getIn('marginRight', UnitManager::MILLIMETER_UNIT));
-        // $this->mpdf->SetBottomMargin($margin->getIn('marginBottom', UnitManager::MILLIMETER_UNIT)); // TODO
-        $this->mpdf->SetLeftMargin($margin->getIn('marginLeft', UnitManager::MILLIMETER_UNIT));
+        $this->mpdf->SetTopMargin($margin->getIn('marginTop', UnitConverter::MILLIMETER_UNIT));
+        $this->mpdf->SetRightMargin($margin->getIn('marginRight', UnitConverter::MILLIMETER_UNIT));
+        // $this->mpdf->SetBottomMargin($margin->getIn('marginBottom', UnitConverter::MILLIMETER_UNIT)); // TODO
+        $this->mpdf->SetLeftMargin($margin->getIn('marginLeft', UnitConverter::MILLIMETER_UNIT));
     }
 
     private function setHeaderAndFooter(): void

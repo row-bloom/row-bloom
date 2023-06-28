@@ -2,8 +2,6 @@
 
 namespace ElaborateCode\RowBloom\Renderers\Sizing;
 
-use Exception;
-
 enum PaperFormat: string
 {
     case FORMAT_4A0 = '4A0';
@@ -65,7 +63,7 @@ enum PaperFormat: string
     /**
      * Sizes in mm
      */
-    public function size(string $to = UnitManager::MILLIMETER_UNIT): array
+    public function size(string $to = UnitConverter::MILLIMETER_UNIT): array
     {
         $to = strtolower(trim($to));
 
@@ -125,12 +123,11 @@ enum PaperFormat: string
             self::FORMAT_ADEM => [216, 356],
             self::FORMAT_Y => [330, 430],
             self::FORMAT_ROYAL => [432, 559],
-            default => throw new Exception('Invalid page format'),
         };
 
         return [
-            UnitManager::convertAbs(UnitManager::MILLIMETER_UNIT, $to, $size[0]),
-            UnitManager::convertAbs(UnitManager::MILLIMETER_UNIT, $to, $size[1]),
+            UnitConverter::convertAbs(UnitConverter::MILLIMETER_UNIT, $to, $size[0]),
+            UnitConverter::convertAbs(UnitConverter::MILLIMETER_UNIT, $to, $size[1]),
         ];
     }
 }

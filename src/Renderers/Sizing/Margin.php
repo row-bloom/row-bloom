@@ -7,7 +7,7 @@ use Exception;
 
 final class Margin
 {
-    private static string $defaultUnit = 'px';
+    private static string $defaultUnit = UnitConverter::MILLIMETER_UNIT;
 
     private string $unit;
 

@@ -6,7 +6,6 @@ use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
-use ElaborateCode\RowBloom\Renderers\Sizing\Paper;
 use ElaborateCode\RowBloom\Renderers\Sizing\UnitManager;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -149,7 +148,7 @@ class PhpChromeRenderer implements RendererContract
     private function setPageFormat(): void
     {
         if (isset($this->options->format)) {
-            $size = Paper::getIn($this->options->format, UnitManager::INCH_UNIT);
+            $size = $this->options->format->size(UnitManager::INCH_UNIT);
 
             $this->phpChromeOptions['paperWidth'] = $this->options->landscape ? $size[1] : $size[0];
             $this->phpChromeOptions['paperHeight'] = $this->options->landscape ? $size[0] : $size[1];

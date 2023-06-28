@@ -2,6 +2,8 @@
 
 namespace ElaborateCode\RowBloom;
 
+use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
+
 class Options
 {
     /**
@@ -23,7 +25,7 @@ class Options
         public ?int $perPage = null,
 
         public bool $landscape = false,
-        public string $format = 'A4', // takes priority over width or height
+        public PaperFormat $format = PaperFormat::FORMAT_A4, // takes priority over width or height
         public ?string $width = null,
         public ?string $height = null,
 

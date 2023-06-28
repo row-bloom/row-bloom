@@ -110,7 +110,7 @@ class MpdfRenderer implements RendererContract
             $orientation = isset($this->options->landscape) && $this->options->landscape ? 'L' : 'P';
 
             $this->mpdf->_setPageSize(
-                $this->options->format,
+                $this->options->format->value,
                 $orientation
             );
 

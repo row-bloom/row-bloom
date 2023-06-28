@@ -29,7 +29,7 @@ class RowBloom
 
     private ?string $templatePath = null;
 
-    /** @var array<Css> */
+    /** @var Css[] */
     private array $css = [];
 
     /** @var string[] */

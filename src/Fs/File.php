@@ -71,7 +71,7 @@ class File implements Stringable
         return new WriteStream(fopen($this->path, 'w'));
     }
 
-    // TODO: delete()
+    // ? delete()
 
     // ============================================================
     //

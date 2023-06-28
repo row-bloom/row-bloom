@@ -31,25 +31,34 @@ final class Margin
             $margin = $parsedMargin;
         }
 
-        $count = count($margin);
-
-        if ($count === 1) {
-            $this->set('marginTop', $margin[0]);
-            $this->set('marginRight', $margin[0]);
-            $this->set('marginBottom', $margin[0]);
-            $this->set('marginLeft', $margin[0]);
-        } elseif ($count === 2) {
-            $this->set('marginTop', $margin[0]);
-            $this->set('marginRight', $margin[1]);
-            $this->set('marginBottom', $margin[0]);
-            $this->set('marginLeft', $margin[1]);
-        } elseif ($count === 4) {
-            $this->set('marginTop', $margin[0]);
-            $this->set('marginRight', $margin[1]);
-            $this->set('marginBottom', $margin[2]);
-            $this->set('marginLeft', $margin[3]);
-        } else {
-            throw new Exception('Invalid margin');
+        switch (count($margin)) {
+            case 1:
+                $this->set('marginTop', $margin[0]);
+                $this->set('marginRight', $margin[0]);
+                $this->set('marginBottom', $margin[0]);
+                $this->set('marginLeft', $margin[0]);
+                break;
+            case 2:
+                $this->set('marginTop', $margin[0]);
+                $this->set('marginRight', $margin[1]);
+                $this->set('marginBottom', $margin[0]);
+                $this->set('marginLeft', $margin[1]);
+                break;
+            case 3:
+                $this->set('marginTop', $margin[0]);
+                $this->set('marginRight', $margin[1]);
+                $this->set('marginBottom', $margin[2]);
+                $this->set('marginLeft', $margin[1]);
+                break;
+            case 4:
+                $this->set('marginTop', $margin[0]);
+                $this->set('marginRight', $margin[1]);
+                $this->set('marginBottom', $margin[2]);
+                $this->set('marginLeft', $margin[3]);
+                break;
+            default:
+                throw new Exception('Invalid margin');
+                break;
         }
     }
 

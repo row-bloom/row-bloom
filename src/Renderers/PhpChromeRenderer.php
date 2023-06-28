@@ -158,8 +158,8 @@ class PhpChromeRenderer implements RendererContract
         // ! style="font-size:10px" needs to be specified on header and footer
 
         if ($this->options->displayHeaderFooter) {
-            $this->phpChromeOptions['headerTemplate'] = $this->options->rawHeader;
-            $this->phpChromeOptions['footerTemplate'] = $this->options->rawFooter;
+            $this->phpChromeOptions['headerTemplate'] = $this->options->rawHeader ?? '';
+            $this->phpChromeOptions['footerTemplate'] = $this->options->rawFooter ?? '';
         }
     }
 

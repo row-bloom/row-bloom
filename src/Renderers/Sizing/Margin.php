@@ -7,19 +7,19 @@ use Exception;
 
 final class Margin
 {
-    private static string $defaultUnit = Length::MILLIMETER_UNIT;
+    private static LengthUnit $defaultUnit = LengthUnit::MILLIMETER_UNIT;
 
-    private string $unit;
+    private LengthUnit $unit;
 
     /** @var Length[] */
     private array $value = [];
 
-    public static function fromOptions(Options $options, ?string $unit = null)
+    public static function fromOptions(Options $options, ?LengthUnit $unit = null)
     {
         return new self($options->margins, $unit);
     }
 
-    public function __construct(array|string $margin, ?string $unit = null)
+    public function __construct(array|string $margin, ?LengthUnit $unit = null)
     {
         $this->unit = $unit ?? self::$defaultUnit;
 
@@ -31,45 +31,55 @@ final class Margin
             $margin = $parsedMargin;
         }
 
-        switch (count($margin)) {
-            case 1:
-                $this->set('marginTop', $margin[0]);
-                $this->set('marginRight', $margin[0]);
-                $this->set('marginBottom', $margin[0]);
-                $this->set('marginLeft', $margin[0]);
-                break;
-            case 2:
-                $this->set('marginTop', $margin[0]);
-                $this->set('marginRight', $margin[1]);
-                $this->set('marginBottom', $margin[0]);
-                $this->set('marginLeft', $margin[1]);
-                break;
-            case 3:
-                $this->set('marginTop', $margin[0]);
-                $this->set('marginRight', $margin[1]);
-                $this->set('marginBottom', $margin[2]);
-                $this->set('marginLeft', $margin[1]);
-                break;
-            case 4:
-                $this->set('marginTop', $margin[0]);
-                $this->set('marginRight', $margin[1]);
-                $this->set('marginBottom', $margin[2]);
-                $this->set('marginLeft', $margin[3]);
-                break;
-            default:
-                throw new Exception('Invalid margin');
-                break;
-        }
+        $this->setValue($margin);
     }
 
-    private function set(string $key, int|float|string $value): void
+    private function setValue(array $margin)
+    {
+        switch (count($margin)) {
+            case 1:
+                $this->setLength('marginTop', $margin[0]);
+                $this->setLength('marginRight', $margin[0]);
+                $this->setLength('marginBottom', $margin[0]);
+                $this->setLength('marginLeft', $margin[0]);
+
+                return;
+            case 2:
+                $this->setLength('marginTop', $margin[0]);
+                $this->setLength('marginRight', $margin[1]);
+                $this->setLength('marginBottom', $margin[0]);
+                $this->setLength('marginLeft', $margin[1]);
+
+                return;
+            case 3:
+                $this->setLength('marginTop', $margin[0]);
+                $this->setLength('marginRight', $margin[1]);
+                $this->setLength('marginBottom', $margin[2]);
+                $this->setLength('marginLeft', $margin[1]);
+
+                return;
+            case 4:
+                $this->setLength('marginTop', $margin[0]);
+                $this->setLength('marginRight', $margin[1]);
+                $this->setLength('marginBottom', $margin[2]);
+                $this->setLength('marginLeft', $margin[3]);
+
+                return;
+        }
+
+        throw new Exception('Invalid margin');
+    }
+
+    private function setLength(string $key, int|float|string $value): void
     {
         $value = trim($value);
 
+        // ! I do not like this regex logic being handled here
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
             $value = Length::fromNumber($value, $this->unit);
         } elseif (preg_match('/^(?<value>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
-            $value = Length::fromNumber($parsed['value'], $parsed['unit'])->convert($this->unit);
+            $value = Length::fromNumber($parsed['value'], LengthUnit::from($parsed['unit']))
+                ->convert($this->unit);
         } else {
             throw new Exception('Invalid margin');
         }
@@ -87,7 +97,7 @@ final class Margin
         return $this->value[$key] ?? null;
     }
 
-    public function getIn(string $key, string $to): ?Length
+    public function getIn(string $key, LengthUnit $to): ?Length
     {
         return $this->get($key)?->convert($to);
     }
@@ -97,7 +107,7 @@ final class Margin
         return $this->get($key)?->value();
     }
 
-    public function getRawIn(string $key, string $to): ?float
+    public function getRawIn(string $key, LengthUnit $to): ?float
     {
         return $this->get($key)?->convert($to)->value();
     }
@@ -107,7 +117,7 @@ final class Margin
         return $this->value;
     }
 
-    public function allIn(string $to): array
+    public function allIn(LengthUnit $to): array
     {
         return array_map(
             fn (Length $v) => $v->convert($to),
@@ -123,7 +133,7 @@ final class Margin
         );
     }
 
-    public function allRawIn(string $to): array
+    public function allRawIn(LengthUnit $to): array
     {
         return array_map(
             fn (Length $v) => $v->convert($to)->value(),

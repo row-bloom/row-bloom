@@ -5,7 +5,7 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
-use ElaborateCode\RowBloom\Renderers\Sizing\Length;
+use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -148,7 +148,7 @@ class PhpChromeRenderer implements RendererContract
     private function setPageFormat(): void
     {
         [$this->phpChromeOptions['paperWidth'], $this->phpChromeOptions['paperHeight']]
-            = $this->options->resolvePaperSize(Length::INCH_UNIT);
+            = $this->options->resolvePaperSize(LengthUnit::INCH_UNIT);
     }
 
     private function setHeaderAndFooter(): void
@@ -164,7 +164,7 @@ class PhpChromeRenderer implements RendererContract
     private function setMargins(): void
     {
         $this->phpChromeOptions =
-            Margin::fromOptions($this->options, Length::INCH_UNIT)->allRaw() +
+            Margin::fromOptions($this->options, LengthUnit::INCH_UNIT)->allRaw() +
             $this->phpChromeOptions;
     }
 }

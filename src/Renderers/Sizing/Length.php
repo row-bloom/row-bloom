@@ -6,23 +6,13 @@ use Exception;
 
 final class Length
 {
-    const PIXEL_UNIT = 'px';
-
-    const CENTIMETER_UNIT = 'cm';
-
-    const MILLIMETER_UNIT = 'mm';
-
-    const INCH_UNIT = 'in';
-
-    const POINT_UNIT = 'pt';
-
-    const PICA_UNIT = 'pc';
-
     /**
      * @var (int|float)[][] Absolute units only
      *
      * ! multiple conversions cause small value infidelity
      * Example: 1 in -> 25.4mm -> 1.00076 in
+     *
+     * TODO: enum keys?
      */
     private const RATIOS_TABLE = [
         'px' => [
@@ -69,56 +59,33 @@ final class Length
         ],
     ];
 
-    /**
-     * Relative:
-     * - To font:
-     *   - em: Relative to the font-size of the parent element.
-     *   - rem: Relative to the font-size of the root element (usually the <html> element).
-     *   - ex: Relative to the x-height of the current font. The x-height is typically the height of lowercase letters.
-     *   - ch: Relative to the width of the "0" (zero) character of the current font.
-     * - To screen:
-     *   - vw: Relative to 1% of the viewport's width.
-     *   - vh: Relative to 1% of the viewport's height.
-     *   - vmin: Relative to 1% of the viewport's smaller dimension (width or height).
-     *   - vmax: Relative to 1% of the viewport's larger dimension (width or height).
-     * - To page size:
-     *   - percent: Represents a percentage relative to the parent element.
-     */
     private float $value;
 
-    // public static function fromString(){}
-
-    public static function fromNumber(float|int|string $value, string $unit): self
+    public static function fromNumber(float|int|string $value, LengthUnit $unit): self
     {
         return new self($value, $unit);
     }
 
-    public function __construct(float|int|string $value, private string $unit)
+    public function __construct(float|int|string $value, private LengthUnit $unit)
     {
         // TODO: if relative unit require a reference
-
-        if (! isset(self::RATIOS_TABLE[$this->unit])) {
-            throw new Exception("Invalid unit {$this->unit}");
-        }
 
         // TODO: handle string?
 
         $this->value = (float) $value;
     }
 
-    public function convert(string $to): self
+    public function convert(LengthUnit $to): self
     {
-        $to = strtolower(trim($to));
-
         if ($this->unit === $to) {
             return clone $this;
         }
 
-        if (! isset(self::RATIOS_TABLE[$this->unit][$to])) {
-            throw new Exception("Invalid conversion from {$this->unit} to {$to}");
+        if (! isset(self::RATIOS_TABLE[$this->unit->value][$to->value])) {
+            throw new Exception("Invalid conversion from {$this->unit->value} to {$to->value}");
         }
 
-        return new self($this->value() * self::RATIOS_TABLE[$this->unit][$to], $to);
+        return new self($this->value() * self::RATIOS_TABLE[$this->unit->value][$to->value], $to);
     }
 
     public function value()

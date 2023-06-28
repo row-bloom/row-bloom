@@ -5,7 +5,7 @@ namespace ElaborateCode\RowBloom\Renderers;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
-use ElaborateCode\RowBloom\Renderers\Sizing\Length;
+use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
@@ -108,7 +108,7 @@ class MpdfRenderer implements RendererContract
 
     private function setPageFormat(): void
     {
-        $size = $this->options->resolvePaperSize(Length::MILLIMETER_UNIT);
+        $size = $this->options->resolvePaperSize(LengthUnit::MILLIMETER_UNIT);
         $orientation = 'p';
 
         $this->mpdf->_setPageSize($size, $orientation);
@@ -116,7 +116,7 @@ class MpdfRenderer implements RendererContract
 
     private function setMargins(): void
     {
-        $margin = Margin::fromOptions($this->options, Length::MILLIMETER_UNIT);
+        $margin = Margin::fromOptions($this->options, LengthUnit::MILLIMETER_UNIT);
 
         $this->mpdf->SetMargins(
             $margin->getRaw('marginLeft'),

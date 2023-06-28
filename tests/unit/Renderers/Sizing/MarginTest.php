@@ -1,9 +1,9 @@
 <?php
 
-use ElaborateCode\RowBloom\Renderers\Sizing\Length;
+use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 
-it('constructs', function (array|string $input, array $expected, string $unit = Length::PIXEL_UNIT) {
+it('constructs', function (array|string $input, array $expected, LengthUnit $unit = LengthUnit::PIXEL_UNIT) {
     $margin = new Margin($input, $unit);
 
     expect($margin->allRaw())->toEqual($expected);
@@ -43,11 +43,11 @@ it('constructs', function (array|string $input, array $expected, string $unit = 
             'marginBottom' => 1,
             'marginLeft' => 1,
         ],
-        'unit' => Length::PICA_UNIT,
+        'unit' => LengthUnit::PICA_UNIT,
     ],
 ]);
 
-it('constructs mixed units', function (array $input, array $expected, string $unit = Length::PIXEL_UNIT) {
+it('constructs mixed units', function (array $input, array $expected, LengthUnit $unit = LengthUnit::PIXEL_UNIT) {
     $margin = new Margin($input, $unit);
 
     expect($margin->allRaw())->toEqual($expected);
@@ -63,7 +63,7 @@ it('constructs mixed units', function (array $input, array $expected, string $un
     ],
 ]);
 
-it('converts', function (array $input, array $expected, string $unit, string $outputUnit) {
+it('converts', function (array $input, array $expected, LengthUnit $unit, LengthUnit $outputUnit) {
     $margin = new Margin($input, $unit);
 
     expect($margin->allRawIn($outputUnit))->toEqual($expected);
@@ -76,8 +76,8 @@ it('converts', function (array $input, array $expected, string $unit, string $ou
             'marginBottom' => 1,
             'marginLeft' => 1,
         ],
-        'unit' => Length::PICA_UNIT,
-        'outputUnit' => Length::PICA_UNIT,
+        'unit' => LengthUnit::PICA_UNIT,
+        'outputUnit' => LengthUnit::PICA_UNIT,
     ],
     'cm -> mm' => [
         'input' => [1, 2],
@@ -87,7 +87,7 @@ it('converts', function (array $input, array $expected, string $unit, string $ou
             'marginBottom' => 10,
             'marginLeft' => 20,
         ],
-        'unit' => Length::CENTIMETER_UNIT,
-        'outputUnit' => Length::MILLIMETER_UNIT,
+        'unit' => LengthUnit::CENTIMETER_UNIT,
+        'outputUnit' => LengthUnit::MILLIMETER_UNIT,
     ],
 ]);

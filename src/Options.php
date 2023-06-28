@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom;
 
+use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
 use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
 
 class Options
@@ -51,8 +52,7 @@ class Options
     ) {
     }
 
-    // TODO: enum unit or object scale
-    public function resolvePaperSize(string $unit)
+    public function resolvePaperSize(LengthUnit $unit)
     {
         if (isset($this->format)) {
             $size = $this->format->size($unit);

@@ -7,7 +7,7 @@ use Exception;
 
 final class Margin
 {
-    private static string $defaultUnit = UnitConverter::MILLIMETER_UNIT;
+    private static string $defaultUnit = Length::MILLIMETER_UNIT;
 
     private string $unit;
 
@@ -23,7 +23,7 @@ final class Margin
     {
         $this->unit = $unit ?? self::$defaultUnit;
 
-        if(is_string($margin)) {
+        if (is_string($margin)) {
             if (preg_match('/\d+(?:\.\d+)?(?:\s+[[:alpha:]]+)?/', $margin, $parsedMargin) === false) {
                 throw new Exception("Invalid margin {$margin}");
             }
@@ -59,7 +59,8 @@ final class Margin
 
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
         } elseif (preg_match('/^(?<value>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
-            $value = UnitConverter::convertAbs($parsed['unit'], $this->unit, $parsed['value']);
+            $value = (new Length($parsed['value'], $parsed['unit']))
+                ->convert($this->unit)->value();
         } else {
             throw new Exception('Invalid margin');
         }
@@ -78,7 +79,8 @@ final class Margin
             return null;
         }
 
-        return UnitConverter::convertAbs($this->unit, $to, $this->value[$key]);
+        return (new Length($this->value[$key], $to))
+            ->convert($this->unit)->value();
     }
 
     // TODO: rename this to allRaw()? all() returns string of "<val> <unit>"
@@ -90,7 +92,7 @@ final class Margin
     public function allIn(string $to): array
     {
         return array_map(
-            fn ($v) => UnitConverter::convertAbs($this->unit, $to, $v),
+            fn ($v) => (new Length($v, $this->unit))->convert($to)->value(),
             $this->value
         );
     }

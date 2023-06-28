@@ -4,7 +4,7 @@ namespace ElaborateCode\RowBloom\Renderers\Sizing;
 
 use Exception;
 
-final class UnitConverter
+final class Length
 {
     const PIXEL_UNIT = 'px';
 
@@ -66,20 +66,40 @@ final class UnitConverter
         ],
     ];
 
-    public static function convertAbs(string $from, string $to, float $value): float
+    private float $value;
+
+    // public static function fromString(){}
+    // public static function fromNumber(){}
+
+    public function __construct(float|int|string $value, private string $unit)
     {
-        $from = strtolower(trim($from));
+        if (! isset(self::RATIOS_TABLE[$this->unit])) {
+            throw new Exception("Invalid unit {$this->unit}");
+        }
+
+        // TODO: handle string?
+
+        $this->value = (float) $value;
+    }
+
+    public function convert(string $to): self
+    {
         $to = strtolower(trim($to));
 
-        if ($to === $from) {
-            return $value;
+        if ($this->unit === $to) {
+            return clone $this;
         }
 
-        if (! isset(self::RATIOS_TABLE[$from]) || ! isset(self::RATIOS_TABLE[$from][$to])) {
-            throw new Exception("Invalid conversion from {$from} to {$to}");
+        if (! isset(self::RATIOS_TABLE[$this->unit][$to])) {
+            throw new Exception("Invalid conversion from {$this->unit} to {$to}");
         }
 
-        return $value * self::RATIOS_TABLE[$from][$to];
+        return new self($this->value() * self::RATIOS_TABLE[$this->unit][$to], $to);
+    }
+
+    public function value()
+    {
+        return $this->value;
     }
 
     /**
@@ -97,7 +117,7 @@ final class UnitConverter
      * - To page size:
      *   - percent: Represents a percentage relative to the parent element.
      */
-    public static function convertRel(string $from, string $to, float $value, $reference)
+    public function convertRel(string $from, string $to, float $value, $reference)
     {
         // TODO: reference shape?
     }

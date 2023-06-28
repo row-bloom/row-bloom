@@ -1,9 +1,9 @@
 <?php
 
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
-use ElaborateCode\RowBloom\Renderers\Sizing\UnitConverter;
+use ElaborateCode\RowBloom\Renderers\Sizing\Length;
 
-it('constructs', function (array|string $input, array $expected, string $unit = UnitConverter::PIXEL_UNIT) {
+it('constructs', function (array|string $input, array $expected, string $unit = Length::PIXEL_UNIT) {
     $margin = new Margin($input, $unit);
 
     expect($margin->all())->toEqual($expected);
@@ -43,11 +43,11 @@ it('constructs', function (array|string $input, array $expected, string $unit = 
             'marginBottom' => 1,
             'marginLeft' => 1,
         ],
-        'unit' => UnitConverter::PICA_UNIT,
+        'unit' => Length::PICA_UNIT,
     ],
 ]);
 
-it('constructs mixed units', function (array $input, array $expected, string $unit = UnitConverter::PIXEL_UNIT) {
+it('constructs mixed units', function (array $input, array $expected, string $unit = Length::PIXEL_UNIT) {
     $margin = new Margin($input, $unit);
 
     expect($margin->all())->toEqual($expected);
@@ -76,8 +76,8 @@ it('converts', function (array $input, array $expected, string $unit, string $ou
             'marginBottom' => 1,
             'marginLeft' => 1,
         ],
-        'unit' => UnitConverter::PICA_UNIT,
-        'outputUnit' => UnitConverter::PICA_UNIT,
+        'unit' => Length::PICA_UNIT,
+        'outputUnit' => Length::PICA_UNIT,
     ],
     'cm -> mm' => [
         'input' => [1, 2],
@@ -87,7 +87,7 @@ it('converts', function (array $input, array $expected, string $unit, string $ou
             'marginBottom' => 10,
             'marginLeft' => 20,
         ],
-        'unit' => UnitConverter::CENTIMETER_UNIT,
-        'outputUnit' => UnitConverter::MILLIMETER_UNIT,
+        'unit' => Length::CENTIMETER_UNIT,
+        'outputUnit' => Length::MILLIMETER_UNIT,
     ],
 ]);

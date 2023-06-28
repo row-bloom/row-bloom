@@ -63,7 +63,7 @@ enum PaperFormat: string
     /**
      * Sizes in mm
      */
-    public function size(string $to = UnitConverter::MILLIMETER_UNIT): array
+    public function size(string $to = Length::MILLIMETER_UNIT): array
     {
         $to = strtolower(trim($to));
 
@@ -126,8 +126,8 @@ enum PaperFormat: string
         };
 
         return [
-            UnitConverter::convertAbs(UnitConverter::MILLIMETER_UNIT, $to, $size[0]),
-            UnitConverter::convertAbs(UnitConverter::MILLIMETER_UNIT, $to, $size[1]),
+            (new Length($size[0], Length::MILLIMETER_UNIT))->convert($to)->value(),
+            (new Length($size[1], Length::MILLIMETER_UNIT))->convert($to)->value(),
         ];
     }
 }

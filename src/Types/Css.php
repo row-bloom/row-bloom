@@ -6,25 +6,30 @@ use Stringable;
 
 final class Css implements Stringable
 {
-    public function __construct(protected string $css)
+    public static function fromString(string $content)
+    {
+        return new self($content);
+    }
+
+    private function __construct(protected string $content)
     {
     }
 
     public function __toString(): string
     {
-        return $this->css;
+        return $this->content;
     }
 
     public function prepend(string|Css $css): static
     {
-        $this->css = $css.$this->css;
+        $this->content = $css.$this->content;
 
         return $this;
     }
 
     public function append(string|Css $css): static
     {
-        $this->css = $this->css.$css;
+        $this->content = $this->content.$css;
 
         return $this;
     }

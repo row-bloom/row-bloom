@@ -15,7 +15,7 @@ it('renders', function () {
     expect(
         $renderer->render(
             Html::fromString('<h1>Title</h1><p>Bold text</p><div>Normal text</div>'),
-            new Css('p {font-weight: bold;}'),
+            Css::fromString('p {font-weight: bold;}'),
             new Options
         )->get()
     )->toBeString();

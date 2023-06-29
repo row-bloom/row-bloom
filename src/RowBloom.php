@@ -115,7 +115,7 @@ class RowBloom
     private function mergeCss(): Css
     {
         // TODO: Redo how css is added (one array to store paths and css objects)
-        $finalCss = new Css('');
+        $finalCss = Css::fromString('');
 
         foreach ($this->cssPaths as $cssPath) {
             $cssFile = File::fromPath($cssPath);

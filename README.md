@@ -31,7 +31,7 @@ Requires:
         ['title' => 'title4', 'body' => 'body4'],
     ]))
     ->setInterpolator(Interpolator::Twig)
-    ->setTemplate(new Template('
+    ->setTemplate(Html::fromString('
         <h1>{{title}}</h1>
         <p>Bold text</p>
         <div>{{body}}</div>
@@ -40,7 +40,7 @@ Requires:
     ->setOption('landscape', false)
     ->setOption('format', PaperFormat::FORMAT_A4)
     ->setOption('displayHeaderFooter', true)
-    ->addCss(new Css('
+    ->addCss(Css::fromString('
         p {font-weight: bold;}
     '))
     // ---------------------------

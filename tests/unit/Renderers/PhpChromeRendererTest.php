@@ -10,7 +10,7 @@ use ElaborateCode\RowBloom\Types\Html;
 it('renders', function () {
     $renderer = RendererFactory::getInstance()->make(Renderer::PhpChrome);
 
-    $css = new Css('p {font-weight: bold;}');
+    $css = Css::fromString('p {font-weight: bold;}');
     $interpolatedTemplate = Html::fromString('<h1>Title</h1><p>Bold text</p><div>Normal text</div>');
 
     expect($renderer)->toBeInstanceOf(PhpChromeRenderer::class);

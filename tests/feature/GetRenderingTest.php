@@ -5,11 +5,11 @@ use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
 use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\RowBloom;
 use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\Table;
 use ElaborateCode\RowBloom\Types\Html;
+use ElaborateCode\RowBloom\Types\Table;
 
 it('renders using Twig and HtmlRenderer', function (RowBloom $r) {
-    $css = new Css('');
+    $css = Css::fromString('');
     $template = Html::fromString('<h1>hey {{ name }}</h1>');
     $table = Table::fromArray([['name' => 'mohamed'], ['name' => 'ilies']]);
 

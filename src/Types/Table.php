@@ -5,16 +5,16 @@ namespace ElaborateCode\RowBloom\Types;
 use Exception;
 use Iterator;
 
-class Table implements Iterator
+final class Table implements Iterator
 {
     protected int $iteratorPosition = 0;
 
     public static function fromArray(array $table): static
     {
-        return new static($table);
+        return new self($table);
     }
 
-    final public function __construct(protected array $table)
+    private function __construct(protected array $table)
     {
         $this->validate();
     }

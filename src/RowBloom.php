@@ -135,9 +135,9 @@ class RowBloom
     // Fluent build methods
     // ============================================================
 
-    public function addTable(Table $table): static
+    public function addTable(Table|array $table): static
     {
-        $this->tables[] = $table;
+        $this->tables[] = $table instanceof Table ? $table : Table::fromArray($table);
 
         return $this;
     }
@@ -153,9 +153,9 @@ class RowBloom
         return $this;
     }
 
-    public function setTemplate(Html $template): static
+    public function setTemplate(Html|string $template): static
     {
-        $this->template = $template;
+        $this->template = $template instanceof Html ? $template : Html::fromString($template);
 
         return $this;
     }
@@ -167,9 +167,9 @@ class RowBloom
         return $this;
     }
 
-    public function addCss(Css $css): static
+    public function addCss(Css|string $css): static
     {
-        $this->css[] = $css;
+        $this->css[] = $css instanceof Css ? $css : Css::fromString($css);
 
         return $this;
     }

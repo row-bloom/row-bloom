@@ -22,14 +22,14 @@ Requires:
 
 ```php
 (new RowBloom)
-    ->addTable(Table::fromArray([
+    ->addTable([
         ['title' => 'title1', 'body' => 'body1'],
         ['title' => 'title2', 'body' => 'body2'],
-    ]))
+    ])
     ->addTable(Table::fromArray([
         ['title' => 'title3', 'body' => 'body3'],
         ['title' => 'title4', 'body' => 'body4'],
-    ]))
+    ])
     ->setInterpolator(Interpolator::Twig)
     ->setTemplate(Html::fromString('
         <h1>{{title}}</h1>
@@ -43,6 +43,9 @@ Requires:
     ->addCss(Css::fromString('
         p {font-weight: bold;}
     '))
+    ->addCss('
+        html {font-family: sans-serif;}
+    ')
     // ---------------------------
     // ->setRenderer(Renderer::Mpdf)
     // ->setOption('margin', '25.4 mm')

@@ -18,8 +18,7 @@ it('default interpolator', function () {
         '<h1>FOO</h1><p>Bar baz</p>',
     ]);
 
-    expect(
-        InterpolatorFactory::getInstance()->make()
-            ->interpolate(new Template($template), Table::fromArray($data))
-    )->toEqual($expected);
+    $interpolator = InterpolatorFactory::getInstance()->make();
+
+    expect($interpolator->interpolate(new Template($template), Table::fromArray($data)))->toEqual($expected);
 });

@@ -114,6 +114,7 @@ class RowBloom
 
     private function mergeCss(): Css
     {
+        // TODO: Redo how css is added (one array to store paths and css objects)
         $finalCss = new Css('');
 
         foreach ($this->cssPaths as $cssPath) {
@@ -122,7 +123,7 @@ class RowBloom
 
             $finalCss->append($cssFile->readFileContent());
         }
-        // TODO: clarify stylesheets ordering or allow setting priority
+
         foreach ($this->css as $css) {
             $finalCss->append($css);
         }

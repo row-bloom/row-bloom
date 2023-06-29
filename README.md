@@ -74,7 +74,7 @@ A driver will be picked automatically for each table path.
 
 Available drivers:
 
-- Spreadsheet (parses local `xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv` files).
+- Spreadsheet (parses local `xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv` files)(`folder` todo).
 - Json (todo)
 
 ### Template
@@ -103,13 +103,18 @@ All renderers are available in `ElaborateCode\RowBloom\Renderers\Renderer` enum,
 
 ### Options
 
-Each renderer has its own way to handle **margins**, **header**, **footer**, **paper sizing** and more. This package tries to act as a wrapper and give the same output from same options regardless of rendering library.
+Each renderer has its own way to handle **margin**, **header**, **footer**, **paper size** and more. This package tries to act as a wrapper and give the same output from same options regardless of rendering library.
 
 > The hard part XD
 
 The main options are the one offered by the browser print UI.
 
 ![browser print options](./browser_print_options.png)
+
+|     |     |
+| --- | --- |
+|     |     |
+|     |     |
 
 ## Testing
 

@@ -29,7 +29,7 @@ Requires:
     ->addTable(Table::fromArray([
         ['title' => 'title3', 'body' => 'body3'],
         ['title' => 'title4', 'body' => 'body4'],
-    ])
+    ]))
     ->setInterpolator(Interpolator::Twig)
     ->setTemplate(Html::fromString('
         <h1>{{title}}</h1>
@@ -44,7 +44,7 @@ Requires:
         p {font-weight: bold;}
     '))
     ->addCss('
-        html {font-family: sans-serif;}
+        div {font-weight: red;}
     ')
     // ---------------------------
     // ->setRenderer(Renderer::Mpdf)

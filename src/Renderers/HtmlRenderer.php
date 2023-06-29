@@ -12,7 +12,7 @@ class HtmlRenderer implements RendererContract
 {
     protected string $rendering;
 
-    protected Html $template;
+    protected Html $html;
 
     protected Css $css;
 
@@ -30,18 +30,25 @@ class HtmlRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(Html $template, Css $css, Options $options): static
+    public function render(Html $html, Css $css, Options $options): static
     {
-        $this->template = $template;
+        $this->html = $html;
         $this->css = $css;
         $this->options = $options;
 
-        $this->rendering = '<!DOCTYPE html><html><head>'
-            .'<title>Row bloom</title>'
-            ."<style>{$this->css}</style>"
-            .'</head>'
-            ."<body>{$this->template}</body>"
-            .'</html>';
+        $this->rendering = <<<_HTML
+            <!DOCTYPE html>
+            <head>
+                <style>
+                    $this->css
+                </style>
+                <title>Row bloom</title>
+            </head>
+            <body>
+                $this->html
+            </body>
+            </html>
+        _HTML;
 
         return $this;
     }

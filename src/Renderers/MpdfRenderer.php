@@ -28,7 +28,7 @@ class MpdfRenderer implements RendererContract
 {
     private string $rendering;
 
-    private Html $template;
+    private Html $html;
 
     private Css $css;
 
@@ -69,9 +69,9 @@ class MpdfRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(Html $template, Css $css, Options $options): static
+    public function render(Html $html, Css $css, Options $options): static
     {
-        $this->template = $template;
+        $this->html = $html;
         $this->css = $css;
         $this->options = $options;
 
@@ -80,7 +80,7 @@ class MpdfRenderer implements RendererContract
         $this->setHeaderAndFooter();
         $this->setMetadata();
 
-        $this->mpdf->WriteHTML($this->template);
+        $this->mpdf->WriteHTML($this->html);
 
         $this->mpdf->WriteHTML($this->css, HTMLParserMode::HEADER_CSS);
 

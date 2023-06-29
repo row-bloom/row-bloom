@@ -6,14 +6,14 @@ use Stringable;
 
 class File implements Stringable
 {
-    private string $path;
+    protected string $path;
 
     public static function fromPath(string $path, bool $real = false): static
     {
         return new static($path, $real);
     }
 
-    final public function __construct(string $path, bool $real = false)
+    final protected function __construct(string $path, bool $real = false)
     {
         if (! $real) {
             $this->path = str_replace('/', DIRECTORY_SEPARATOR, str_replace('\\', DIRECTORY_SEPARATOR, $path));
@@ -109,7 +109,7 @@ class File implements Stringable
 
     public function extension(): string
     {
-        return pathinfo($this->path, PATHINFO_EXTENSION);
+        return strtolower(pathinfo($this->path, PATHINFO_EXTENSION));
     }
 
     public function touch(): bool

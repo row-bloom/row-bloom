@@ -22,7 +22,7 @@ class RowBloom
     /** @var Table[] */
     private array $tables = [];
 
-    /** @var string[] */
+    /** @var string[][] */
     private array $tablePaths = [];
 
     private ?Template $template = null;
@@ -72,12 +72,17 @@ class RowBloom
 
     private function mergeTables(): Table
     {
+        $dataCollectorFactory = DataCollectorFactory::getInstance();
+
         foreach ($this->tablePaths as $tablePath) {
-            // TODO: each path should be handled with its adequate driver
-            $this->tables[] = DataCollectorFactory::make('spreadsheet')
-                ->getTable($tablePath);
+            $this->tables[] = (match (true) {
+                isset($tablePath['driver']) => $dataCollectorFactory->make($tablePath['driver']),
+                default => $dataCollectorFactory->makeFromPath($tablePath['path']),
+            })->getTable($tablePath['path']);
         }
+
         $data = [];
+
         foreach ($this->tables as $table) {
             $data += $table->toArray();
         }
@@ -134,9 +139,13 @@ class RowBloom
         return $this;
     }
 
-    public function addTablePath(string $tablePath): static
+    // ? addSpreadsheetPath() ,addJsonPath(), ...
+    public function addTablePath(string $tablePath, ?string $driver = null): static
     {
-        $this->tablePaths[] = $tablePath;
+        $this->tablePaths[] = [
+            'path' => $tablePath,
+            'driver' => $driver,
+        ];
 
         return $this;
     }

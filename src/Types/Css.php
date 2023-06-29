@@ -6,7 +6,7 @@ use Stringable;
 
 final class Css implements Stringable
 {
-    public static function fromString(string $content)
+    public static function fromString(string $content): static
     {
         return new self($content);
     }

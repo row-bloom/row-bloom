@@ -5,23 +5,23 @@ namespace ElaborateCode\RowBloom\Types;
 use Exception;
 use Iterator;
 
-class Table implements Iterator
+final class Table implements Iterator
 {
     protected int $iteratorPosition = 0;
 
-    public static function fromArray(array $table): static
+    public static function fromArray(array $data): static
     {
-        return new static($table);
+        return new self($data);
     }
 
-    final public function __construct(protected array $table)
+    private function __construct(protected array $data)
     {
         $this->validate();
     }
 
     protected function validate()
     {
-        foreach ($this->table as $i => $row) {
+        foreach ($this->data as $i => $row) {
             if (! is_array($row)) {
                 throw new Exception("Row $i must be an array");
             }
@@ -32,19 +32,19 @@ class Table implements Iterator
 
     public function toArray(): array
     {
-        return $this->table;
+        return $this->data;
     }
 
-    // public function prepend(Table $table): static
+    // public function prepend(Table $data): static
     // {
-    //     $this->table = array_merge($table, $this->table);
+    //     $this->data = array_merge($data, $this->data);
     //     return $this;
     // }
 
-    public function append(Table $table): static
+    public function append(Table $data): static
     {
-        foreach ($table as $newRow) {
-            $this->table[] = $newRow;
+        foreach ($data as $newRow) {
+            $this->data[] = $newRow;
         }
 
         return $this;
@@ -61,7 +61,7 @@ class Table implements Iterator
 
     public function current(): ?array
     {
-        return $this->table[$this->iteratorPosition];
+        return $this->data[$this->iteratorPosition];
     }
 
     public function key(): int
@@ -76,6 +76,6 @@ class Table implements Iterator
 
     public function valid(): bool
     {
-        return isset($this->table[$this->iteratorPosition]);
+        return isset($this->data[$this->iteratorPosition]);
     }
 }

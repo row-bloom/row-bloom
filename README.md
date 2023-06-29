@@ -22,16 +22,16 @@ Requires:
 
 ```php
 (new RowBloom)
-    ->addTable(Table::fromArray([
+    ->addTable([
         ['title' => 'title1', 'body' => 'body1'],
         ['title' => 'title2', 'body' => 'body2'],
-    ]))
+    ])
     ->addTable(Table::fromArray([
         ['title' => 'title3', 'body' => 'body3'],
         ['title' => 'title4', 'body' => 'body4'],
     ]))
     ->setInterpolator(Interpolator::Twig)
-    ->setTemplate(new Template('
+    ->setTemplate(Html::fromString('
         <h1>{{title}}</h1>
         <p>Bold text</p>
         <div>{{body}}</div>
@@ -40,9 +40,12 @@ Requires:
     ->setOption('landscape', false)
     ->setOption('format', PaperFormat::FORMAT_A4)
     ->setOption('displayHeaderFooter', true)
-    ->addCss(new Css('
+    ->addCss(Css::fromString('
         p {font-weight: bold;}
     '))
+    ->addCss('
+        div {font-weight: red;}
+    ')
     // ---------------------------
     // ->setRenderer(Renderer::Mpdf)
     // ->setOption('margin', '25.4 mm')

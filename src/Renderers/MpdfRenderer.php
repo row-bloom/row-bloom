@@ -8,7 +8,7 @@ use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
+use ElaborateCode\RowBloom\Types\Html;
 use Mpdf\HTMLParserMode;
 use Mpdf\Mpdf;
 
@@ -28,7 +28,7 @@ class MpdfRenderer implements RendererContract
 {
     private string $rendering;
 
-    private InterpolatedTemplate $interpolatedTemplate;
+    private Html $html;
 
     private Css $css;
 
@@ -69,9 +69,9 @@ class MpdfRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): static
+    public function render(Html $html, Css $css, Options $options): static
     {
-        $this->interpolatedTemplate = $interpolatedTemplate;
+        $this->html = $html;
         $this->css = $css;
         $this->options = $options;
 
@@ -80,39 +80,13 @@ class MpdfRenderer implements RendererContract
         $this->setHeaderAndFooter();
         $this->setMetadata();
 
-        $body = $this->getHtmlBody();
-        $this->mpdf->WriteHTML($body);
+        $this->mpdf->WriteHTML($this->html);
 
         $this->mpdf->WriteHTML($this->css, HTMLParserMode::HEADER_CSS);
 
         $this->rendering = base64_encode($this->mpdf->OutputBinaryData());
 
         return $this;
-    }
-
-    // ============================================================
-    // Html
-    // ============================================================
-
-    private function getHtmlBody(): string
-    {
-        if (is_null($this->options->perPage)) {
-            return implode('', $this->interpolatedTemplate->toArray());
-        }
-
-        $body = '';
-        foreach ($this->interpolatedTemplate->toArray() as $i => $t) {
-            $body .= "\n{$t}";
-
-            if (
-                ($i + 1) % $this->options->perPage === 0 &&
-                ($i + 1) !== count($this->interpolatedTemplate->toArray())
-            ) {
-                $body .= '<div style="page-break-before: always;"></div>';
-            }
-        }
-
-        return $body;
     }
 
     // ============================================================

@@ -36,7 +36,7 @@ class Options
         public ?string $width = null,
         public ?string $height = null,
 
-        // ! same value does not give same rendering on different drivers
+        // TODO: unify behavior across drivers
         public array|string $margin = '1 in',
 
         public ?string $metadataTitle = null,
@@ -45,8 +45,9 @@ class Options
         public ?string $metadataSubject = null,
         public ?string $metadataKeywords = null,
 
+        // TODO: font
+
         // scale ?
-        // font ?
         // security ?
         // compression ?
     ) {

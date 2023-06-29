@@ -4,7 +4,7 @@ namespace ElaborateCode\RowBloom\Types;
 
 use Stringable;
 
-final class Css implements Stringable
+final class Html implements Stringable
 {
     public static function fromString(string $content): static
     {
@@ -18,19 +18,5 @@ final class Css implements Stringable
     public function __toString(): string
     {
         return $this->content;
-    }
-
-    public function prepend(string|Css $css): static
-    {
-        $this->content = $css.$this->content;
-
-        return $this;
-    }
-
-    public function append(string|Css $css): static
-    {
-        $this->content = $this->content.$css;
-
-        return $this;
     }
 }

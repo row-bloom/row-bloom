@@ -66,7 +66,7 @@ Requires:
         </div>
     ')
     // ---------------------------
-    ->save(File::fromPath(__DIR__.'/foo.pdf'));
+    ->save(__DIR__.'/foo.pdf');
 ```
 
 ### Data

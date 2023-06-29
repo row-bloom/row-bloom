@@ -2,7 +2,9 @@
 
 namespace ElaborateCode\RowBloom\DataCollectors;
 
-enum DataCollector
+use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
+
+enum DataCollector: string
 {
-    case Spreadsheet;
+    case Spreadsheet = SpreadsheetDataCollector::class;
 }

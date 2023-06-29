@@ -3,7 +3,6 @@
 namespace ElaborateCode\RowBloom\DataCollectors;
 
 use ElaborateCode\RowBloom\DataCollectorContract;
-use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Utils\BasicSingletonConcern;
 use Exception;
@@ -15,9 +14,7 @@ final class DataCollectorFactory
     public function make(DataCollector|string $driver): DataCollectorContract
     {
         if ($driver instanceof DataCollector) {
-            $dataCollector = $this->resolveDriver($driver);
-
-            return new $dataCollector;
+            return new $driver->value;
         }
 
         if (class_exists($driver) && in_array(DataCollectorContract::class, class_implements($driver), true)) {
@@ -37,13 +34,6 @@ final class DataCollectorFactory
         };
 
         return $this->make($driver);
-    }
-
-    private function resolveDriver(DataCollector $driver): string
-    {
-        return match ($driver) {
-            DataCollector::Spreadsheet => SpreadsheetDataCollector::class,
-        };
     }
 
     private function resolveFileDriver(File $file): DataCollector

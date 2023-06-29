@@ -2,7 +2,12 @@
 
 namespace ElaborateCode\RowBloom\Interpolators;
 
-enum Interpolator
+enum Interpolator: string
 {
-    case Twig;
+    case Twig = TwigInterpolator::class;
+
+    public static function getDefault(): static
+    {
+        return static::Twig;
+    }
 }

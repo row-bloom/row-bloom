@@ -10,16 +10,12 @@ final class RendererFactory
 {
     use BasicSingletonConcern;
 
-    public static $defaultDriver = Renderer::Html;
-
     public function make(Renderer|string|null $driver = null): RendererContract
     {
-        $driver ??= self::$defaultDriver;
+        $driver ??= Renderer::getDefault();
 
         if ($driver instanceof Renderer) {
-            $renderer = $this->resolveDriver($driver);
-
-            return new $renderer;
+            return new $driver->value;
         }
 
         if (class_exists($driver) && in_array(RendererContract::class, class_implements($driver), true)) {
@@ -27,15 +23,5 @@ final class RendererFactory
         }
 
         throw new Exception("'{$driver}' is not a valid renderer");
-    }
-
-    private function resolveDriver(Renderer $driver): string
-    {
-        return match ($driver) {
-            Renderer::Html => HtmlRenderer::class,
-            Renderer::PhpChrome => PhpChromeRenderer::class,
-            Renderer::Mpdf => MpdfRenderer::class,
-            // ? tcpdf
-        };
     }
 }

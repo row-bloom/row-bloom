@@ -179,7 +179,7 @@ class File implements Stringable
     {
         // ? support array of extensions
         if (strcmp(strtolower($this->extension()), strtolower($extension)) !== 0) {
-            throw new FsException("{$this->path} is not writable");
+            throw new FsException("'{$this->path}' must be '{$extension}'");
         }
 
         return $this;

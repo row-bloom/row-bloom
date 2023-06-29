@@ -6,13 +6,13 @@ use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
 use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
+use ElaborateCode\RowBloom\Types\Html;
 
 class HtmlRenderer implements RendererContract
 {
     protected string $rendering;
 
-    protected InterpolatedTemplate $interpolatedTemplate;
+    protected Html $template;
 
     protected Css $css;
 
@@ -30,34 +30,17 @@ class HtmlRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(InterpolatedTemplate $interpolatedTemplate, Css $css, Options $options): static
+    public function render(Html $template, Css $css, Options $options): static
     {
-        $this->interpolatedTemplate = $interpolatedTemplate;
+        $this->template = $template;
         $this->css = $css;
         $this->options = $options;
-
-        $body = '';
-        if (! is_null($this->options->perPage)) {
-            foreach ($this->interpolatedTemplate->toArray() as $i => $t) {
-                $body .= "\n{$t}";
-
-                if (
-                    ($i + 1) % $this->options->perPage === 0 &&
-                    ($i + 1) !== count($this->interpolatedTemplate->toArray())
-                ) {
-                    $body .= '<div style="page-break-before: always;"></div>';
-                }
-            }
-        } else {
-            // ? implode with a special string
-            $body = implode('\n', $this->interpolatedTemplate->toArray());
-        }
 
         $this->rendering = '<!DOCTYPE html><html><head>'
             .'<title>Row bloom</title>'
             ."<style>{$this->css}</style>"
             .'</head>'
-            ."<body>{$body}</body>"
+            ."<body>{$this->template}</body>"
             .'</html>';
 
         return $this;

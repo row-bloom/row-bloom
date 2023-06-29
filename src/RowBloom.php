@@ -9,8 +9,8 @@ use ElaborateCode\RowBloom\Interpolators\InterpolatorFactory;
 use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
+use ElaborateCode\RowBloom\Types\Html;
 use ElaborateCode\RowBloom\Types\Table;
-use ElaborateCode\RowBloom\Types\Template;
 use Exception;
 
 class RowBloom
@@ -27,7 +27,7 @@ class RowBloom
     /** @var string[][] */
     private array $tablePaths = [];
 
-    private ?Template $template = null;
+    private ?Html $template = null;
 
     private ?string $templatePath = null;
 
@@ -65,9 +65,9 @@ class RowBloom
         $finaleTemplate = $this->template();
         $finalCss = $this->mergeCss();
 
-        $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable);
+        $html = $interpolator->interpolate($finaleTemplate, $finalTable, $this->options->perPage);
 
-        return $renderer->render($interpolatedTemplate, $finalCss, $this->options);
+        return $renderer->render($html, $finalCss, $this->options);
     }
 
     // ------------------------------------------------------------
@@ -92,7 +92,7 @@ class RowBloom
         return Table::fromArray($data);
     }
 
-    private function template(): Template
+    private function template(): Html
     {
         if (! is_null($this->template) && ! is_null($this->templatePath)) {
             throw new Exception('TEMPLATE...');
@@ -102,7 +102,7 @@ class RowBloom
             $file = File::fromPath($this->templatePath);
             $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
 
-            return new Template($file->readFileContent());
+            return Html::fromString($file->readFileContent());
         }
 
         if (! is_null($this->template)) {
@@ -153,7 +153,7 @@ class RowBloom
         return $this;
     }
 
-    public function setTemplate(Template $template): static
+    public function setTemplate(Html $template): static
     {
         $this->template = $template;
 

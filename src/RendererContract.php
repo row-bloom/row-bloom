@@ -4,7 +4,7 @@ namespace ElaborateCode\RowBloom;
 
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
+use ElaborateCode\RowBloom\Types\Html;
 
 interface RendererContract
 {
@@ -14,5 +14,5 @@ interface RendererContract
 
     // ? stream()
 
-    public function render(InterpolatedTemplate $template, Css $css, Options $options): static;
+    public function render(Html $template, Css $css, Options $options): static;
 }

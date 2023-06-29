@@ -4,7 +4,7 @@ namespace ElaborateCode\RowBloom\Types;
 
 use Stringable;
 
-class Css implements Stringable
+final class Css implements Stringable
 {
     public function __construct(protected string $css)
     {

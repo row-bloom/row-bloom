@@ -36,6 +36,8 @@ class HtmlRenderer implements RendererContract
         $this->css = $css;
         $this->options = $options;
 
+        // TODO: handle options
+
         $this->rendering = <<<_HTML
             <!DOCTYPE html>
             <head>

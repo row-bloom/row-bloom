@@ -2,10 +2,11 @@
 
 namespace ElaborateCode\RowBloom\Types;
 
+use Countable;
 use Exception;
 use Iterator;
 
-final class Table implements Iterator
+final class Table implements Iterator, Countable
 {
     protected int $iteratorPosition = 0;
 
@@ -53,6 +54,11 @@ final class Table implements Iterator
     // ============================================================
     // Iterator interface methods
     // ============================================================
+
+    public function count(): int
+    {
+        return count($this->data);
+    }
 
     public function rewind(): void
     {

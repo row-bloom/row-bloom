@@ -16,24 +16,24 @@ class TwigInterpolator implements InterpolatorContract
         $twig = new Environment($loader);
         $template = $twig->load('template');
 
-        $interpolatedRows = [];
-        foreach ($table->toArray() as $rowData) {
-            $interpolatedRows[] = $template->render($rowData);
-        }
-
-        $joinCharacter = '';
-
-        if (is_null($perPage)) {
-            return Html::fromString(implode($joinCharacter, $interpolatedRows));
-        }
-
+        // ? refine logic here
         $body = '';
-        foreach ($interpolatedRows as $i => $t) {
+        $joinCharacter = '';
+        $dataCount = count($table);
+        $separatePages = !is_null($perPage);
+
+        foreach ($table as $i => $rowData) {
+            $t = $template->render($rowData);
+
             $body .= "{$joinCharacter}{$t}";
+
+            if ($separatePages) {
+                continue;
+            }
 
             if (
                 ($i + 1) % $perPage === 0 &&
-                ($i + 1) !== count($interpolatedRows)
+                ($i + 1) !== $dataCount
             ) {
                 $body .= '<div style="page-break-before: always;"></div>';
             }

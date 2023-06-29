@@ -2,12 +2,13 @@
 
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\MpdfRenderer;
+use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
-    $renderer = RendererFactory::make('*mpdf');
+    $renderer = RendererFactory::getInstance()->make(Renderer::Mpdf);
 
     expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
 

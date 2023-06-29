@@ -4,7 +4,9 @@ namespace ElaborateCode\RowBloom;
 
 use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Interpolators\Interpolator;
 use ElaborateCode\RowBloom\Interpolators\InterpolatorFactory;
+use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Table;
@@ -13,16 +15,16 @@ use Exception;
 
 class RowBloom
 {
-    private InterpolatorContract|string $interpolator;
+    private Interpolator|InterpolatorContract|string $interpolator;
 
-    private RendererContract|string $renderer;
+    private Renderer|RendererContract|string $renderer;
 
     // ------------------------------------------------------------
 
     /** @var Table[] */
     private array $tables = [];
 
-    /** @var string[] */
+    /** @var string[][] */
     private array $tablePaths = [];
 
     private ?Template $template = null;
@@ -72,12 +74,17 @@ class RowBloom
 
     private function mergeTables(): Table
     {
+        $dataCollectorFactory = DataCollectorFactory::getInstance();
+
         foreach ($this->tablePaths as $tablePath) {
-            // TODO: each path should be handled with its adequate driver
-            $this->tables[] = DataCollectorFactory::make('spreadsheet')
-                ->getTable($tablePath);
+            $this->tables[] = (match (true) {
+                isset($tablePath['driver']) => $dataCollectorFactory->make($tablePath['driver']),
+                default => $dataCollectorFactory->makeFromPath($tablePath['path']),
+            })->getTable($tablePath['path']);
         }
+
         $data = [];
+
         foreach ($this->tables as $table) {
             $data += $table->toArray();
         }
@@ -134,9 +141,13 @@ class RowBloom
         return $this;
     }
 
-    public function addTablePath(string $tablePath): static
+    // ? addSpreadsheetPath() ,addJsonPath(), ...
+    public function addTablePath(string $tablePath, ?string $driver = null): static
     {
-        $this->tablePaths[] = $tablePath;
+        $this->tablePaths[] = [
+            'path' => $tablePath,
+            'driver' => $driver,
+        ];
 
         return $this;
     }
@@ -176,14 +187,14 @@ class RowBloom
         return $this;
     }
 
-    public function setInterpolator(InterpolatorContract|string $interpolator): static
+    public function setInterpolator(Interpolator|InterpolatorContract|string $interpolator): static
     {
         $this->interpolator = $interpolator;
 
         return $this;
     }
 
-    public function setRenderer(RendererContract|string $renderer): static
+    public function setRenderer(Renderer|RendererContract|string $renderer): static
     {
         $this->renderer = $renderer;
 
@@ -197,26 +208,26 @@ class RowBloom
     private function resolveInterpolator(): InterpolatorContract
     {
         if (! isset($this->interpolator)) {
-            return InterpolatorFactory::make();
+            return InterpolatorFactory::getInstance()->make();
         }
 
         if ($this->interpolator instanceof InterpolatorContract) {
             return $this->interpolator;
         }
 
-        return InterpolatorFactory::make($this->interpolator);
+        return InterpolatorFactory::getInstance()->make($this->interpolator);
     }
 
     private function resolveRenderer(): RendererContract
     {
         if (! isset($this->renderer)) {
-            return RendererFactory::make();
+            return RendererFactory::getInstance()->make();
         }
 
         if ($this->renderer instanceof RendererContract) {
             return $this->renderer;
         }
 
-        return RendererFactory::make($this->renderer);
+        return RendererFactory::getInstance()->make($this->renderer);
     }
 }

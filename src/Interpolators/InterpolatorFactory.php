@@ -3,20 +3,19 @@
 namespace ElaborateCode\RowBloom\Interpolators;
 
 use ElaborateCode\RowBloom\InterpolatorContract;
+use ElaborateCode\RowBloom\Utils\BasicSingletonConcern;
 use Exception;
 
-class InterpolatorFactory
+final class InterpolatorFactory
 {
-    public static $defaultDriver = '*twig';
+    use BasicSingletonConcern;
 
-    public static function make(?string $driver = null): InterpolatorContract
+    public function make(Interpolator|string|null $driver = null): InterpolatorContract
     {
-        $driver ??= self::$defaultDriver;
+        $driver ??= Interpolator::getDefault();
 
-        $interpolator = self::resolveDriver($driver);
-
-        if ($interpolator) {
-            return new $interpolator;
+        if ($driver instanceof Interpolator) {
+            return new $driver->value;
         }
 
         if (class_exists($driver) && in_array(InterpolatorContract::class, class_implements($driver), true)) {
@@ -24,13 +23,5 @@ class InterpolatorFactory
         }
 
         throw new Exception("'{$driver}' is not a valid interpolator");
-    }
-
-    private static function resolveDriver(string $driver): ?string
-    {
-        return match ($driver) {
-            '*twig' => TwigInterpolator::class,
-            default => null,
-        };
     }
 }

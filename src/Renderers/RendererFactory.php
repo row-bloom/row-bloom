@@ -3,20 +3,19 @@
 namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\RendererContract;
+use ElaborateCode\RowBloom\Utils\BasicSingletonConcern;
 use Exception;
 
 final class RendererFactory
 {
-    public static $defaultDriver = '*html';
+    use BasicSingletonConcern;
 
-    public static function make(?string $driver = null): RendererContract
+    public function make(Renderer|string|null $driver = null): RendererContract
     {
-        $driver ??= self::$defaultDriver;
+        $driver ??= Renderer::getDefault();
 
-        $renderer = self::resolveDriver($driver);
-
-        if ($renderer) {
-            return new $renderer;
+        if ($driver instanceof Renderer) {
+            return new $driver->value;
         }
 
         if (class_exists($driver) && in_array(RendererContract::class, class_implements($driver), true)) {
@@ -24,16 +23,5 @@ final class RendererFactory
         }
 
         throw new Exception("'{$driver}' is not a valid renderer");
-    }
-
-    private static function resolveDriver(string $driver): ?string
-    {
-        return match ($driver) {
-            '*html' => HtmlRenderer::class,
-            '*php chrome' => PhpChromeRenderer::class,
-            '*mpdf' => MpdfRenderer::class,
-            // ? tcpdf
-            default => null,
-        };
     }
 }

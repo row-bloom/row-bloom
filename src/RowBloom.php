@@ -85,13 +85,13 @@ class RowBloom
             })->getTable($tablePath['path']);
         }
 
-        $data = [];
+        $finalTable = Table::fromArray([]);
 
         foreach ($this->tables as $table) {
-            $data += $table->toArray();
+            $finalTable->append($table);
         }
 
-        return Table::fromArray($data);
+        return $finalTable;
     }
 
     private function template(): Html

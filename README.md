@@ -69,6 +69,12 @@ Requires:
     ->save(__DIR__.'/foo.pdf');
 ```
 
+After finishing the fluent build, the execution goes through three main steps:
+
+1. Collect data.
+2. Interpolate data into the given template and make the final HTML body.
+3. Handle options and output the final HTML or PDF.
+
 ### Data
 
 Provide data using `addTable` or `addTablePath`.

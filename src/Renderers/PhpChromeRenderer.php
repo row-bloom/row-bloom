@@ -101,6 +101,7 @@ class PhpChromeRenderer implements RendererContract
 
     private function html(): string
     {
+        // ? same happens in HtmlRenderer
         return <<<_HTML
             <!DOCTYPE html>
             <head>

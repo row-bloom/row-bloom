@@ -2,12 +2,13 @@
 
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
+use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders and saves', function () {
-    $renderer = RendererFactory::getInstance()->make('*html');
+    $renderer = RendererFactory::getInstance()->make(Renderer::Html);
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 

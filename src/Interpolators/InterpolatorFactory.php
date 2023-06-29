@@ -10,15 +10,15 @@ final class InterpolatorFactory
 {
     use BasicSingletonConcern;
 
-    public static $defaultDriver = '*twig';
+    public static $defaultDriver = Interpolator::Twig;
 
-    public function make(?string $driver = null): InterpolatorContract
+    public function make(Interpolator|string|null $driver = null): InterpolatorContract
     {
         $driver ??= self::$defaultDriver;
 
-        $interpolator = $this->resolveDriver($driver);
+        if ($driver instanceof Interpolator) {
+            $interpolator = $this->resolveDriver($driver);
 
-        if ($interpolator) {
             return new $interpolator;
         }
 
@@ -29,11 +29,10 @@ final class InterpolatorFactory
         throw new Exception("'{$driver}' is not a valid interpolator");
     }
 
-    private function resolveDriver(string $driver): ?string
+    private function resolveDriver(Interpolator $driver): string
     {
         return match ($driver) {
-            '*twig' => TwigInterpolator::class,
-            default => null,
+            Interpolator::Twig => TwigInterpolator::class,
         };
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
+use ElaborateCode\RowBloom\Interpolators\Interpolator;
 use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
+use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\RowBloom;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Table;
@@ -15,7 +17,7 @@ it('renders using Twig and HtmlRenderer', function (RowBloom $r) {
         ->toBeString()->toContain('ilies', 'mohamed');
 })->with([
     'basic' => new RowBloom,
-    'twig' => (new RowBloom)->setInterpolator('*twig'),
-    'html' => (new RowBloom)->setRenderer('*html'),
+    'twig' => (new RowBloom)->setInterpolator(Interpolator::Twig),
+    'html' => (new RowBloom)->setRenderer(Renderer::Html),
     'HtmlRenderer instance' => (new RowBloom)->setRenderer(new HtmlRenderer),
 ]);

@@ -12,11 +12,11 @@ final class DataCollectorFactory
 {
     use BasicSingletonConcern;
 
-    public function make(string $driver): DataCollectorContract
+    public function make(DataCollector|string $driver): DataCollectorContract
     {
-        $dataCollector = $this->resolveDriver($driver);
+        if ($driver instanceof DataCollector) {
+            $dataCollector = $this->resolveDriver($driver);
 
-        if ($dataCollector) {
             return new $dataCollector;
         }
 
@@ -39,18 +39,17 @@ final class DataCollectorFactory
         return $this->make($driver);
     }
 
-    private function resolveDriver(string $driver): ?string
+    private function resolveDriver(DataCollector $driver): string
     {
         return match ($driver) {
-            '*spreadsheet' => SpreadsheetDataCollector::class,
-            default => null,
+            DataCollector::Spreadsheet => SpreadsheetDataCollector::class,
         };
     }
 
-    private function resolveFileDriver(File $file): string
+    private function resolveFileDriver(File $file): DataCollector
     {
         if (in_array($file->extension(), ['xlsx', 'xls', 'xml', 'ods', 'slk', 'gnumeric', 'html', 'csv'], true)) {
-            return '*spreadsheet';
+            return DataCollector::Spreadsheet;
         }
 
         throw new Exception("Couldn't resolve a driver for the file '{$file}'");

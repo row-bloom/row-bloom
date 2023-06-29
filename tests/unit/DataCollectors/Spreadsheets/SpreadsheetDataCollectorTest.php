@@ -1,10 +1,11 @@
 <?php
 
+use ElaborateCode\RowBloom\DataCollectors\DataCollector;
 use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
 use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 
 it('parses', function () {
-    $dataCollector = DataCollectorFactory::getInstance()->make('*spreadsheet');
+    $dataCollector = DataCollectorFactory::getInstance()->make(DataCollector::Spreadsheet);
 
     expect($dataCollector)->toBeInstanceOf(SpreadsheetDataCollector::class);
 

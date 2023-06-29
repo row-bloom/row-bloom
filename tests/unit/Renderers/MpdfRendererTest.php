@@ -14,9 +14,9 @@ it('renders', function ($template, $css, $options) {
 
     expect($renderer->render($template, $css, $options)->get())->toBeString();
 })->with([
-    "example 1" => [
+    'example 1' => [
         'template' => Html::fromString('<h1>Title</h1><p>Bold text</p><div>Normal text</div>'),
         'css' => Css::fromString('p {font-weight: bold;}'),
-        'options' => new Options
-    ]
+        'options' => new Options,
+    ],
 ]);

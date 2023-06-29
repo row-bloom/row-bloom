@@ -63,7 +63,7 @@ class RowBloom
 
         $finalTable = $this->mergeTables();
         $finaleTemplate = $this->template();
-        $finalCss = $this->mergeCss(); // ! should be optional
+        $finalCss = $this->mergeCss();
 
         $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable);
 
@@ -182,7 +182,7 @@ class RowBloom
 
     public function setOption(string $key, mixed $value): static
     {
-        $this->options[$key] = $value;
+        $this->options->$key = $value;
 
         return $this;
     }

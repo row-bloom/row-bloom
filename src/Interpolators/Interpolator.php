@@ -8,6 +8,6 @@ enum Interpolator: string
 
     public static function getDefault(): static
     {
-        return static::Twig;
+        return self::Twig;
     }
 }

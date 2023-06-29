@@ -11,6 +11,6 @@ enum Renderer: string
 
     public static function getDefault(): static
     {
-        return static::Html;
+        return self::Html;
     }
 }

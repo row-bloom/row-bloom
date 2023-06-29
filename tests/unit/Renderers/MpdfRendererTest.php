@@ -7,7 +7,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
-    $renderer = RendererFactory::make('*mpdf');
+    $renderer = RendererFactory::getInstance()->make('*mpdf');
 
     expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
 

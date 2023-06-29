@@ -5,24 +5,12 @@ namespace ElaborateCode\RowBloom\DataCollectors;
 use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\Utils\BasicSingletonConcern;
 use Exception;
 
-class DataCollectorFactory
+final class DataCollectorFactory
 {
-    private static $instance;
-
-    private function __construct()
-    {
-    }
-
-    public static function getInstance(): DataCollectorFactory
-    {
-        if (! self::$instance) {
-            self::$instance = new DataCollectorFactory();
-        }
-
-        return self::$instance;
-    }
+    use BasicSingletonConcern;
 
     public function make(string $driver): DataCollectorContract
     {

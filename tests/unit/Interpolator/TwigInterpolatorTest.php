@@ -19,7 +19,7 @@ it('default interpolator', function () {
     ]);
 
     expect(
-        InterpolatorFactory::make()
+        InterpolatorFactory::getInstance()->make()
             ->interpolate(new Template($template), Table::fromArray($data))
     )->toEqual($expected);
 });

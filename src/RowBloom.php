@@ -206,26 +206,26 @@ class RowBloom
     private function resolveInterpolator(): InterpolatorContract
     {
         if (! isset($this->interpolator)) {
-            return InterpolatorFactory::make();
+            return InterpolatorFactory::getInstance()->make();
         }
 
         if ($this->interpolator instanceof InterpolatorContract) {
             return $this->interpolator;
         }
 
-        return InterpolatorFactory::make($this->interpolator);
+        return InterpolatorFactory::getInstance()->make($this->interpolator);
     }
 
     private function resolveRenderer(): RendererContract
     {
         if (! isset($this->renderer)) {
-            return RendererFactory::make();
+            return RendererFactory::getInstance()->make();
         }
 
         if ($this->renderer instanceof RendererContract) {
             return $this->renderer;
         }
 
-        return RendererFactory::make($this->renderer);
+        return RendererFactory::getInstance()->make($this->renderer);
     }
 }

@@ -7,7 +7,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders', function () {
-    $renderer = RendererFactory::make('*php chrome');
+    $renderer = RendererFactory::getInstance()->make('*php chrome');
 
     $css = new Css('p {font-weight: bold;}');
     $interpolatedTemplate = new InterpolatedTemplate([

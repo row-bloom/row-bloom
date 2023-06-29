@@ -7,7 +7,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\InterpolatedTemplate;
 
 it('renders and saves', function () {
-    $renderer = RendererFactory::make('*html');
+    $renderer = RendererFactory::getInstance()->make('*html');
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 

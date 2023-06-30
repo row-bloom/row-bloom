@@ -31,11 +31,8 @@ class RowBloom
 
     private ?string $templatePath = null;
 
-    /** @var Css[] */
+    /** @var (Css|File)[] */
     private array $css = [];
-
-    /** @var string[] */
-    private array $cssPaths = [];
 
     private Options $options;
 
@@ -116,18 +113,15 @@ class RowBloom
 
     private function mergeCss(): Css
     {
-        // TODO: Redo how css is added (one array to store paths and css objects)
         $finalCss = Css::fromString('');
 
-        foreach ($this->cssPaths as $cssPath) {
-            $cssFile = File::fromPath($cssPath);
-            $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
-
-            $finalCss->append($cssFile->readFileContent());
-        }
-
         foreach ($this->css as $css) {
-            $finalCss->append($css);
+            if ($css instanceof Css) {
+                $finalCss->append($css);
+            } elseif ($css instanceof File) {
+                $finalCss->append($css->readFileContent());
+            }
+            // else: unexpected
         }
 
         return $finalCss;
@@ -176,9 +170,13 @@ class RowBloom
         return $this;
     }
 
-    public function addCssPath(string $cssPath): static
+    public function addCssPath(File|string $cssFile): static
     {
-        $this->cssPaths[] = $cssPath;
+        $cssFile = $cssFile instanceof File ? $cssFile : File::fromPath($cssFile);
+
+        $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
+
+        $this->css[] = $cssFile;
 
         return $this;
     }

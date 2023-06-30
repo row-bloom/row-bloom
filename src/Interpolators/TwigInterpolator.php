@@ -20,14 +20,14 @@ class TwigInterpolator implements InterpolatorContract
         $body = '';
         $joinCharacter = '';
         $dataCount = count($table);
-        $separatePages = !is_null($perPage);
+        $separatePages = ! is_null($perPage);
 
         foreach ($table as $i => $rowData) {
             $t = $template->render($rowData);
 
             $body .= "{$joinCharacter}{$t}";
 
-            if ($separatePages) {
+            if (! $separatePages) {
                 continue;
             }
 

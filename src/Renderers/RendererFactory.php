@@ -10,10 +10,8 @@ final class RendererFactory
 {
     use BasicSingletonConcern;
 
-    public function make(Renderer|string|null $driver = null): RendererContract
+    public function make(Renderer|string $driver): RendererContract
     {
-        $driver ??= Renderer::getDefault();
-
         if ($driver instanceof Renderer) {
             return new $driver->value;
         }

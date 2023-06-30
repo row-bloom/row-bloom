@@ -1,5 +1,6 @@
 <?php
 
+use ElaborateCode\RowBloom\Interpolators\Interpolator;
 use ElaborateCode\RowBloom\Interpolators\InterpolatorFactory;
 use ElaborateCode\RowBloom\Types\Html;
 use ElaborateCode\RowBloom\Types\Table;
@@ -17,7 +18,7 @@ it('default interpolator', function () {
         '<h1>lorem</h1><p>Lorem ipsum delorme</p>'.
         '<h1>FOO</h1><p>Bar baz</p>';
 
-    $interpolator = InterpolatorFactory::getInstance()->make();
+    $interpolator = InterpolatorFactory::getInstance()->make(Interpolator::Twig);
 
     expect($interpolator->interpolate(Html::fromString($template), Table::fromArray($data)))->toEqual($expected);
 });

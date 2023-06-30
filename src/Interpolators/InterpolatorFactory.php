@@ -10,10 +10,8 @@ final class InterpolatorFactory
 {
     use BasicSingletonConcern;
 
-    public function make(Interpolator|string|null $driver = null): InterpolatorContract
+    public function make(Interpolator|string $driver): InterpolatorContract
     {
-        $driver ??= Interpolator::getDefault();
-
         if ($driver instanceof Interpolator) {
             return new $driver->value;
         }

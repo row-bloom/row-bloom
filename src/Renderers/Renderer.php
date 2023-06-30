@@ -8,9 +8,4 @@ enum Renderer: string
     case Mpdf = MpdfRenderer::class;
     case PhpChrome = PhpChromeRenderer::class;
     // ? tcpdf
-
-    public static function getDefault(): static
-    {
-        return self::Html;
-    }
 }

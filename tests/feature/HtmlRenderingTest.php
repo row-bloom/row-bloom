@@ -9,7 +9,10 @@ use ElaborateCode\RowBloom\Types\Html;
 use ElaborateCode\RowBloom\Types\Table;
 
 it('Basic html output', function (RowBloom $r, $css, $template, $table) {
-    $r->addCss($css)->setTemplate($template)->addTable($table);
+    $r->setRenderer(Renderer::Html)->setInterpolator(Interpolator::Twig)
+        ->addCss($css)
+        ->setTemplate($template)
+        ->addTable($table);
 
     expect($r->get())
         ->toBeString()

@@ -209,7 +209,7 @@ class RowBloom
     private function resolveInterpolator(): InterpolatorContract
     {
         if (! isset($this->interpolator)) {
-            return InterpolatorFactory::getInstance()->make();
+            throw new Exception('Interpolator must be set');
         }
 
         if ($this->interpolator instanceof InterpolatorContract) {
@@ -222,7 +222,7 @@ class RowBloom
     private function resolveRenderer(): RendererContract
     {
         if (! isset($this->renderer)) {
-            return RendererFactory::getInstance()->make();
+            throw new Exception('Renderer must be set');
         }
 
         if ($this->renderer instanceof RendererContract) {

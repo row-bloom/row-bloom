@@ -14,7 +14,7 @@ final class Margin
     /** @var Length[] */
     private array $value = [];
 
-    public static function fromOptions(Options $options, ?LengthUnit $unit = null)
+    public static function fromOptions(Options $options, ?LengthUnit $unit = null): static
     {
         return new self($options->margin, $unit);
     }
@@ -34,7 +34,7 @@ final class Margin
         $this->setValue($margin);
     }
 
-    private function setValue(array $margin)
+    private function setValue(array $margin): void
     {
         switch (count($margin)) {
             case 1:
@@ -74,7 +74,7 @@ final class Margin
     {
         $value = trim($value);
 
-        // ! I do not like this regex logic being handled here
+        // TODO: move this logic to builder
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {
             $value = Length::fromNumber($value, $this->unit);
         } elseif (preg_match('/^(?<value>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {

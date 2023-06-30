@@ -6,7 +6,7 @@ use InvalidArgumentException;
 
 class WriteStream
 {
-    public function __construct(protected $file)
+    public function __construct(protected mixed $file)
     {
         if (false === is_resource($file)) {
             throw new InvalidArgumentException(

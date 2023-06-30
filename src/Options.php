@@ -53,7 +53,7 @@ class Options
     ) {
     }
 
-    public function resolvePaperSize(LengthUnit $unit)
+    public function resolvePaperSize(LengthUnit $unit): array
     {
         if (isset($this->format)) {
             $size = $this->format->size($unit);

@@ -20,7 +20,7 @@ final class Table implements Iterator, Countable
         $this->validate();
     }
 
-    protected function validate()
+    protected function validate(): void
     {
         foreach ($this->data as $i => $row) {
             if (! is_array($row)) {

@@ -4,6 +4,7 @@ namespace ElaborateCode\RowBloom\Utils;
 
 trait BasicSingletonConcern
 {
+    /** @phpstan-ignore-next-line */
     private static $instance;
 
     private function __construct()

@@ -88,7 +88,7 @@ final class Length
         return new self($this->value() * self::RATIOS_TABLE[$this->unit->value][$to->value], $to);
     }
 
-    public function value()
+    public function value(): float
     {
         return $this->value;
     }

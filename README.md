@@ -125,13 +125,6 @@ The main options are the one offered by the browser print UI.
 |     |     |
 |     |     |
 
-## Testing
-
-```bash
-./vendor/bin/pest
-./vendor/bin/phpstan
-```
-
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

@@ -18,6 +18,7 @@ final class DataCollectorFactory
         }
 
         if (class_exists($driver) && in_array(DataCollectorContract::class, class_implements($driver), true)) {
+            /** @phpstan-ignore-next-line */
             return new $driver;
         }
 

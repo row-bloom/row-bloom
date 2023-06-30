@@ -72,7 +72,7 @@ final class Margin
 
     private function setLength(string $key, int|float|string $value): void
     {
-        $value = trim($value);
+        $value = trim((string) $value);
 
         // TODO: move this logic to builder
         if (preg_match('/^\d+(\.\d+)?$/', $value)) {

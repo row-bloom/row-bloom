@@ -45,7 +45,7 @@ class File implements Stringable
             return null;
         }
 
-        return file_get_contents($this->path);
+        return file_get_contents($this->path) ?: null;
     }
 
     public function startSaving(): WriteStream

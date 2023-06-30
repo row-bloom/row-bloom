@@ -19,6 +19,7 @@ final class InterpolatorFactory
         }
 
         if (class_exists($driver) && in_array(InterpolatorContract::class, class_implements($driver), true)) {
+            /** @phpstan-ignore-next-line */
             return new $driver;
         }
 

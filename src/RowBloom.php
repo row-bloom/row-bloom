@@ -45,7 +45,7 @@ class RowBloom
 
     public function save(File|string $file): bool
     {
-        $file = $file instanceof Table ? $file : File::fromPath($file);
+        $file = $file instanceof File ? $file : File::fromPath($file);
 
         return $this->render()->save($file);
     }

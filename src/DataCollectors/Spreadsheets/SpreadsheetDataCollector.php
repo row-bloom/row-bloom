@@ -9,15 +9,14 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class SpreadsheetDataCollector implements DataCollectorContract
 {
-    public function getTable(string $path): Table
+    public function getTable(File|string $file): Table
     {
+        $file = $file instanceof File ? $file : File::fromPath($file);
+
         // XLSX, XLS, XML, ODS, SLK, GNUMERIC, HTML, CSV
-        $path = File::fromPath($path)
-            ->mustExist()->mustBeReadable();
+        $file->mustExist()->mustBeReadable()->mustBeFile();
 
-        // TODO Support composition behavior for folders
-
-        $spreadsheet = IOFactory::load($path);
+        $spreadsheet = IOFactory::load($file);
 
         // TODO access all sheets
 

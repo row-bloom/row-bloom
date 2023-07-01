@@ -25,6 +25,7 @@ final class DataCollectorFactory
         throw new Exception("'{$driver}' is not a valid data collector");
     }
 
+    // TODO Support composition behavior for folders
     public function makeFromPath(string $path): DataCollectorContract
     {
         $file = File::fromPath($path);

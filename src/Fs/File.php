@@ -150,7 +150,7 @@ class File implements Stringable
 
     public function mustBeFile(): static
     {
-        if (! $this->isDir()) {
+        if (! $this->isFile()) {
             throw new FsException("{$this->path} is not a regular file");
         }
 

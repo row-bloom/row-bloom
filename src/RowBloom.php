@@ -19,17 +19,10 @@ class RowBloom
 
     private Renderer|RendererContract|string $renderer;
 
-    // ------------------------------------------------------------
-
-    /** @var Table[] */
+    /** @var (Table|array)[] */
     private array $tables = [];
 
-    /** @var string[][] */
-    private array $tablePaths = [];
-
-    private ?Html $template = null;
-
-    private ?string $templatePath = null;
+    private Html|File|null $template = null;
 
     /** @var (Css|File)[] */
     private array $css = [];
@@ -60,58 +53,67 @@ class RowBloom
         $interpolator = $this->resolveInterpolator();
         $renderer = $this->resolveRenderer();
 
-        $finalTable = $this->mergeTables();
+        $finalTable = $this->table();
         $finaleTemplate = $this->template();
-        $finalCss = $this->mergeCss();
+        $finalCss = $this->css();
 
-        $html = $interpolator->interpolate($finaleTemplate, $finalTable, $this->options->perPage);
+        $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable, $this->options->perPage);
 
-        return $renderer->render($html, $finalCss, $this->options);
+        return $renderer->render($interpolatedTemplate, $finalCss, $this->options);
     }
 
     // ------------------------------------------------------------
 
-    private function mergeTables(): Table
+    private function table(): Table
     {
-        $dataCollectorFactory = DataCollectorFactory::getInstance();
-
-        foreach ($this->tablePaths as $tablePath) {
-            $this->tables[] = (match (true) {
-                isset($tablePath['driver']) => $dataCollectorFactory->make($tablePath['driver']),
-                default => $dataCollectorFactory->makeFromPath($tablePath['path']),
-            })->getTable($tablePath['path']);
+        if (empty($this->tables)) {
+            throw new Exception('A table is required');
         }
 
         $finalTable = Table::fromArray([]);
 
         foreach ($this->tables as $table) {
-            $finalTable->append($table);
+            if ($table instanceof Table) {
+                $finalTable->append($table);
+            } else {
+                $finalTable->append($this->tableFromPath($table));
+            }
         }
 
         return $finalTable;
     }
 
+    private function tableFromPath(array $tablePath): Table
+    {
+        $dataCollectorFactory = DataCollectorFactory::getInstance();
+
+        $table = null;
+
+        if (isset($tablePath['driver'])) {
+            $table = $dataCollectorFactory->make($tablePath['driver']);
+        } else {
+            $table = $dataCollectorFactory->makeFromPath($tablePath['path']);
+        }
+
+        return $table->getTable($tablePath['path']);
+    }
+
     private function template(): Html
     {
-        if (! is_null($this->template) && ! is_null($this->templatePath)) {
-            throw new Exception('TEMPLATE...');
+        if (is_null($this->template)) {
+            throw new Exception('A template is required');
         }
 
-        if (! is_null($this->templatePath)) {
-            $file = File::fromPath($this->templatePath);
-            $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
-
-            return Html::fromString($file->readFileContent());
-        }
-
-        if (! is_null($this->template)) {
+        if ($this->template instanceof Html) {
             return $this->template;
         }
 
-        throw new Exception('TEMPLATE...');
+        if ($this->template instanceof File) {
+            return Html::fromString($this->template->readFileContent());
+        }
     }
 
-    private function mergeCss(): Css
+    private function css(): Css
     {
         $finalCss = Css::fromString('');
 
@@ -121,7 +123,6 @@ class RowBloom
             } elseif ($css instanceof File) {
                 $finalCss->append($css->readFileContent());
             }
-            // else: unexpected
         }
 
         return $finalCss;
@@ -141,7 +142,8 @@ class RowBloom
     // ? addSpreadsheetPath() ,addJsonPath(), ...
     public function addTablePath(string $tablePath, ?string $driver = null): static
     {
-        $this->tablePaths[] = [
+        // ? improve type (TablePath...)
+        $this->tables[] = [
             'path' => $tablePath,
             'driver' => $driver,
         ];
@@ -156,9 +158,13 @@ class RowBloom
         return $this;
     }
 
-    public function setTemplatePath(string $templatePath): static
+    public function setTemplatePath(File|string $templateFile): static
     {
-        $this->templatePath = $templatePath;
+        $templateFile = $templateFile instanceof File ? $templateFile : File::fromPath($templateFile);
+
+        $templateFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
+
+        $this->template = $templateFile;
 
         return $this;
     }
@@ -188,6 +194,10 @@ class RowBloom
         return $this;
     }
 
+    // ============================================================
+    //
+    // ============================================================
+
     public function setInterpolator(Interpolator|InterpolatorContract|string $interpolator): static
     {
         $this->interpolator = $interpolator;
@@ -201,10 +211,6 @@ class RowBloom
 
         return $this;
     }
-
-    // ============================================================
-    //
-    // ============================================================
 
     private function resolveInterpolator(): InterpolatorContract
     {

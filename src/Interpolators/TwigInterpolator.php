@@ -10,6 +10,8 @@ use Twig\Loader\ArrayLoader;
 
 class TwigInterpolator implements InterpolatorContract
 {
+    use GlueHtmlConcern;
+
     public function interpolate(Html $template, Table $table, ?int $perPage = null): Html
     {
         $loader = new ArrayLoader(['template' => $template]);
@@ -17,26 +19,12 @@ class TwigInterpolator implements InterpolatorContract
         $template = $twig->load('template');
 
         $body = '';
-        $joinCharacter = '';
         $dataCount = count($table);
-        $separatePages = ! is_null($perPage);
 
         foreach ($table as $i => $rowData) {
-            // ? refine logic here (extract to trait + $this->performInterpolation())
             $t = $template->render($rowData);
 
-            $body .= "{$joinCharacter}{$t}";
-
-            if (! $separatePages) {
-                continue;
-            }
-
-            if (
-                ($i + 1) % $perPage === 0 &&
-                ($i + 1) !== $dataCount
-            ) {
-                $body .= '<div style="page-break-before: always;"></div>';
-            }
+            $body = $this->glue($body, $t, $i, $dataCount, $perPage);
         }
 
         return Html::fromString($body);

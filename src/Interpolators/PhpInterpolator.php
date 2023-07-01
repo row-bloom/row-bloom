@@ -9,28 +9,17 @@ use Exception;
 
 class PhpInterpolator implements InterpolatorContract
 {
+    use GlueHtmlConcern;
+
     public function interpolate(Html $template, Table $table, ?int $perPage = null): Html
     {
         $body = '';
-        $joinCharacter = '';
         $dataCount = count($table);
-        $separatePages = ! is_null($perPage);
 
         foreach ($table as $i => $rowData) {
             $t = $this->render($template, $rowData);
 
-            $body .= "{$joinCharacter}{$t}";
-
-            if (! $separatePages) {
-                continue;
-            }
-
-            if (
-                ($i + 1) % $perPage === 0 &&
-                ($i + 1) !== $dataCount
-            ) {
-                $body .= '<div style="page-break-before: always;"></div>';
-            }
+            $body = $this->glue($body, $t, $i, $dataCount, $perPage);
         }
 
         return Html::fromString($body);
@@ -45,7 +34,7 @@ class PhpInterpolator implements InterpolatorContract
 
         $output = ob_get_clean();
 
-        if($output === false) {
+        if ($output === false) {
             throw new Exception("Couldn't render '{$template}'");
         }
 

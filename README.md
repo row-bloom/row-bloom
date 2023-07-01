@@ -84,7 +84,7 @@ A driver will be picked automatically for each table path.
 Available drivers:
 
 - Spreadsheet (parses local `xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv` files)(`folder` todo).
-- Json (todo)
+- Json
 
 ### Template
 

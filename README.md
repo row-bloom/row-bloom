@@ -92,8 +92,8 @@ Pick a driver using `setInterpolator`, and provide a template with `setTemplate`
 
 The available interpolators are:
 
-- Twig (default)
-- Php (todo)
+- Twig
+- Php
 - Blade (todo)
 
 All interpolators are available in `ElaborateCode\RowBloom\Interpolators\Interpolator` enum, and you can provide a custom one as long as you implement `ElaborateCode\RowBloom\InterpolatorContract`
@@ -104,7 +104,7 @@ Pick a driver using `setRenderer`, and optionally provide css with `addCss` or `
 
 The available renderers are:
 
-- Html (default)
+- Html
 - Php chrome
 - Mpdf
 

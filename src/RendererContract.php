@@ -12,7 +12,7 @@ interface RendererContract
 
     public function save(File $file): bool;
 
-    // ? stream()
+    // ? echo()
 
     public function render(Html $template, Css $css, Options $options): static;
 }

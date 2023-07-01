@@ -16,13 +16,13 @@ class TwigInterpolator implements InterpolatorContract
         $twig = new Environment($loader);
         $template = $twig->load('template');
 
-        // ? refine logic here
         $body = '';
         $joinCharacter = '';
         $dataCount = count($table);
         $separatePages = ! is_null($perPage);
 
         foreach ($table as $i => $rowData) {
+            // ? refine logic here (extract to trait + $this->performInterpolation())
             $t = $template->render($rowData);
 
             $body .= "{$joinCharacter}{$t}";

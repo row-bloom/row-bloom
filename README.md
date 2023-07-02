@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/elaborate-code/row-bloom/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/elaborate-code/row-bloom/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/elaborate-code/row-bloom.svg?style=flat-square)](https://packagist.org/packages/elaborate-code/row-bloom)
 
-![illustaton](./illustration.png)
+![illustration](./illustration.png)
 
 ## Installation
 
@@ -21,36 +21,51 @@ Requires:
 ## Usage
 
 ```php
+use ElaborateCode\RowBloom\Interpolators\Interpolator;
+use ElaborateCode\RowBloom\Renderers\Renderer;
+use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
+use ElaborateCode\RowBloom\RowBloom;
+use ElaborateCode\RowBloom\Types\Table;
+
 (new RowBloom)
     ->addTable([
-        ['title' => 'title1', 'body' => 'body1'],
-        ['title' => 'title2', 'body' => 'body2'],
+        ['title' => 'Title1', 'body' => 'body1'],
+        ['title' => 'Title2', 'body' => 'body2'],
     ])
     ->addTable(Table::fromArray([
-        ['title' => 'title3', 'body' => 'body3'],
-        ['title' => 'title4', 'body' => 'body4'],
+        ['title' => 'Title3', 'body' => 'body3'],
+        ['title' => 'Title4', 'body' => 'body4'],
     ]))
-    ->setInterpolator(Interpolator::Twig)
-    ->setTemplate(Html::fromString('
-        <h1>{{title}}</h1>
+    // ---------------------------
+    // ->setInterpolator(Interpolator::Twig)
+    // ->setTemplate('
+    //     <h1>{{ title }}</h1>
+    //     <p>Bold text</p>
+    //     <div>{{ body }}</div>
+    // ')
+    // ---------------------------
+    ->setInterpolator(Interpolator::Php)
+    ->setTemplate('
+        <h1><?= $title ?></h1>
         <p>Bold text</p>
-        <div>{{body}}</div>
-    '))
+        <div><?= $body ?></div>
+    ')
+    // ---------------------------
     ->setOption('perPage', 2)
     ->setOption('landscape', false)
     ->setOption('format', PaperFormat::FORMAT_A4)
     ->setOption('displayHeaderFooter', true)
-    ->addCss(Css::fromString('
-        p {font-weight: bold;}
-    '))
     ->addCss('
-        div {font-weight: red;}
+        p {font-weight: bold;}
+    ')
+    ->addCss('
+        div {color: red;}
     ')
     // ---------------------------
     // ->setRenderer(Renderer::Mpdf)
     // ->setOption('margin', '25.4 mm')
-    // ->setOption('rawHeader', '{DATE j-m-Y}|y|z')
-    // ->setOption('rawFooter', 'x|y|{PAGENO}/{nb}')
+    // ->setOption('rawHeader', '{DATE j-m-Y}|center|right')
+    // ->setOption('rawFooter', 'left|center|{PAGENO}/{nb}')
     // ---------------------------
     ->setRenderer(Renderer::PhpChrome)
     ->setOption('margin', '1 in')
@@ -120,10 +135,25 @@ The main options are the one offered by the browser print UI.
 
 ![browser print options](./browser_print_options.png)
 
-|     |     |
-| --- | --- |
-|     |     |
-|     |     |
+| Option                | type            | default  | Html | Mpdf | Php chrome |
+| --------------------- | --------------- | -------- | ---- | ---- | ------ |
+| `perPage`             | `int`           | `null`   | ✔️ | ✔️ | ✔️   |
+| `displayHeaderFooter` | `bool`          | `true`   | ❌ | ✔️ | ✔️   |
+| `rawHeader`           | `string`        | `null`   | ❌ | ✔️ | ✔️   |
+| `rawFooter`           | `string`        | `null`   | ❌ | ✔️ | ✔️   |
+| `printBackground`     | `bool`          | `false`  | ❌ | ❌ | ✔️   |
+| `preferCSSPageSize`   | `bool`          | `false`  | ❌ | ❌ | ✔️   |
+| `landscape`           | `bool`          | `false`  | ❌ | ✔️ | ✔️   |
+| `format`              | `PaperFormat`   | `null`   | ❌ | ✔️ | ✔️   |
+| `width`               | `string`        | `null`   | ❌ | ✔️ | ✔️   |
+| `height`              | `string`        | `null`   | ❌ | ✔️ | ✔️   |
+| `margin`              | `array\|string` | `'1 in'` | ❌ | ✔️ | ✔️   |
+| `metadataTitle`       | `string`        | `null`   | ❌ | ✔️ | ❌   |
+| `metadataAuthor`      | `string`        | `null`   | ❌ | ✔️ | ❌   |
+| `metadataCreator`     | `string`        | `null`   | ❌ | ✔️ | ❌   |
+| `metadataSubject`     | `string`        | `null`   | ❌ | ✔️ | ❌   |
+| `metadataKeywords`    | `string`        | `null`   | ❌ | ✔️ | ❌   |
+|                       |                 |          |      |      |        |
 
 ## Changelog
 

@@ -16,8 +16,7 @@ final class RendererFactory
             return new $driver->value;
         }
 
-        if (class_exists($driver) && in_array(RendererContract::class, class_implements($driver), true)) {
-            /** @phpstan-ignore-next-line */
+        if (is_a($driver, RendererContract::class, true)) {
             return new $driver;
         }
 

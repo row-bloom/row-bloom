@@ -4,7 +4,7 @@ use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Fs\FsException;
 
 it('represents paths', function () {
-    $file = File::fromPath(__FILE__);
+    $file = ROW_BLOOM_CONTAINER->make(File::class, ['path' => __FILE__]);
 
     expect($file->exists())->toBeTrue();
     expect($file->isFile())->toBeTrue();

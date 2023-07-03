@@ -24,7 +24,7 @@ final class DataCollectorFactory
     // TODO Support composition behavior for folders
     public function makeFromPath(string $path): DataCollectorContract
     {
-        $file = File::fromPath($path);
+        $file = ROW_BLOOM_CONTAINER->make(File::class, ['path' => $path]);
 
         $driver = match (true) {
             $file->exists() => $this->resolveFileDriver($file),

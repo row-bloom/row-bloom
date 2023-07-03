@@ -11,7 +11,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
 {
     public function getTable(File|string $file): Table
     {
-        $file = $file instanceof File ? $file : File::fromPath($file);
+        $file = $file instanceof File ? $file : ROW_BLOOM_CONTAINER->make(File::class, ['path' => $file]);
 
         // XLSX, XLS, XML, ODS, SLK, GNUMERIC, HTML, CSV
         $file->mustExist()->mustBeReadable()->mustBeFile();

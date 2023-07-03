@@ -38,7 +38,7 @@ class RowBloom
 
     public function save(File|string $file): bool
     {
-        $file = $file instanceof File ? $file : File::fromPath($file);
+        $file = $file instanceof File ? $file : ROW_BLOOM_CONTAINER->make(File::class, ['path' => $file]);
 
         return $this->render()->save($file);
     }
@@ -160,7 +160,7 @@ class RowBloom
 
     public function setTemplatePath(File|string $templateFile): static
     {
-        $templateFile = $templateFile instanceof File ? $templateFile : File::fromPath($templateFile);
+        $templateFile = $templateFile instanceof File ? $templateFile : ROW_BLOOM_CONTAINER->make(File::class, ['path' => $templateFile]);
 
         $templateFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
 
@@ -178,7 +178,7 @@ class RowBloom
 
     public function addCssPath(File|string $cssFile): static
     {
-        $cssFile = $cssFile instanceof File ? $cssFile : File::fromPath($cssFile);
+        $cssFile = $cssFile instanceof File ? $cssFile : ROW_BLOOM_CONTAINER->make(File::class, ['path' => $cssFile]);
 
         $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
 

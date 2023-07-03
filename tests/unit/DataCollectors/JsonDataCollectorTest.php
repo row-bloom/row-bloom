@@ -9,7 +9,7 @@ it('parses', function () {
 
     expect($dataCollector)->toBeInstanceOf(JsonDataCollector::class);
 
-    // ! Mock File
+    // TODO: Mock File
     expect(
         $dataCollector->getTable(__DIR__.'/../../stubs/2json.json')->toArray()
     )->toEqual([

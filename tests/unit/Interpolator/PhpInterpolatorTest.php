@@ -18,7 +18,7 @@ it('default interpolator', function () {
         '<h1>lorem</h1><p>Lorem ipsum delorme</p>'.
         '<h1>FOO</h1><p>Bar baz</p>';
 
-    $interpolator = ROW_BLOOM_CONTAINER->make(InterpolatorFactory::class)->make(Interpolator::Php);
+    $interpolator = app()->make(InterpolatorFactory::class)->make(Interpolator::Php);
 
     expect($interpolator->interpolate(Html::fromString($template), Table::fromArray($data)))->toEqual($expected);
 });

@@ -11,7 +11,7 @@ class JsonDataCollector implements DataCollectorContract
 {
     public function getTable(File|string $file): Table
     {
-        $file = $file instanceof File ? $file : ROW_BLOOM_CONTAINER->make(File::class, ['path' => $file]);
+        $file = $file instanceof File ? $file : app()->make(File::class, ['path' => $file]);
 
         $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('json');
 

@@ -5,10 +5,11 @@ use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
 use ElaborateCode\RowBloom\DataCollectors\Json\JsonDataCollector;
 
 it('parses', function () {
-    $dataCollector = ROW_BLOOM_CONTAINER->make(DataCollectorFactory::class)->make(DataCollector::Json);
+    $dataCollector = app()->make(DataCollectorFactory::class)->make(DataCollector::Json);
 
     expect($dataCollector)->toBeInstanceOf(JsonDataCollector::class);
 
+    // ! Mock File
     expect(
         $dataCollector->getTable(__DIR__.'/../../stubs/2json.json')->toArray()
     )->toEqual([

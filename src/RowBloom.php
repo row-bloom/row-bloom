@@ -85,7 +85,7 @@ class RowBloom
 
     private function tableFromPath(array $tablePath): Table
     {
-        $dataCollectorFactory = DataCollectorFactory::getInstance();
+        $dataCollectorFactory = ROW_BLOOM_CONTAINER->make(DataCollectorFactory::class);
 
         $table = null;
 
@@ -222,7 +222,7 @@ class RowBloom
             return $this->interpolator;
         }
 
-        return InterpolatorFactory::getInstance()->make($this->interpolator);
+        return ROW_BLOOM_CONTAINER->make(InterpolatorFactory::class)->make($this->interpolator);
     }
 
     private function resolveRenderer(): RendererContract
@@ -235,6 +235,6 @@ class RowBloom
             return $this->renderer;
         }
 
-        return RendererFactory::getInstance()->make($this->renderer);
+        return ROW_BLOOM_CONTAINER->make(RendererFactory::class)->make($this->renderer);
     }
 }

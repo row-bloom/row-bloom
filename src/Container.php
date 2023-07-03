@@ -9,3 +9,7 @@ $container = new IlluminateContainer;
 $container->instance(Container::class, $container);
 
 define('ROW_BLOOM_CONTAINER', $container);
+
+$container->singleton(DataCollectorFactory::class, DataCollectorFactory::class);
+$container->singleton(InterpolatorFactory::class, InterpolatorFactory::class);
+$container->singleton(RendererFactory::class, RendererFactory::class);

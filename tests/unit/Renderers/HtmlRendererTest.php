@@ -8,7 +8,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Html;
 
 it('renders and saves', function ($template, $css, $options) {
-    $renderer = RendererFactory::getInstance()->make(Renderer::Html);
+    $renderer = ROW_BLOOM_CONTAINER->make(RendererFactory::class)->make(Renderer::Html);
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 

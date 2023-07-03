@@ -8,7 +8,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Html;
 
 it('renders', function ($template, $css, $options) {
-    $renderer = RendererFactory::getInstance()->make(Renderer::Mpdf);
+    $renderer = ROW_BLOOM_CONTAINER->make(RendererFactory::class)->make(Renderer::Mpdf);
 
     expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
 

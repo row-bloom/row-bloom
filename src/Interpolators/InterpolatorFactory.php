@@ -3,13 +3,10 @@
 namespace ElaborateCode\RowBloom\Interpolators;
 
 use ElaborateCode\RowBloom\InterpolatorContract;
-use ElaborateCode\RowBloom\Utils\BasicSingletonConcern;
 use Exception;
 
 final class InterpolatorFactory
 {
-    use BasicSingletonConcern;
-
     public function make(Interpolator|string $driver): InterpolatorContract
     {
         if ($driver instanceof Interpolator) {

@@ -4,13 +4,10 @@ namespace ElaborateCode\RowBloom\DataCollectors;
 
 use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Utils\BasicSingletonConcern;
 use Exception;
 
 final class DataCollectorFactory
 {
-    use BasicSingletonConcern;
-
     public function make(DataCollector|string $driver): DataCollectorContract
     {
         if ($driver instanceof DataCollector) {

@@ -5,7 +5,7 @@ use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
 use ElaborateCode\RowBloom\DataCollectors\Json\JsonDataCollector;
 
 it('parses', function () {
-    $dataCollector = DataCollectorFactory::getInstance()->make(DataCollector::Json);
+    $dataCollector = ROW_BLOOM_CONTAINER->make(DataCollectorFactory::class)->make(DataCollector::Json);
 
     expect($dataCollector)->toBeInstanceOf(JsonDataCollector::class);
 

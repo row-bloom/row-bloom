@@ -33,7 +33,7 @@ class RowBloom
 
     public function __construct()
     {
-        $this->options = new Options;
+        $this->options = ROW_BLOOM_CONTAINER->make(Options::class);
     }
 
     public function save(File|string $file): bool

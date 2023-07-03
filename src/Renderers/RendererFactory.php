@@ -10,11 +10,11 @@ final class RendererFactory
     public function make(Renderer|string $driver): RendererContract
     {
         if ($driver instanceof Renderer) {
-            return new $driver->value;
+            return ROW_BLOOM_CONTAINER->make($driver->value);
         }
 
         if (is_a($driver, RendererContract::class, true)) {
-            return new $driver;
+            return ROW_BLOOM_CONTAINER->make($driver);
         }
 
         throw new Exception("'{$driver}' is not a valid renderer");

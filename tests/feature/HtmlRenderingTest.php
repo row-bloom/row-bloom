@@ -19,10 +19,13 @@ it('Basic html output', function (RowBloom $r, $css, $template, $table) {
         ->toContain('ilies', 'mohamed');
 })
     ->with([
-        'Default' => new RowBloom,
-        'Twig' => (new RowBloom)->setInterpolator(Interpolator::Twig),
-        'Html' => (new RowBloom)->setRenderer(Renderer::Html),
-        'HtmlRenderer instance' => (new RowBloom)->setRenderer(new HtmlRenderer),
+        'Default' => ROW_BLOOM_CONTAINER->make(RowBloom::class),
+        'Twig' => (ROW_BLOOM_CONTAINER->make(RowBloom::class))
+            ->setInterpolator(Interpolator::Twig),
+        'Html' => (ROW_BLOOM_CONTAINER->make(RowBloom::class))
+            ->setRenderer(Renderer::Html),
+        'HtmlRenderer instance' => (ROW_BLOOM_CONTAINER->make(RowBloom::class))
+            ->setRenderer(ROW_BLOOM_CONTAINER->make(HtmlRenderer::class)),
     ])
     ->with([
         'primitives' => [

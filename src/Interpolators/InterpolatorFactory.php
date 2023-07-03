@@ -10,11 +10,11 @@ final class InterpolatorFactory
     public function make(Interpolator|string $driver): InterpolatorContract
     {
         if ($driver instanceof Interpolator) {
-            return new $driver->value;
+            return ROW_BLOOM_CONTAINER->make($driver->value);
         }
 
         if (is_a($driver, InterpolatorContract::class, true)) {
-            return new $driver;
+            return ROW_BLOOM_CONTAINER->make($driver);
         }
 
         throw new Exception("'{$driver}' is not a valid interpolator");

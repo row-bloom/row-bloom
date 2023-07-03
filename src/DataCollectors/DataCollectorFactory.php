@@ -11,11 +11,11 @@ final class DataCollectorFactory
     public function make(DataCollector|string $driver): DataCollectorContract
     {
         if ($driver instanceof DataCollector) {
-            return new $driver->value;
+            return ROW_BLOOM_CONTAINER->make($driver->value);
         }
 
         if (is_a($driver, DataCollectorContract::class, true)) {
-            return new $driver;
+            return ROW_BLOOM_CONTAINER->make($driver);
         }
 
         throw new Exception("'{$driver}' is not a valid data collector");

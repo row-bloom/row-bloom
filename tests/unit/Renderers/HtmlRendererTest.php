@@ -18,6 +18,6 @@ it('renders and saves', function ($template, $css, $options) {
     'example 1' => [
         'template' => Html::fromString('<h1>Title</h1><p>Bold text</p><div>Normal text</div>'),
         'css' => Css::fromString('p {font-weight: bold;}'),
-        'options' => new Options,
+        'options' => ROW_BLOOM_CONTAINER->make(Options::class),
     ],
 ]);

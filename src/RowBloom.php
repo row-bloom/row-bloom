@@ -27,13 +27,10 @@ class RowBloom
     /** @var (Css|File)[] */
     private array $css = [];
 
-    private Options $options;
-
     // ------------------------------------------------------------
 
-    public function __construct()
+    public function __construct(private Options $options)
     {
-        $this->options = ROW_BLOOM_CONTAINER->make(Options::class);
     }
 
     public function save(File|string $file): bool

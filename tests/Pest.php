@@ -3,7 +3,7 @@
 require __DIR__.'./../src/Container.php';
 
 uses()
-    ->beforeEach(function(){
+    ->beforeEach(function () {
         app()->forgetInstances();
         Mockery::close();
     })

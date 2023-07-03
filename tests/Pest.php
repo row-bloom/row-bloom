@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__.'./../src/Container.php';
+
 uses()
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';

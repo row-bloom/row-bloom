@@ -17,6 +17,7 @@
     "require": {
         "php": "^8.1",
         "chrome-php/chrome": "^1.9",
+        "illuminate/container": "*",
         "mpdf/mpdf": "^8.1",
         "phpoffice/phpspreadsheet": "^1.28",
         "twig/twig": "^3.6"

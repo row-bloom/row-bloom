@@ -3,6 +3,10 @@
 require __DIR__.'./../src/Container.php';
 
 uses()
+    ->beforeEach(function(){
+        app()->forgetInstances();
+        Mockery::close();
+    })
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';
         if (! is_dir($folderPath)) {

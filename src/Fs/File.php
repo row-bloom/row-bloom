@@ -8,12 +8,7 @@ class File implements Stringable
 {
     protected string $path;
 
-    public static function fromPath(string $path, bool $real = false): static
-    {
-        return new static($path, $real);
-    }
-
-    final protected function __construct(string $path, bool $real = false)
+    final public function __construct(string $path, bool $real = false)
     {
         if (! $real) {
             $this->path = str_replace('/', DIRECTORY_SEPARATOR, str_replace('\\', DIRECTORY_SEPARATOR, $path));

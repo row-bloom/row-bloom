@@ -20,7 +20,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
 {
     public function getTable(File|string $file): Table
     {
-        $file = $file instanceof File ? $file : File::fromPath($file);
+        $file = $file instanceof File ? $file : app()->make(File::class, ['path' => $file]);
 
         $file->mustExist()->mustBeReadable()->mustBeFile();
 
@@ -68,7 +68,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
             default => throw new Exception("Unable to identify a Spreadsheet reader for {$file}"),
         };
 
-        $reader = new $class;
+        $reader = app()->make($class);
 
         if ($reader instanceof Csv) {
             $reader->setTestAutoDetect(false);

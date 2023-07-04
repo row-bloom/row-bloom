@@ -71,8 +71,8 @@ class PhpChromeRenderer implements RendererContract
         $this->css = $css;
         $this->options = $options;
 
-        $browserFactory = new BrowserFactory();
-        // Start a new browser and create a new page
+        $browserFactory = app()->make(BrowserFactory::class);
+        // Start a browser and create a page
         $browser = $browserFactory->createBrowser();
         $page = $browser->createPage();
 

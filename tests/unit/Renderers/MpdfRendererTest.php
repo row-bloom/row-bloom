@@ -8,7 +8,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Html;
 
 it('renders', function ($template, $css, $options) {
-    $renderer = RendererFactory::getInstance()->make(Renderer::Mpdf);
+    $renderer = app()->make(RendererFactory::class)->make(Renderer::Mpdf);
 
     expect($renderer)->toBeInstanceOf(MpdfRenderer::class);
 
@@ -17,6 +17,6 @@ it('renders', function ($template, $css, $options) {
     'example 1' => [
         'template' => Html::fromString('<h1>Title</h1><p>Bold text</p><div>Normal text</div>'),
         'css' => Css::fromString('p {font-weight: bold;}'),
-        'options' => new Options,
+        'options' => app()->make(Options::class),
     ],
 ]);

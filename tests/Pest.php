@@ -1,6 +1,14 @@
 <?php
 
+use ElaborateCode\RowBloom\RowBloomServiceProvider;
+
+app()->make(RowBloomServiceProvider::class)->register();
+
 uses()
+    ->beforeEach(function () {
+        app()->forgetInstances();
+        Mockery::close();
+    })
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';
         if (! is_dir($folderPath)) {

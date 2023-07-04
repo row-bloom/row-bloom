@@ -27,18 +27,15 @@ class RowBloom
     /** @var (Css|File)[] */
     private array $css = [];
 
-    private Options $options;
-
     // ------------------------------------------------------------
 
-    public function __construct()
+    public function __construct(private Options $options)
     {
-        $this->options = new Options;
     }
 
     public function save(File|string $file): bool
     {
-        $file = $file instanceof File ? $file : File::fromPath($file);
+        $file = $file instanceof File ? $file : app()->make(File::class, ['path' => $file]);
 
         return $this->render()->save($file);
     }
@@ -85,7 +82,7 @@ class RowBloom
 
     private function tableFromPath(array $tablePath): Table
     {
-        $dataCollectorFactory = DataCollectorFactory::getInstance();
+        $dataCollectorFactory = app()->make(DataCollectorFactory::class);
 
         $table = null;
 
@@ -160,7 +157,7 @@ class RowBloom
 
     public function setTemplatePath(File|string $templateFile): static
     {
-        $templateFile = $templateFile instanceof File ? $templateFile : File::fromPath($templateFile);
+        $templateFile = $templateFile instanceof File ? $templateFile : app()->make(File::class, ['path' => $templateFile]);
 
         $templateFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
 
@@ -178,7 +175,7 @@ class RowBloom
 
     public function addCssPath(File|string $cssFile): static
     {
-        $cssFile = $cssFile instanceof File ? $cssFile : File::fromPath($cssFile);
+        $cssFile = $cssFile instanceof File ? $cssFile : app()->make(File::class, ['path' => $cssFile]);
 
         $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
 
@@ -222,7 +219,7 @@ class RowBloom
             return $this->interpolator;
         }
 
-        return InterpolatorFactory::getInstance()->make($this->interpolator);
+        return app()->make(InterpolatorFactory::class)->make($this->interpolator);
     }
 
     private function resolveRenderer(): RendererContract
@@ -235,6 +232,6 @@ class RowBloom
             return $this->renderer;
         }
 
-        return RendererFactory::getInstance()->make($this->renderer);
+        return app()->make(RendererFactory::class)->make($this->renderer);
     }
 }

@@ -4,7 +4,7 @@ use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
 use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
 
 it('constructs', function (array|string $input, array $expected, LengthUnit $unit = LengthUnit::PIXEL_UNIT) {
-    $margin = new Margin($input, $unit);
+    $margin = app()->make(Margin::class, ['margin' => $input, 'unit' => $unit]);
 
     expect($margin->allRaw())->toEqual($expected);
 })->with([
@@ -48,7 +48,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
 ]);
 
 it('constructs mixed units', function (array $input, array $expected, LengthUnit $unit = LengthUnit::PIXEL_UNIT) {
-    $margin = new Margin($input, $unit);
+    $margin = app()->make(Margin::class, ['margin' => $input, 'unit' => $unit]);
 
     expect($margin->allRaw())->toEqual($expected);
 })->with([
@@ -64,7 +64,7 @@ it('constructs mixed units', function (array $input, array $expected, LengthUnit
 ]);
 
 it('converts', function (array $input, array $expected, LengthUnit $unit, LengthUnit $outputUnit) {
-    $margin = new Margin($input, $unit);
+    $margin = app()->make(Margin::class, ['margin' => $input, 'unit' => $unit]);
 
     expect($margin->allRawIn($outputUnit))->toEqual($expected);
 })->with([

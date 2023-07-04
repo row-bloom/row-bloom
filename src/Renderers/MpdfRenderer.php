@@ -34,8 +34,6 @@ class MpdfRenderer implements RendererContract
 
     private Options $options;
 
-    private Mpdf $mpdf;
-
     // ! see: https://mpdf.github.io/reference/mpdf-functions/construct.html
     /**
      * Config and defaults
@@ -51,9 +49,8 @@ class MpdfRenderer implements RendererContract
      * margin_footer: 9mm
      * orientation: 'P' (Portrait)
      */
-    public function __construct()
+    public function __construct(private Mpdf $mpdf)
     {
-        $this->mpdf = new Mpdf;
     }
 
     public function get(): string

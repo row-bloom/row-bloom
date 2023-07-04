@@ -4,21 +4,18 @@ namespace ElaborateCode\RowBloom\DataCollectors;
 
 use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Utils\BasicSingletonConcern;
 use Exception;
 
 final class DataCollectorFactory
 {
-    use BasicSingletonConcern;
-
     public function make(DataCollector|string $driver): DataCollectorContract
     {
         if ($driver instanceof DataCollector) {
-            return new $driver->value;
+            return app()->make($driver->value);
         }
 
         if (is_a($driver, DataCollectorContract::class, true)) {
-            return new $driver;
+            return app()->make($driver);
         }
 
         throw new Exception("'{$driver}' is not a valid data collector");
@@ -27,7 +24,7 @@ final class DataCollectorFactory
     // TODO Support composition behavior for folders
     public function makeFromPath(string $path): DataCollectorContract
     {
-        $file = File::fromPath($path);
+        $file = app()->make(File::class, ['path' => $path]);
 
         $driver = match (true) {
             $file->exists() => $this->resolveFileDriver($file),

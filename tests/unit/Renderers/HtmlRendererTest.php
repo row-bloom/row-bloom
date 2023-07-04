@@ -8,7 +8,7 @@ use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Html;
 
 it('renders and saves', function ($template, $css, $options) {
-    $renderer = RendererFactory::getInstance()->make(Renderer::Html);
+    $renderer = app()->make(RendererFactory::class)->make(Renderer::Html);
 
     expect($renderer)->toBeInstanceOf(HtmlRenderer::class);
 
@@ -18,6 +18,6 @@ it('renders and saves', function ($template, $css, $options) {
     'example 1' => [
         'template' => Html::fromString('<h1>Title</h1><p>Bold text</p><div>Normal text</div>'),
         'css' => Css::fromString('p {font-weight: bold;}'),
-        'options' => new Options,
+        'options' => app()->make(Options::class),
     ],
 ]);

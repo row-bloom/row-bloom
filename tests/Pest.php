@@ -1,6 +1,8 @@
 <?php
 
-require __DIR__.'./../src/Container.php';
+use ElaborateCode\RowBloom\RowBloomServiceProvider;
+
+app()->make(RowBloomServiceProvider::class)->register();
 
 uses()
     ->beforeEach(function () {

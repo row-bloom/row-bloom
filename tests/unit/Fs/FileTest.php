@@ -3,16 +3,23 @@
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Fs\FsException;
 
-it('represents paths', function () {
-    $file = app()->make(File::class, ['path' => __FILE__]);
+it('represents PHP File')
+    ->expect(app()->make(File::class, ['path' => __FILE__]))
+    ->exists()->toBeTrue()
+    ->isFile()->toBeTrue()
+    ->isDir()->toBeFalse()
+    ->isWritable()->toBeTrue()
+    ->extension()->toBe('php');
 
-    expect($file->exists())->toBeTrue();
-    expect($file->isFile())->toBeTrue();
-    expect($file->isDir())->toBeFalse();
-    expect($file->isWritable())->toBeTrue();
-    expect($file->extension())->toBe('php');
-    expect(fn () => $file->mustBeDir())->toThrow(FsException::class);
-});
+it('represents directory')
+    ->expect(app()->make(File::class, ['path' => __DIR__]))
+    ->exists()->toBeTrue()
+    ->isDir()->toBeTrue()
+    ->isFile()->toBeFalse()
+    ->isWritable()->toBeTrue()
+    ->isReadable()->toBeTrue()
+    ->extension()->toBe('');
 
-test('edge cases', function () {
-})->todo();
+it('throws PHP File is not dir')
+    ->expect(fn () => app()->make(File::class, ['path' => __FILE__])->mustBeDir())
+    ->throws(FsException::class);

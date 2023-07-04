@@ -3,9 +3,9 @@
 namespace ElaborateCode\RowBloom\Interpolators;
 
 use ElaborateCode\RowBloom\InterpolatorContract;
+use ElaborateCode\RowBloom\RowBloomException;
 use ElaborateCode\RowBloom\Types\Html;
 use ElaborateCode\RowBloom\Types\Table;
-use Exception;
 
 class PhpInterpolator implements InterpolatorContract
 {
@@ -35,7 +35,7 @@ class PhpInterpolator implements InterpolatorContract
         $output = ob_get_clean();
 
         if ($output === false) {
-            throw new Exception("Couldn't render '{$template}'");
+            throw new RowBloomException("Couldn't render '{$template}'");
         }
 
         return $output;

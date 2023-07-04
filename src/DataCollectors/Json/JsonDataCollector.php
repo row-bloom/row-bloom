@@ -4,8 +4,8 @@ namespace ElaborateCode\RowBloom\DataCollectors\Json;
 
 use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\Fs\File;
+use ElaborateCode\RowBloom\RowBloomException;
 use ElaborateCode\RowBloom\Types\Table;
-use Exception;
 
 class JsonDataCollector implements DataCollectorContract
 {
@@ -19,7 +19,7 @@ class JsonDataCollector implements DataCollectorContract
         $data = json_decode($file->readFileContent(), true);
 
         if (! is_array($data)) {
-            throw new Exception("Invalid Json '{$file}'");
+            throw new RowBloomException("Invalid Json '{$file}'");
         }
 
         return Table::fromArray($data);

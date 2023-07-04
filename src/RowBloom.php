@@ -11,7 +11,6 @@ use ElaborateCode\RowBloom\Renderers\RendererFactory;
 use ElaborateCode\RowBloom\Types\Css;
 use ElaborateCode\RowBloom\Types\Html;
 use ElaborateCode\RowBloom\Types\Table;
-use Exception;
 
 class RowBloom
 {
@@ -64,7 +63,7 @@ class RowBloom
     private function table(): Table
     {
         if (empty($this->tables)) {
-            throw new Exception('A table is required');
+            throw new RowBloomException('A table is required');
         }
 
         $finalTable = Table::fromArray([]);
@@ -98,7 +97,7 @@ class RowBloom
     private function template(): Html
     {
         if (is_null($this->template)) {
-            throw new Exception('A template is required');
+            throw new RowBloomException('A template is required');
         }
 
         if ($this->template instanceof Html) {
@@ -212,7 +211,7 @@ class RowBloom
     private function resolveInterpolator(): InterpolatorContract
     {
         if (! isset($this->interpolator)) {
-            throw new Exception('Interpolator must be set');
+            throw new RowBloomException('Interpolator must be set');
         }
 
         if ($this->interpolator instanceof InterpolatorContract) {
@@ -225,7 +224,7 @@ class RowBloom
     private function resolveRenderer(): RendererContract
     {
         if (! isset($this->renderer)) {
-            throw new Exception('Renderer must be set');
+            throw new RowBloomException('Renderer must be set');
         }
 
         if ($this->renderer instanceof RendererContract) {

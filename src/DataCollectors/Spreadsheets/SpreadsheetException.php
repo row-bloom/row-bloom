@@ -2,8 +2,8 @@
 
 namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
 
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 
-class SpreadsheetException extends Exception
+class SpreadsheetException extends RowBloomException
 {
 }

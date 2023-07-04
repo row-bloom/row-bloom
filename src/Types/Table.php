@@ -3,7 +3,7 @@
 namespace ElaborateCode\RowBloom\Types;
 
 use Countable;
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 use Iterator;
 
 final class Table implements Iterator, Countable
@@ -24,7 +24,7 @@ final class Table implements Iterator, Countable
     {
         foreach ($this->data as $i => $row) {
             if (! is_array($row)) {
-                throw new Exception("Row $i must be an array");
+                throw new RowBloomException("Row $i must be an array");
             }
 
             // ? is every cell value, a string

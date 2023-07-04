@@ -2,8 +2,8 @@
 
 namespace ElaborateCode\RowBloom\Fs;
 
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 
-class FsException extends Exception
+class FsException extends RowBloomException
 {
 }

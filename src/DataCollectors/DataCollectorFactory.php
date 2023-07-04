@@ -4,7 +4,7 @@ namespace ElaborateCode\RowBloom\DataCollectors;
 
 use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\Fs\File;
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 
 final class DataCollectorFactory
 {
@@ -18,7 +18,7 @@ final class DataCollectorFactory
             return app()->make($driver);
         }
 
-        throw new Exception("'{$driver}' is not a valid data collector");
+        throw new RowBloomException("'{$driver}' is not a valid data collector");
     }
 
     // TODO Support composition behavior for folders
@@ -28,7 +28,7 @@ final class DataCollectorFactory
 
         $driver = match (true) {
             $file->exists() => $this->resolveFileDriver($file),
-            default => throw new Exception("Couldn't resolve a driver for the path '{$path}'"),
+            default => throw new RowBloomException("Couldn't resolve a driver for the path '{$path}'"),
         };
 
         return $this->make($driver);
@@ -40,6 +40,6 @@ final class DataCollectorFactory
             return DataCollector::Spreadsheet;
         }
 
-        throw new Exception("Couldn't resolve a driver for the file '{$file}'");
+        throw new RowBloomException("Couldn't resolve a driver for the file '{$file}'");
     }
 }

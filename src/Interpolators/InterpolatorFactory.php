@@ -3,7 +3,7 @@
 namespace ElaborateCode\RowBloom\Interpolators;
 
 use ElaborateCode\RowBloom\InterpolatorContract;
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 
 final class InterpolatorFactory
 {
@@ -17,6 +17,6 @@ final class InterpolatorFactory
             return app()->make($driver);
         }
 
-        throw new Exception("'{$driver}' is not a valid interpolator");
+        throw new RowBloomException("'{$driver}' is not a valid interpolator");
     }
 }

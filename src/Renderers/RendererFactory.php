@@ -3,7 +3,7 @@
 namespace ElaborateCode\RowBloom\Renderers;
 
 use ElaborateCode\RowBloom\RendererContract;
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 
 final class RendererFactory
 {
@@ -17,6 +17,6 @@ final class RendererFactory
             return app()->make($driver);
         }
 
-        throw new Exception("'{$driver}' is not a valid renderer");
+        throw new RowBloomException("'{$driver}' is not a valid renderer");
     }
 }

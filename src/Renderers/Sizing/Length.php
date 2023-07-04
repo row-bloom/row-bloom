@@ -2,7 +2,7 @@
 
 namespace ElaborateCode\RowBloom\Renderers\Sizing;
 
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 
 final class Length
 {
@@ -81,7 +81,7 @@ final class Length
         }
 
         if (! isset(self::RATIOS_TABLE[$this->unit->value][$to->value])) {
-            throw new Exception("Invalid conversion from {$this->unit->value} to {$to->value}");
+            throw new RowBloomException("Invalid conversion from {$this->unit->value} to {$to->value}");
         }
 
         return new self($this->value() * self::RATIOS_TABLE[$this->unit->value][$to->value], $to);

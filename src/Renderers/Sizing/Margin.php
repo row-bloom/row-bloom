@@ -3,7 +3,7 @@
 namespace ElaborateCode\RowBloom\Renderers\Sizing;
 
 use ElaborateCode\RowBloom\Options;
-use Exception;
+use ElaborateCode\RowBloom\RowBloomException;
 
 final class Margin
 {
@@ -25,7 +25,7 @@ final class Margin
 
         if (is_string($margin)) {
             if (preg_match('/\d+(?:\.\d+)?(?:\s+[[:alpha:]]+)?/', $margin, $parsedMargin) === false) {
-                throw new Exception("Invalid margin {$margin}");
+                throw new RowBloomException("Invalid margin {$margin}");
             }
 
             $margin = $parsedMargin;
@@ -67,7 +67,7 @@ final class Margin
                 return;
         }
 
-        throw new Exception('Invalid margin');
+        throw new RowBloomException('Invalid margin');
     }
 
     private function setLength(string $key, int|float|string $value): void
@@ -81,7 +81,7 @@ final class Margin
             $value = Length::fromNumber($parsed['value'], LengthUnit::from($parsed['unit']))
                 ->convert($this->unit);
         } else {
-            throw new Exception('Invalid margin');
+            throw new RowBloomException('Invalid margin');
         }
 
         $this->value[$key] = $value;

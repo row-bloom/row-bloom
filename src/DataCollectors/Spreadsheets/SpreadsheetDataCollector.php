@@ -5,7 +5,6 @@ namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
 use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Types\Table;
-use Exception;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
@@ -65,7 +64,7 @@ class SpreadsheetDataCollector implements DataCollectorContract
             'gnumeric' => Gnumeric::class,
             'htm', 'html' => Html::class,
             'csv' => Csv::class,
-            default => throw new Exception("Unable to identify a Spreadsheet reader for {$file}"),
+            default => throw new SpreadsheetException("Unable to identify a Spreadsheet reader for {$file}"),
         };
 
         $reader = app()->make($class);

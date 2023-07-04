@@ -5,7 +5,16 @@ namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
 use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Types\Table;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use Exception;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
+use PhpOffice\PhpSpreadsheet\Reader\Html;
+use PhpOffice\PhpSpreadsheet\Reader\IReader;
+use PhpOffice\PhpSpreadsheet\Reader\Ods;
+use PhpOffice\PhpSpreadsheet\Reader\Slk;
+use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Reader\Xml;
 
 class SpreadsheetDataCollector implements DataCollectorContract
 {
@@ -13,10 +22,11 @@ class SpreadsheetDataCollector implements DataCollectorContract
     {
         $file = $file instanceof File ? $file : File::fromPath($file);
 
-        // XLSX, XLS, XML, ODS, SLK, GNUMERIC, HTML, CSV
         $file->mustExist()->mustBeReadable()->mustBeFile();
 
-        $spreadsheet = IOFactory::load($file);
+        $reader = $this->getReaderTypeFromExtension($file);
+
+        $spreadsheet = $reader->load($file);
 
         // TODO access all sheets
 
@@ -35,5 +45,35 @@ class SpreadsheetDataCollector implements DataCollectorContract
         );
 
         return Table::fromArray($data);
+    }
+
+    /**
+     * Copied from phpoffice/phpspreadsheet:
+     * - Version: 1.28.0
+     * - File: vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\IOFactory.php
+     *
+     * setTestAutoDetect() is unique to CSV reader
+     */
+    private function getReaderTypeFromExtension(File $file): IReader
+    {
+        $class = match ($file->extension()) {
+            'xlsx', 'xlsm', 'xltx', 'xltm' => Xlsx::class,
+            'xls', 'xlt' => Xls::class,
+            'ods', 'ots' => Ods::class,
+            'slk' => Slk::class,
+            'xml' => Xml::class,
+            'gnumeric' => Gnumeric::class,
+            'htm', 'html' => Html::class,
+            'csv' => Csv::class,
+            default => throw new Exception("Unable to identify a Spreadsheet reader for {$file}"),
+        };
+
+        $reader = new $class;
+
+        if ($reader instanceof Csv) {
+            $reader->setTestAutoDetect(false);
+        }
+
+        return $reader;
     }
 }

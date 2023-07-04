@@ -17,7 +17,3 @@
 ```bash
 ./vendor/bin/pint
 ```
-
-## Architecture
-
-![class diagram](./class_diagram.drawio.png)

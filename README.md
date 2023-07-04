@@ -25,9 +25,12 @@ use ElaborateCode\RowBloom\Interpolators\Interpolator;
 use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
 use ElaborateCode\RowBloom\RowBloom;
+use ElaborateCode\RowBloom\RowBloomServiceProvider;
 use ElaborateCode\RowBloom\Types\Table;
 
-(new RowBloom)
+app()->make(RowBloomServiceProvider::class)->register();
+
+app()->make(RowBloom::class)
     ->addTable([
         ['title' => 'Title1', 'body' => 'body1'],
         ['title' => 'Title2', 'body' => 'body2'],
@@ -136,24 +139,24 @@ The main options are the one offered by the browser print UI.
 ![browser print options](./browser_print_options.png)
 
 | Option                | type            | default  | Html | Mpdf | Php chrome |
-| --------------------- | --------------- | -------- | ---- | ---- | ------ |
-| `perPage`             | `int`           | `null`   | ✔️ | ✔️ | ✔️   |
-| `displayHeaderFooter` | `bool`          | `true`   | ❌ | ✔️ | ✔️   |
-| `rawHeader`           | `string`        | `null`   | ❌ | ✔️ | ✔️   |
-| `rawFooter`           | `string`        | `null`   | ❌ | ✔️ | ✔️   |
-| `printBackground`     | `bool`          | `false`  | ❌ | ❌ | ✔️   |
-| `preferCSSPageSize`   | `bool`          | `false`  | ❌ | ❌ | ✔️   |
-| `landscape`           | `bool`          | `false`  | ❌ | ✔️ | ✔️   |
-| `format`              | `PaperFormat`   | `null`   | ❌ | ✔️ | ✔️   |
-| `width`               | `string`        | `null`   | ❌ | ✔️ | ✔️   |
-| `height`              | `string`        | `null`   | ❌ | ✔️ | ✔️   |
-| `margin`              | `array\|string` | `'1 in'` | ❌ | ✔️ | ✔️   |
-| `metadataTitle`       | `string`        | `null`   | ❌ | ✔️ | ❌   |
-| `metadataAuthor`      | `string`        | `null`   | ❌ | ✔️ | ❌   |
-| `metadataCreator`     | `string`        | `null`   | ❌ | ✔️ | ❌   |
-| `metadataSubject`     | `string`        | `null`   | ❌ | ✔️ | ❌   |
-| `metadataKeywords`    | `string`        | `null`   | ❌ | ✔️ | ❌   |
-|                       |                 |          |      |      |        |
+| --------------------- | --------------- | -------- | ---- | ---- | ---------- |
+| `perPage`             | `int`           | `null`   | ✔️ | ✔️ | ✔️       |
+| `displayHeaderFooter` | `bool`          | `true`   | ❌   | ✔️ | ✔️       |
+| `rawHeader`           | `string`        | `null`   | ❌   | ✔️ | ✔️       |
+| `rawFooter`           | `string`        | `null`   | ❌   | ✔️ | ✔️       |
+| `printBackground`     | `bool`          | `false`  | ❌   | ❌   | ✔️       |
+| `preferCSSPageSize`   | `bool`          | `false`  | ❌   | ❌   | ✔️       |
+| `landscape`           | `bool`          | `false`  | ❌   | ✔️ | ✔️       |
+| `format`              | `PaperFormat`   | `null`   | ❌   | ✔️ | ✔️       |
+| `width`               | `string`        | `null`   | ❌   | ✔️ | ✔️       |
+| `height`              | `string`        | `null`   | ❌   | ✔️ | ✔️       |
+| `margin`              | `array\|string` | `'1 in'` | ❌   | ✔️ | ✔️       |
+| `metadataTitle`       | `string`        | `null`   | ❌   | ✔️ | ❌         |
+| `metadataAuthor`      | `string`        | `null`   | ❌   | ✔️ | ❌         |
+| `metadataCreator`     | `string`        | `null`   | ❌   | ✔️ | ❌         |
+| `metadataSubject`     | `string`        | `null`   | ❌   | ✔️ | ❌         |
+| `metadataKeywords`    | `string`        | `null`   | ❌   | ✔️ | ❌         |
+|                       |                 |          |      |      |            |
 
 ## Changelog
 
@@ -162,6 +165,8 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+![class diagram](./class_diagram.drawio.png)
 
 ## License
 

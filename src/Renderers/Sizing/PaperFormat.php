@@ -71,10 +71,8 @@ enum PaperFormat: string
         $size = $this->mmSize();
 
         return [
-            app()->make(Length::class, ['value' => $size[0], 'unit' => LengthUnit::MILLIMETER_UNIT])
-                ->convert($to)->value(),
-            app()->make(Length::class, ['value' => $size[1], 'unit' => LengthUnit::MILLIMETER_UNIT])
-                ->convert($to)->value(),
+            Length::fromNumber($size[0], LengthUnit::MILLIMETER_UNIT)->valueIn($to),
+            Length::fromNumber($size[1], LengthUnit::MILLIMETER_UNIT)->valueIn($to),
         ];
     }
 

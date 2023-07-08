@@ -9,8 +9,6 @@ final class Length
     /**
      * @var (int|float)[][] Absolute units only
      *
-     * TODO: add props $currentUnit and $initialUnit to avoid precision loss on conversion
-     *
      * ? enum keys
      */
     private const RATIOS_TABLE = [
@@ -58,37 +56,73 @@ final class Length
         ],
     ];
 
-    private float $value;
-
-    public static function fromNumber(float|int|string $value, LengthUnit $unit): self
+    public static function fromValue(int|float|string $value, LengthUnit $readUnit): self
     {
-        return new self($value, $unit);
+        if (is_numeric($value)) {
+            return Length::fromNumber($value, $readUnit);
+        }
+
+        return Length::fromString($value, $readUnit);
     }
 
-    public function __construct(float|int|string $value, private LengthUnit $unit)
+    public static function fromNumber(float|int|string $value, LengthUnit $readUnit, ?LengthUnit $sourceUnit = null): self
     {
+        if (!is_numeric($value)) {
+            throw new RowBloomException("Not numeric value '{$value}'");
+        }
+
+        $sourceUnit ??= $readUnit;
+
+        return new self((float) $value, $readUnit, $sourceUnit);
+    }
+
+    public static function fromString(string $value, LengthUnit $readUnit): self
+    {
+        $value = trim((string) $value);
+
+        if (is_numeric($value)) {
+            return Length::fromNumber($value, $readUnit);
+        }
+
+        if (preg_match('/^(?<v>\d+(\.\d+)?)\s+(?<u>[[:alpha:]]+)$/', $value, $parsed)) {
+            return Length::fromNumber($parsed['v'], LengthUnit::from($parsed['u']))
+                ->setUnit($readUnit);
+        }
+
+        throw new RowBloomException("Invalid value '{$value}'");
+    }
+
+    private function __construct(
+        private readonly float $value,
+        private LengthUnit $readUnit,
+        private readonly LengthUnit $sourceUnit
+    ) {
         // TODO: if relative unit require a reference
-
-        // ? do I need to handle string in a special way
-
-        $this->value = (float) $value;
     }
 
-    public function convert(LengthUnit $to): self
+    public function setUnit(LengthUnit $readUnit): self
     {
-        if ($this->unit === $to) {
-            return clone $this;
-        }
+        $this->readUnit = $readUnit;
 
-        if (! isset(self::RATIOS_TABLE[$this->unit->value][$to->value])) {
-            throw new RowBloomException("Invalid conversion from {$this->unit->value} to {$to->value}");
-        }
+        return $this;
+    }
 
-        return new self($this->value() * self::RATIOS_TABLE[$this->unit->value][$to->value], $to);
+    public function convert(LengthUnit $readUnit): self
+    {
+        return (clone $this)->setUnit($readUnit);
     }
 
     public function value(): float
     {
-        return $this->value;
+        return $this->valueIn($this->readUnit);
+    }
+
+    public function valueIn(LengthUnit $readUnit): float
+    {
+        if ($readUnit === $this->sourceUnit) {
+            return $this->value;
+        }
+
+        return $this->value * self::RATIOS_TABLE[$this->sourceUnit->value][$readUnit->value];
     }
 }

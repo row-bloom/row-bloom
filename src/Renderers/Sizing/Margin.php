@@ -72,19 +72,7 @@ final class Margin
 
     private function setLength(string $key, int|float|string $value): void
     {
-        $value = trim((string) $value);
-
-        // TODO: move this logic to builder
-        if (preg_match('/^\d+(\.\d+)?$/', $value)) {
-            $value = Length::fromNumber($value, $this->unit);
-        } elseif (preg_match('/^(?<value>\d+(\.\d+)?)\s+(?<unit>[[:alpha:]]+)$/', $value, $parsed)) {
-            $value = Length::fromNumber($parsed['value'], LengthUnit::from($parsed['unit']))
-                ->convert($this->unit);
-        } else {
-            throw new RowBloomException('Invalid margin');
-        }
-
-        $this->value[$key] = $value;
+        $this->value[$key] = Length::fromValue($value, $this->unit);
     }
 
     // ============================================================

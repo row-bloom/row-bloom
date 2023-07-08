@@ -67,7 +67,7 @@ final class Length
 
     public static function fromNumber(float|int|string $value, LengthUnit $readUnit, ?LengthUnit $sourceUnit = null): self
     {
-        if (!is_numeric($value)) {
+        if (! is_numeric($value)) {
             throw new RowBloomException("Not numeric value '{$value}'");
         }
 

@@ -102,9 +102,10 @@ A driver will be picked automatically for each table path.
 Available drivers:
 
 - Spreadsheet (parses local `xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv` files).
-- Json
-- Folder (todo)
-- Db (todo)
+- Json.
+- Csv (todo).
+- Folder (todo).
+- Db (todo).
 
 ### Template
 
@@ -112,9 +113,9 @@ Pick a driver using `setInterpolator`, and provide a template with `setTemplate`
 
 The available interpolators are:
 
-- Twig
-- Php
-- Blade (todo)
+- Twig.
+- Php.
+- Blade (todo).
 
 All interpolators are available in `ElaborateCode\RowBloom\Interpolators\Interpolator` enum, and you can provide a custom one as long as you implement `ElaborateCode\RowBloom\InterpolatorContract`
 
@@ -124,9 +125,9 @@ Pick a driver using `setRenderer`, and optionally provide css with `addCss` or `
 
 The available renderers are:
 
-- Html
-- Php chrome
-- Mpdf
+- Html.
+- Php chrome.
+- Mpdf.
 
 All renderers are available in `ElaborateCode\RowBloom\Renderers\Renderer` enum, and you can provide a custom one as long as you implement `ElaborateCode\RowBloom\RendererContract`
 

@@ -3,9 +3,18 @@ name: run-tests
 on:
   push:
     branches: [main]
+    paths:
+      - '**.php'
+      - 'phpunit.**'
+      - 'composer.**'
+      - 'tests/**'
   pull_request:
     branches: [main]
-  # TODO: paths
+    paths:
+      - '**.php'
+      - 'phpunit.**'
+      - 'composer.**'
+      - 'tests/**'
 
 jobs:
   test:

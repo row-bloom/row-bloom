@@ -34,7 +34,8 @@ class MpdfRenderer implements RendererContract
 
     private Options $options;
 
-    // ! see: https://mpdf.github.io/reference/mpdf-functions/construct.html
+    private Mpdf $mpdf;
+
     /**
      * Config and defaults
      * mode: Depends on the values of codepage and country/language codes
@@ -49,9 +50,7 @@ class MpdfRenderer implements RendererContract
      * margin_footer: 9mm
      * orientation: 'P' (Portrait)
      */
-    public function __construct(private Mpdf $mpdf)
-    {
-    }
+    // ! see: https://mpdf.github.io/reference/mpdf-functions/construct.html
 
     public function get(): string
     {
@@ -72,8 +71,11 @@ class MpdfRenderer implements RendererContract
         $this->css = $css;
         $this->options = $options;
 
+        $this->mpdf = new Mpdf(
+            $this->getMargin(),
+        );
+
         $this->setPageFormat();
-        $this->setMargin();
         $this->setHeaderAndFooter();
         $this->setMetadata();
 
@@ -98,17 +100,18 @@ class MpdfRenderer implements RendererContract
         $this->mpdf->_setPageSize($size, $orientation);
     }
 
-    private function setMargin(): void
+    private function getMargin(): array
     {
-        https://mpdf.github.io/headers-footers/headers-top-margins.html
         $margin = Margin::fromOptions($this->options, LengthUnit::MILLIMETER_UNIT);
 
-        $this->mpdf->SetMargins(
-            $margin->getRaw('marginLeft'),
-            $margin->getRaw('marginRight'),
-            $margin->getRaw('marginTop')
-            // TODO: bottom ?
-        );
+        return [
+            'margin_top' => $margin->getRaw('marginTop'),
+            'margin_right' => $margin->getRaw('marginRight'),
+            'margin_bottom' => $margin->getRaw('marginBottom'),
+            'margin_left' => $margin->getRaw('marginLeft'),
+            // 'margin_header' => 0,
+            // 'margin_footer' => 0,
+        ];
     }
 
     private function setHeaderAndFooter(): void

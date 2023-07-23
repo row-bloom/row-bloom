@@ -37,7 +37,8 @@ class MpdfRenderer implements RendererContract
     private Mpdf $mpdf;
 
     /**
-     * Config and defaults
+     * Config and defaults:
+     *
      * mode: Depends on the values of codepage and country/language codes
      * format: 'A4'
      * default_font_size: Uses the default value set in defaultCSS configuration variable for the font-size of the BODY
@@ -49,9 +50,9 @@ class MpdfRenderer implements RendererContract
      * margin_header: 9mm
      * margin_footer: 9mm
      * orientation: 'P' (Portrait)
+     *
+     * see: https://mpdf.github.io/reference/mpdf-functions/construct.html
      */
-    // ! see: https://mpdf.github.io/reference/mpdf-functions/construct.html
-
     public function get(): string
     {
         return $this->rendering;

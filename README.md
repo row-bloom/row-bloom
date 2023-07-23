@@ -101,10 +101,10 @@ A driver will be picked automatically for each table path.
 
 Available drivers:
 
-- Spreadsheet (parses local `xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv` files).
+- Spreadsheet (`xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv`).
 - Json.
+- Folder.
 - Csv (todo).
-- Folder (todo).
 - Db (todo).
 
 ### Template

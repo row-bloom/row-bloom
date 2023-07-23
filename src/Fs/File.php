@@ -34,6 +34,22 @@ class File implements Stringable
     // IO
     // ============================================================
 
+    public function ls(): array
+    {
+        if (! $this->exists()) {
+            throw new FsException("Cannot find path {$this->path} because it does not exist.");
+        }
+
+        if ($this->isFile()) {
+            return [realpath($this->path)];
+        }
+
+        return array_map(
+            fn ($f) => $this->path.'/'.$f,
+            array_diff(scandir($this->path), ['..', '.'])
+        );
+    }
+
     public function readFileContent(): ?string
     {
         if (! $this->exists() || $this->isDir()) {

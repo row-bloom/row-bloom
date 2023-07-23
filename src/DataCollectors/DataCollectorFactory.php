@@ -34,8 +34,11 @@ final class DataCollectorFactory
         return $this->make($driver);
     }
 
-    private function resolveFileDriver(File $file): DataCollector
+    private function resolveFsDriver(File $file): DataCollector
     {
+        if ($file->isDir()) {
+            return DataCollector::Folder;
+        }
 
         if ($file->extension() === 'json') {
             return DataCollector::Json;

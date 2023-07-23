@@ -46,7 +46,7 @@ class File implements Stringable
 
         $folderContent = scandir($this->path);
 
-        if(false === $folderContent) {
+        if (false === $folderContent) {
             throw new FsException("Cannot scan folder content of {$this->path}.");
         }
 

@@ -136,7 +136,7 @@ class RowBloom
     }
 
     // ? addSpreadsheetPath() ,addJsonPath(), ...
-    public function addTablePath(string $tablePath, ?string $driver = null): static
+    public function addTablePath(string $tablePath, string $driver = null): static
     {
         // ? improve type (TablePath...)
         $this->tables[] = [

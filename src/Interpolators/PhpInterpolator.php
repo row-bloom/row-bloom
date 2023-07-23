@@ -11,7 +11,7 @@ class PhpInterpolator implements InterpolatorContract
 {
     use GlueHtmlConcern;
 
-    public function interpolate(Html $template, Table $table, ?int $perPage = null): Html
+    public function interpolate(Html $template, Table $table, int $perPage = null): Html
     {
         $body = '';
         $dataCount = count($table);

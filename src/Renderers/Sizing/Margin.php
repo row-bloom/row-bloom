@@ -14,12 +14,12 @@ final class Margin
     /** @var Length[] */
     private array $value = [];
 
-    public static function fromOptions(Options $options, ?LengthUnit $unit = null): static
+    public static function fromOptions(Options $options, LengthUnit $unit = null): static
     {
         return new self($options->margin, $unit);
     }
 
-    public function __construct(array|string $margin, ?LengthUnit $unit = null)
+    public function __construct(array|string $margin, LengthUnit $unit = null)
     {
         $this->unit = $unit ?? self::$defaultUnit;
 

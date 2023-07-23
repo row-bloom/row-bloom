@@ -44,9 +44,15 @@ class File implements Stringable
             return [realpath($this->path)];
         }
 
+        $folderContent = scandir($this->path);
+
+        if(false === $folderContent) {
+            throw new FsException("Cannot scan folder content of {$this->path}.");
+        }
+
         return array_map(
             fn ($f) => $this->path.'/'.$f,
-            array_diff(scandir($this->path), ['..', '.'])
+            array_diff($folderContent, ['..', '.'])
         );
     }
 

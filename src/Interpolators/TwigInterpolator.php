@@ -12,7 +12,7 @@ class TwigInterpolator implements InterpolatorContract
 {
     use GlueHtmlConcern;
 
-    public function interpolate(Html $template, Table $table, ?int $perPage = null): Html
+    public function interpolate(Html $template, Table $table, int $perPage = null): Html
     {
         $loader = app()->make(ArrayLoader::class, ['templates' => ['template' => $template]]);
         $twig = app()->make(Environment::class, ['loader' => $loader]);

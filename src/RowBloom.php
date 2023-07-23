@@ -83,15 +83,15 @@ class RowBloom
     {
         $dataCollectorFactory = app()->make(DataCollectorFactory::class);
 
-        $table = null;
+        $dataCollector = null;
 
         if (isset($tablePath['driver'])) {
-            $table = $dataCollectorFactory->make($tablePath['driver']);
+            $dataCollector = $dataCollectorFactory->make($tablePath['driver']);
         } else {
-            $table = $dataCollectorFactory->makeFromPath($tablePath['path']);
+            $dataCollector = $dataCollectorFactory->makeFromPath($tablePath['path']);
         }
 
-        return $table->getTable($tablePath['path']);
+        return $dataCollector->getTable($tablePath['path']);
     }
 
     private function template(): Html
@@ -136,7 +136,7 @@ class RowBloom
     }
 
     // ? addSpreadsheetPath() ,addJsonPath(), ...
-    public function addTablePath(string $tablePath, ?string $driver = null): static
+    public function addTablePath(string $tablePath, string $driver = null): static
     {
         // ? improve type (TablePath...)
         $this->tables[] = [

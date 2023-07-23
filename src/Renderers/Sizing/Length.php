@@ -65,7 +65,7 @@ final class Length
         return Length::fromString($value, $readUnit);
     }
 
-    public static function fromNumber(float|int|string $value, LengthUnit $readUnit, ?LengthUnit $sourceUnit = null): self
+    public static function fromNumber(float|int|string $value, LengthUnit $readUnit, LengthUnit $sourceUnit = null): self
     {
         if (! is_numeric($value)) {
             throw new RowBloomException("Not numeric value '{$value}'");

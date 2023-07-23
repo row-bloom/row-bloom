@@ -21,21 +21,29 @@ final class DataCollectorFactory
         throw new RowBloomException("'{$driver}' is not a valid data collector");
     }
 
-    // TODO Support composition behavior for folders
     public function makeFromPath(string $path): DataCollectorContract
     {
+        /** @var File */
         $file = app()->make(File::class, ['path' => $path]);
 
         $driver = match (true) {
-            $file->exists() => $this->resolveFileDriver($file),
+            $file->exists() => $this->resolveFsDriver($file),
             default => throw new RowBloomException("Couldn't resolve a driver for the path '{$path}'"),
         };
 
         return $this->make($driver);
     }
 
-    private function resolveFileDriver(File $file): DataCollector
+    private function resolveFsDriver(File $file): DataCollector
     {
+        if ($file->isDir()) {
+            return DataCollector::Folder;
+        }
+
+        if ($file->extension() === 'json') {
+            return DataCollector::Json;
+        }
+
         if (in_array($file->extension(), ['xlsx', 'xls', 'xml', 'ods', 'slk', 'gnumeric', 'html', 'csv'], true)) {
             return DataCollector::Spreadsheet;
         }

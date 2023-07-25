@@ -1,9 +1,11 @@
 {
     "name": "elaborate-code/row-bloom",
-    "description": "This is my package row-bloom",
+    "description": "tables rows to pdf cards",
     "keywords": [
-        "elaborate-code",
-        "row-bloom"
+        "pdf",
+        "table",
+        "generation",
+        "rendering"
     ],
     "homepage": "https://github.com/elaborate-code/row-bloom",
     "license": "MIT",

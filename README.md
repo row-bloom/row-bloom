@@ -13,6 +13,14 @@
 composer require elaborate-code/row-bloom
 ```
 
+Call `RowBloomServiceProvider::register()` at the entrypoint of your application.
+
+```php
+use ElaborateCode\RowBloom\RowBloomServiceProvider;
+
+app()->make(RowBloomServiceProvider::class)->register();
+```
+
 Requires:
 
 - PHP 8.1
@@ -25,10 +33,7 @@ use ElaborateCode\RowBloom\Interpolators\Interpolator;
 use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
 use ElaborateCode\RowBloom\RowBloom;
-use ElaborateCode\RowBloom\RowBloomServiceProvider;
 use ElaborateCode\RowBloom\Types\Table;
-
-app()->make(RowBloomServiceProvider::class)->register();
 
 app()->make(RowBloom::class)
     ->addTable([

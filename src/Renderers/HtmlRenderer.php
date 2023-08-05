@@ -54,4 +54,25 @@ class HtmlRenderer implements RendererContract
 
         return $this;
     }
+
+    public static function getOptionsSupport(): array
+    {
+        return [
+            'displayHeaderFooter' => false,
+            'rawHeader' => false,
+            'rawFooter' => false,
+            'printBackground' => false,
+            'preferCSSPageSize' => false,
+            'landscape' => false,
+            'format' => false,
+            'width' => false,
+            'height' => false,
+            'margin' => false,
+            'metadataTitle' => false,
+            'metadataAuthor' => false,
+            'metadataCreator' => false,
+            'metadataSubject' => false,
+            'metadataKeywords' => false,
+        ];
+    }
 }

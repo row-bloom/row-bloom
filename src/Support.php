@@ -97,4 +97,15 @@ class Support
     {
         return $this->supportedTableFileExtensions;
     }
+
+    public function getRendererOptionsSupport(Renderer|string $renderer): ?array
+    {
+        $className = $renderer instanceof Renderer ? $renderer->value : $renderer;
+
+        if (! class_exists($className) || ! is_a($className, RendererContract::class, true)) {
+            return null;
+        }
+
+        return $className::getOptionsSupport();
+    }
 }

@@ -3,11 +3,14 @@
 namespace ElaborateCode\RowBloom;
 
 use ElaborateCode\RowBloom\DataCollectors\DataCollector;
+use ElaborateCode\RowBloom\Interpolators\Interpolator;
 use ElaborateCode\RowBloom\Renderers\Renderer;
 
 class Support
 {
     private array $dataCollectorDrivers = [];
+
+    private array $interpolatorDrivers = [];
 
     private array $rendererDrivers = [];
 
@@ -17,6 +20,7 @@ class Support
     {
         $this->setDataCollectorDrivers()
             ->setSupportedTableFileExtensions()
+            ->setInterpolatorDrivers()
             ->setRendererDrivers();
     }
 
@@ -38,6 +42,26 @@ class Support
     public function getDataCollectorDrivers(): array
     {
         return $this->dataCollectorDrivers;
+    }
+
+    public function setInterpolatorDrivers(): static
+    {
+        foreach (Interpolator::cases() as $interpolator) {
+            $className = $interpolator->value;
+
+            if (! class_exists($className)) {
+                continue;
+            }
+
+            $this->interpolatorDrivers[$interpolator->name] = $className;
+        }
+
+        return $this;
+    }
+
+    public function getInterpolatorDrivers(): array
+    {
+        return $this->interpolatorDrivers;
     }
 
     public function setRendererDrivers(): static

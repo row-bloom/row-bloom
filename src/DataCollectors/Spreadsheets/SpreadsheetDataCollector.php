@@ -46,6 +46,26 @@ class SpreadsheetDataCollector implements DataCollectorContract
         return Table::fromArray($data);
     }
 
+    public static function getSupportedFileExtensions(): array
+    {
+        return [
+            'xlsx' => true,
+            'xlsm' => true,
+            'xltx' => true,
+            'xltm' => true,
+            'xls' => true,
+            'xlt' => true,
+            'ods' => true,
+            'ots' => true,
+            'slk' => true,
+            'xml' => true,
+            'gnumeric' => true,
+            'htm' => true,
+            'html' => true,
+            'csv' => true,
+        ];
+    }
+
     /**
      * Copied from phpoffice/phpspreadsheet:
      * - Version: 1.28.0

@@ -95,6 +95,27 @@ class PhpChromeRenderer implements RendererContract
         return $this;
     }
 
+    public static function getOptionsSupport(): array
+    {
+        return [
+            'displayHeaderFooter' => true,
+            'rawHeader' => true,
+            'rawFooter' => true,
+            'printBackground' => true,
+            'preferCSSPageSize' => true,
+            'landscape' => true,
+            'format' => true,
+            'width' => true,
+            'height' => true,
+            'margin' => true,
+            'metadataTitle' => false,
+            'metadataAuthor' => false,
+            'metadataCreator' => false,
+            'metadataSubject' => false,
+            'metadataKeywords' => false,
+        ];
+    }
+
     // ============================================================
     // Html
     // ============================================================

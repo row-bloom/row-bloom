@@ -6,6 +6,7 @@ use ElaborateCode\RowBloom\DataCollectorContract;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\RowBloomException;
 
+// TODO: improve factory to allow user to register new drivers and what they support
 final class DataCollectorFactory
 {
     public function make(DataCollector|string $driver): DataCollectorContract

@@ -24,4 +24,11 @@ class JsonDataCollector implements DataCollectorContract
 
         return Table::fromArray($data);
     }
+
+    public static function getSupportedFileExtensions(): array
+    {
+        return [
+            'json' => true,
+        ];
+    }
 }

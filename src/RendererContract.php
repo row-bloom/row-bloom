@@ -8,6 +8,7 @@ use ElaborateCode\RowBloom\Types\Html;
 
 interface RendererContract
 {
+    // ? keep rendering base64
     public function get(): string;
 
     public function save(File $file): bool;
@@ -15,4 +16,6 @@ interface RendererContract
     // ? echo()
 
     public function render(Html $template, Css $css, Options $options): static;
+
+    public static function getOptionsSupport(): array;
 }

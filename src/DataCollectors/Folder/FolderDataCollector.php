@@ -26,4 +26,9 @@ class FolderDataCollector implements DataCollectorContract
 
         return $table;
     }
+
+    public static function getSupportedFileExtensions(): array
+    {
+        return [];
+    }
 }

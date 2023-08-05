@@ -89,6 +89,27 @@ class MpdfRenderer implements RendererContract
         return $this;
     }
 
+    public static function getOptionsSupport(): array
+    {
+        return [
+            'displayHeaderFooter' => true,
+            'rawHeader' => true,
+            'rawFooter' => true,
+            'printBackground' => false,
+            'preferCSSPageSize' => false,
+            'landscape' => true,
+            'format' => true,
+            'width' => true,
+            'height' => true,
+            'margin' => true,
+            'metadataTitle' => true,
+            'metadataAuthor' => true,
+            'metadataCreator' => true,
+            'metadataSubject' => true,
+            'metadataKeywords' => true,
+        ];
+    }
+
     // ============================================================
     // Options
     // ============================================================

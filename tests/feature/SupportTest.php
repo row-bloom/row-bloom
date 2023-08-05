@@ -8,7 +8,7 @@ use ElaborateCode\RowBloom\Renderers\PhpChromeRenderer;
 use ElaborateCode\RowBloom\Renderers\Renderer;
 use ElaborateCode\RowBloom\Support;
 
-it('lists capabilities', function() {
+it('lists capabilities', function () {
     /** @var Support */
     $support = app()->get(Support::class);
 

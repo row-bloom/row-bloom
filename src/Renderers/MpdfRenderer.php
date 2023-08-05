@@ -12,18 +12,6 @@ use ElaborateCode\RowBloom\Types\Html;
 use Mpdf\HTMLParserMode;
 use Mpdf\Mpdf;
 
-/**
- * https://mpdf.github.io/
- *
- * HTML to PDF
- *
- * Pros:
- * - PDF specific attributes
- *
- * Cons
- * - Weak HTML and CSS support
- * - No js
- */
 class MpdfRenderer implements RendererContract
 {
     private string $rendering;
@@ -36,23 +24,6 @@ class MpdfRenderer implements RendererContract
 
     private Mpdf $mpdf;
 
-    /**
-     * Config and defaults:
-     *
-     * mode: Depends on the values of codepage and country/language codes
-     * format: 'A4'
-     * default_font_size: Uses the default value set in defaultCSS configuration variable for the font-size of the BODY
-     * default_font: Uses the default value set in defaultCSS for the font-family of BODY unless codepage is set to 'win-1252'
-     * margin_left: 15mm
-     * margin_right: 15mm
-     * margin_top: 16mm
-     * margin_bottom: 16mm
-     * margin_header: 9mm
-     * margin_footer: 9mm
-     * orientation: 'P' (Portrait)
-     *
-     * see: https://mpdf.github.io/reference/mpdf-functions/construct.html
-     */
     public function get(): string
     {
         return $this->rendering;

@@ -22,6 +22,7 @@
         "illuminate/container": "*",
         "mpdf/mpdf": "^8.1",
         "phpoffice/phpspreadsheet": "^1.28",
+        "spatie/browsershot": "^3.58",
         "twig/twig": "^3.6"
     },
     "require-dev": {

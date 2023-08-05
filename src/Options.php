@@ -53,6 +53,9 @@ class Options
     ) {
     }
 
+    /**
+     * return [<width>, <height>]
+     */
     public function resolvePaperSize(LengthUnit $unit): array
     {
         if (isset($this->format)) {

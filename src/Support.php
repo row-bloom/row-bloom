@@ -93,11 +93,17 @@ class Support
         return $this;
     }
 
+    /**
+     * @return array An associative array that contains supported extensions as keys, all values are set to true
+     */
     public function getSupportedTableFileExtensions(): array
     {
         return $this->supportedTableFileExtensions;
     }
 
+    /**
+     * @return ?array An associative array of 'optionName' => \<bool\> or null if $renderer is invalid
+     */
     public function getRendererOptionsSupport(Renderer|string $renderer): ?array
     {
         $className = $renderer instanceof Renderer ? $renderer->value : $renderer;

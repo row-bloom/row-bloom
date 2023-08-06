@@ -35,7 +35,7 @@ use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
 use ElaborateCode\RowBloom\RowBloom;
 use ElaborateCode\RowBloom\Types\Table;
 
-app()->make(RowBloom::class)
+app()->get(RowBloom::class)
     ->addTable([
         ['title' => 'Title1', 'body' => 'body1'],
         ['title' => 'Title2', 'body' => 'body2'],
@@ -131,8 +131,9 @@ Pick a driver using `setRenderer`, and optionally provide css with `addCss` or `
 The available renderers are:
 
 - Html.
-- Php chrome.
 - Mpdf.
+- Php chrome (experimental).
+- Browsershot (experimental).
 
 All renderers are available in `ElaborateCode\RowBloom\Renderers\Renderer` enum, and you can provide a custom one as long as you implement `ElaborateCode\RowBloom\RendererContract`
 
@@ -165,6 +166,25 @@ The main options are the one offered by the browser print UI.
 | `metadataSubject`     | `string`        | `null`   | ❌   | ✔️ | ❌         |
 | `metadataKeywords`    | `string`        | `null`   | ❌   | ✔️ | ❌         |
 |                       |                 |          |      |      |            |
+
+### Support info
+
+When I was building an application to consume this library, I found it useful to get lists of what is supported by `RowBloom` as drivers, file extensions, and options per rendering driver... So here comes `ElaborateCode\RowBloom\Support` class.
+
+```php
+use ElaborateCode\RowBloom\Support;
+
+/** @var Support */
+$support = app()->get(Support::class);
+
+$support->getDataCollectorDrivers();
+$support->getInterpolatorDrivers();
+$support->getRendererDrivers();
+
+$support->getSupportedTableFileExtensions();
+
+$support->getRendererOptionsSupport('driverName');
+```
 
 ## Changelog
 

@@ -5,6 +5,10 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/elaborate-code/row-bloom/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/elaborate-code/row-bloom/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/elaborate-code/row-bloom.svg?style=flat-square)](https://packagist.org/packages/elaborate-code/row-bloom)
 
+This package is used to generate PDFs using a table of data with one or many rows, and a template that gets applied for each row.
+
+The goal is to allow the usage of any templating engine with any PDF generation library, by abstracting them as drivers and trying to ensure an idempotent output no matter what driver the user picks.
+
 ![illustration](./illustration.png)
 
 ## Installation
@@ -13,7 +17,7 @@
 composer require elaborate-code/row-bloom
 ```
 
-Call `RowBloomServiceProvider::register()` at the entrypoint of your application.
+Call `RowBloomServiceProvider::register()` at the entry point of your application.
 
 ```php
 use ElaborateCode\RowBloom\RowBloomServiceProvider;
@@ -139,11 +143,11 @@ All renderers are available in `ElaborateCode\RowBloom\Renderers\Renderer` enum,
 
 ### Options
 
-Each renderer has its own way to handle **margin**, **header**, **footer**, **paper size** and more. This package tries to act as a wrapper and give the same output from same options regardless of rendering library.
+Each renderer has its own way of handling **margin**, **header**, **footer**, **paper size**, and more. This package tries to act as a wrapper and give the same output from the same options regardless of the rendering library.
 
 > The hard part XD
 
-The main options are the one offered by the browser print UI.
+The main options are the ones offered by the browser print UI.
 
 ![browser print options](./browser_print_options.png)
 

@@ -1,6 +1,6 @@
 {
-    "name": "elaborate-code/row-bloom",
-    "description": "tables rows to pdf cards",
+    "name": "row-bloom/row-bloom",
+    "description": "Table rows to pdf cards",
     "keywords": [
         "pdf",
         "table",

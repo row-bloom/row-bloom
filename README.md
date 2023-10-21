@@ -190,6 +190,14 @@ $support->getSupportedTableFileExtensions();
 $support->getRendererOptionsSupport('driverName');
 ```
 
+## Gotchas
+
+- npm path
+- node path
+- Puppeteer installation.
+- Chromium path.
+- Web process permissions.
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

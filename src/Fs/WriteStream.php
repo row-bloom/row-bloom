@@ -8,7 +8,7 @@ class WriteStream
 {
     public function __construct(protected mixed $file)
     {
-        if (false === is_resource($file)) {
+        if (is_resource($file) === false) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Argument must be a valid resource type. %s given.',

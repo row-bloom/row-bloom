@@ -13,5 +13,6 @@ class RowBloomServiceProvider
         app()->singleton(DataCollectorFactory::class, DataCollectorFactory::class);
         app()->singleton(InterpolatorFactory::class, InterpolatorFactory::class);
         app()->singleton(RendererFactory::class, RendererFactory::class);
+        app()->singleton(Support::class, Support::class);
     }
 }

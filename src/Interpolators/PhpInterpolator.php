@@ -27,12 +27,14 @@ class PhpInterpolator implements InterpolatorContract
 
     private function render(Html $template, array $row): string
     {
-        ob_start();
+        $output = (function (Html $template, array $row) {
+            ob_start();
 
-        extract($row);
-        eval(' ?>'.$template.'<?php ');
+            extract($row);
+            eval(' ?>'.$template.'<?php ');
 
-        $output = ob_get_clean();
+            return ob_get_clean();
+        })($template, $row);
 
         if ($output === false) {
             throw new RowBloomException("Couldn't render '{$template}'");

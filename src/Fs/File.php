@@ -18,7 +18,7 @@ class File implements Stringable
 
         $realPath = realpath($path);
 
-        if (false === $realPath) {
+        if ($realPath === false) {
             throw new FsException("Invalid path format {$path}");
         }
 
@@ -46,7 +46,7 @@ class File implements Stringable
 
         $folderContent = scandir($this->path);
 
-        if (false === $folderContent) {
+        if ($folderContent === false) {
             throw new FsException("Cannot scan folder content of {$this->path}.");
         }
 

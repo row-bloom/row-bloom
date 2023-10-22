@@ -6,7 +6,7 @@ use Countable;
 use ElaborateCode\RowBloom\RowBloomException;
 use Iterator;
 
-final class Table implements Iterator, Countable
+final class Table implements Countable, Iterator
 {
     protected int $iteratorPosition = 0;
 

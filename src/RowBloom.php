@@ -28,7 +28,7 @@ class RowBloom
 
     // ------------------------------------------------------------
 
-    public function __construct(private Options $options)
+    public function __construct(private Options $options, private Config $config)
     {
     }
 
@@ -55,7 +55,7 @@ class RowBloom
 
         $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable, $this->options->perPage);
 
-        return $renderer->render($interpolatedTemplate, $finalCss, $this->options);
+        return $renderer->render($interpolatedTemplate, $finalCss, $this->options, $this->config);
     }
 
     // ------------------------------------------------------------
@@ -127,6 +127,13 @@ class RowBloom
     // ============================================================
     // Fluent build methods
     // ============================================================
+
+    public function setConfig(Config $config): static
+    {
+        $this->config = $config;
+
+        return $this;
+    }
 
     public function addTable(Table|array $table): static
     {

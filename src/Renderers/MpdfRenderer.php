@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom\Renderers;
 
+use ElaborateCode\RowBloom\Config;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
@@ -37,7 +38,7 @@ class MpdfRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(Html $html, Css $css, Options $options): static
+    public function render(Html $html, Css $css, Options $options, Config $config): static
     {
         $this->html = $html;
         $this->css = $css;

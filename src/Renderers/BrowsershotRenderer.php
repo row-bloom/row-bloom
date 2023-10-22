@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom\Renderers;
 
+use ElaborateCode\RowBloom\Config;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
@@ -35,7 +36,7 @@ class BrowsershotRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(Html $html, Css $css, Options $options): static
+    public function render(Html $html, Css $css, Options $options, Config $config): static
     {
         $this->html = $html;
         $this->css = $css;
@@ -46,6 +47,7 @@ class BrowsershotRenderer implements RendererContract
         $margin = Margin::fromOptions($this->options)->allRawIn(LengthUnit::MILLIMETER_UNIT);
 
         $browsershot = Browsershot::html($this->html())
+            ->newHeadless()
             ->paperSize($paperWidth, $paperHeight)->landscape(false)
             ->margins($margin['marginTop'], $margin['marginRight'], $margin['marginBottom'], $margin['marginLeft'])
             ->showBackground($this->options->printBackground)
@@ -55,6 +57,22 @@ class BrowsershotRenderer implements RendererContract
             $browsershot->showBrowserHeaderAndFooter()
                 ->headerHtml($this->options->rawHeader ?? '')
                 ->footerHtml($this->options->rawFooter ?? '');
+        }
+
+        if (! is_null($config->getChromePath())) {
+            $browsershot->setChromePath($config->getChromePath());
+        }
+
+        if (! is_null($config->getNodeBinaryPath())) {
+            $browsershot->setNodeBinary($config->getNodeBinaryPath());
+        }
+
+        if (! is_null($config->getNpmBinaryPath())) {
+            $browsershot->setNpmBinary($config->getNpmBinaryPath());
+        }
+
+        if (! is_null($config->getNodeModulesPath())) {
+            $browsershot->setNodeModulePath($config->getNodeModulesPath());
         }
 
         $this->rendering = $browsershot->base64pdf();

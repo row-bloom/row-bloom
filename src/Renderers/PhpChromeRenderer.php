@@ -2,6 +2,7 @@
 
 namespace ElaborateCode\RowBloom\Renderers;
 
+use ElaborateCode\RowBloom\Config;
 use ElaborateCode\RowBloom\Fs\File;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\RendererContract;
@@ -36,13 +37,13 @@ class PhpChromeRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(Html $html, Css $css, Options $options): static
+    public function render(Html $html, Css $css, Options $options, Config $config): static
     {
         $this->html = $html;
         $this->css = $css;
         $this->options = $options;
 
-        $browserFactory = app()->make(BrowserFactory::class);
+        $browserFactory = app()->make(BrowserFactory::class, ['chromeBinary' => $config->getChromePath()]);
         // Start a browser and create a page
         $browser = $browserFactory->createBrowser();
         $page = $browser->createPage();

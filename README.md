@@ -190,6 +190,10 @@ $support->getSupportedTableFileExtensions();
 $support->getRendererOptionsSupport('driverName');
 ```
 
+### Config
+
+`RowBloom\RowBloom\Config`
+
 ## Gotchas
 
 - npm path

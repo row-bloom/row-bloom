@@ -1,5 +1,6 @@
 <?php
 
+use ElaborateCode\RowBloom\Config;
 use ElaborateCode\RowBloom\Options;
 use ElaborateCode\RowBloom\Renderers\PhpChromeRenderer;
 use ElaborateCode\RowBloom\Renderers\Renderer;
@@ -17,10 +18,12 @@ it('renders and get (basic)')
             'template' => Html::fromString('<h1>Title</h1><p>Bold text</p><div>Normal text</div>'),
             'css' => Css::fromString('p {font-weight: bold;}'),
             'options' => app()->make(Options::class),
+            'config' => app()->make(Config::class),
         ],
     ])
-    ->expect(function ($template, $css, $options) {
-        return app()->make(RendererFactory::class)->make(Renderer::PhpChrome)->render($template, $css, $options)->get();
+    ->expect(function ($template, $css, $options, $config) {
+        return app()->make(RendererFactory::class)->make(Renderer::PhpChrome)
+            ->render($template, $css, $options, $config)->get();
     })
     // ? more assertions
     ->toBeString();

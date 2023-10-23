@@ -1,6 +1,6 @@
 <?php
 
-use ElaborateCode\RowBloom\RowBloomServiceProvider;
+use RowBloom\RowBloom\RowBloomServiceProvider;
 
 app()->make(RowBloomServiceProvider::class)->register();
 

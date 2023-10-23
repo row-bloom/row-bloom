@@ -1,8 +1,8 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\Types\Table;
 
 interface DataCollectorContract
 {

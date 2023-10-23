@@ -1,17 +1,17 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Renderers;
+namespace RowBloom\RowBloom\Renderers;
 
-use ElaborateCode\RowBloom\Config;
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Options;
-use ElaborateCode\RowBloom\RendererContract;
-use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
-use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
-use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\Html;
 use Mpdf\HTMLParserMode;
 use Mpdf\Mpdf;
+use RowBloom\RowBloom\Config;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\Options;
+use RowBloom\RowBloom\RendererContract;
+use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
+use RowBloom\RowBloom\Renderers\Sizing\Margin;
+use RowBloom\RowBloom\Types\Css;
+use RowBloom\RowBloom\Types\Html;
 
 class MpdfRenderer implements RendererContract
 {

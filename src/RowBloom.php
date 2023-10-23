@@ -1,16 +1,16 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
-use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Interpolators\Interpolator;
-use ElaborateCode\RowBloom\Interpolators\InterpolatorFactory;
-use ElaborateCode\RowBloom\Renderers\Renderer;
-use ElaborateCode\RowBloom\Renderers\RendererFactory;
-use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\Html;
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\Interpolators\Interpolator;
+use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
+use RowBloom\RowBloom\Renderers\Renderer;
+use RowBloom\RowBloom\Renderers\RendererFactory;
+use RowBloom\RowBloom\Types\Css;
+use RowBloom\RowBloom\Types\Html;
+use RowBloom\RowBloom\Types\Table;
 
 class RowBloom
 {

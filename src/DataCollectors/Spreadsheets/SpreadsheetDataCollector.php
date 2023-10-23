@@ -1,10 +1,7 @@
 <?php
 
-namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
+namespace RowBloom\RowBloom\DataCollectors\Spreadsheets;
 
-use ElaborateCode\RowBloom\DataCollectorContract;
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Types\Table;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
@@ -14,6 +11,9 @@ use PhpOffice\PhpSpreadsheet\Reader\Slk;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\Xml;
+use RowBloom\RowBloom\DataCollectorContract;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\Types\Table;
 
 class SpreadsheetDataCollector implements DataCollectorContract
 {

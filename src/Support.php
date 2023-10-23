@@ -1,10 +1,10 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
-use ElaborateCode\RowBloom\DataCollectors\DataCollector;
-use ElaborateCode\RowBloom\Interpolators\Interpolator;
-use ElaborateCode\RowBloom\Renderers\Renderer;
+use RowBloom\RowBloom\DataCollectors\DataCollector;
+use RowBloom\RowBloom\Interpolators\Interpolator;
+use RowBloom\RowBloom\Renderers\Renderer;
 
 class Support
 {

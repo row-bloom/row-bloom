@@ -1,8 +1,8 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Renderers\Sizing;
+namespace RowBloom\RowBloom\Renderers\Sizing;
 
-use ElaborateCode\RowBloom\RowBloomException;
+use RowBloom\RowBloom\RowBloomException;
 
 final class Length
 {

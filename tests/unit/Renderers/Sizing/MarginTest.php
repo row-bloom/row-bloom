@@ -1,7 +1,7 @@
 <?php
 
-use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
-use ElaborateCode\RowBloom\Renderers\Sizing\Margin;
+use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
+use RowBloom\RowBloom\Renderers\Sizing\Margin;
 
 it('constructs', function (array|string $input, array $expected, LengthUnit $unit = LengthUnit::PIXEL_UNIT) {
     $margin = app()->make(Margin::class, ['margin' => $input, 'unit' => $unit]);

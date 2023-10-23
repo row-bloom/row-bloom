@@ -1,12 +1,12 @@
 <?php
 
-use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
-use ElaborateCode\RowBloom\Interpolators\PhpInterpolator;
-use ElaborateCode\RowBloom\Interpolators\TwigInterpolator;
-use ElaborateCode\RowBloom\Renderers\MpdfRenderer;
-use ElaborateCode\RowBloom\Renderers\PhpChromeRenderer;
-use ElaborateCode\RowBloom\Renderers\Renderer;
-use ElaborateCode\RowBloom\Support;
+use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
+use RowBloom\RowBloom\Interpolators\PhpInterpolator;
+use RowBloom\RowBloom\Interpolators\TwigInterpolator;
+use RowBloom\RowBloom\Renderers\MpdfRenderer;
+use RowBloom\RowBloom\Renderers\PhpChromeRenderer;
+use RowBloom\RowBloom\Renderers\Renderer;
+use RowBloom\RowBloom\Support;
 
 it('lists capabilities', function () {
     /** @var Support */

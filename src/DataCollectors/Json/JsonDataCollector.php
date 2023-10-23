@@ -1,11 +1,11 @@
 <?php
 
-namespace ElaborateCode\RowBloom\DataCollectors\Json;
+namespace RowBloom\RowBloom\DataCollectors\Json;
 
-use ElaborateCode\RowBloom\DataCollectorContract;
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\RowBloomException;
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\DataCollectorContract;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\RowBloomException;
+use RowBloom\RowBloom\Types\Table;
 
 class JsonDataCollector implements DataCollectorContract
 {

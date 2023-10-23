@@ -1,10 +1,10 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Interpolators;
+namespace RowBloom\RowBloom\Interpolators;
 
-use ElaborateCode\RowBloom\InterpolatorContract;
-use ElaborateCode\RowBloom\Types\Html;
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\InterpolatorContract;
+use RowBloom\RowBloom\Types\Html;
+use RowBloom\RowBloom\Types\Table;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 

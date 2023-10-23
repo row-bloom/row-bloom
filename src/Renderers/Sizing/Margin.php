@@ -1,9 +1,9 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Renderers\Sizing;
+namespace RowBloom\RowBloom\Renderers\Sizing;
 
-use ElaborateCode\RowBloom\Options;
-use ElaborateCode\RowBloom\RowBloomException;
+use RowBloom\RowBloom\Options;
+use RowBloom\RowBloom\RowBloomException;
 
 final class Margin
 {

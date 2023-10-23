@@ -1,9 +1,9 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Renderers;
+namespace RowBloom\RowBloom\Renderers;
 
-use ElaborateCode\RowBloom\RendererContract;
-use ElaborateCode\RowBloom\RowBloomException;
+use RowBloom\RowBloom\RendererContract;
+use RowBloom\RowBloom\RowBloomException;
 
 final class RendererFactory
 {

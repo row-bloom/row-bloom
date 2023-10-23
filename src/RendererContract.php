@@ -1,10 +1,10 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\Html;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\Types\Css;
+use RowBloom\RowBloom\Types\Html;
 
 interface RendererContract
 {

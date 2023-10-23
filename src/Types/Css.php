@@ -1,6 +1,6 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Types;
+namespace RowBloom\RowBloom\Types;
 
 use Stringable;
 

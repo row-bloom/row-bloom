@@ -1,6 +1,6 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Renderers\Sizing;
+namespace RowBloom\RowBloom\Renderers\Sizing;
 
 enum PaperFormat: string
 {

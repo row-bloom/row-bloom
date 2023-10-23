@@ -1,8 +1,8 @@
 <?php
 
-namespace ElaborateCode\RowBloom\DataCollectors\Spreadsheets;
+namespace RowBloom\RowBloom\DataCollectors\Spreadsheets;
 
-use ElaborateCode\RowBloom\RowBloomException;
+use RowBloom\RowBloom\RowBloomException;
 
 class SpreadsheetException extends RowBloomException
 {

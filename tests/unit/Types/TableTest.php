@@ -1,6 +1,6 @@
 <?php
 
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\Types\Table;
 
 it('functions', function () {
     $data1 = [

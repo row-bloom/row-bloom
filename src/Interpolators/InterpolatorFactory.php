@@ -1,9 +1,9 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Interpolators;
+namespace RowBloom\RowBloom\Interpolators;
 
-use ElaborateCode\RowBloom\InterpolatorContract;
-use ElaborateCode\RowBloom\RowBloomException;
+use RowBloom\RowBloom\InterpolatorContract;
+use RowBloom\RowBloom\RowBloomException;
 
 final class InterpolatorFactory
 {

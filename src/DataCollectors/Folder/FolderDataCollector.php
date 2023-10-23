@@ -1,11 +1,11 @@
 <?php
 
-namespace ElaborateCode\RowBloom\DataCollectors\Folder;
+namespace RowBloom\RowBloom\DataCollectors\Folder;
 
-use ElaborateCode\RowBloom\DataCollectorContract;
-use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\DataCollectorContract;
+use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\Types\Table;
 
 class FolderDataCollector implements DataCollectorContract
 {

@@ -1,7 +1,7 @@
 <?php
 
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\Fs\FsException;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\Fs\FsException;
 
 it('represents PHP File')
     ->expect(app()->make(File::class, ['path' => __FILE__]))

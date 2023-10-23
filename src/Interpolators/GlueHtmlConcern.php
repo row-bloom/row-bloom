@@ -1,6 +1,6 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Interpolators;
+namespace RowBloom\RowBloom\Interpolators;
 
 trait GlueHtmlConcern
 {

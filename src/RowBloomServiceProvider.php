@@ -1,10 +1,10 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
-use ElaborateCode\RowBloom\DataCollectors\DataCollectorFactory;
-use ElaborateCode\RowBloom\Interpolators\InterpolatorFactory;
-use ElaborateCode\RowBloom\Renderers\RendererFactory;
+use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
+use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
+use RowBloom\RowBloom\Renderers\RendererFactory;
 
 class RowBloomServiceProvider
 {

@@ -20,7 +20,7 @@ composer require row-bloom/row-bloom
 Call `RowBloomServiceProvider::register()` at the entry point of your application.
 
 ```php
-use ElaborateCode\RowBloom\RowBloomServiceProvider;
+use RowBloom\RowBloom\RowBloomServiceProvider;
 
 app()->make(RowBloomServiceProvider::class)->register();
 ```
@@ -33,11 +33,11 @@ Requires:
 ## Usage
 
 ```php
-use ElaborateCode\RowBloom\Interpolators\Interpolator;
-use ElaborateCode\RowBloom\Renderers\Renderer;
-use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
-use ElaborateCode\RowBloom\RowBloom;
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\Interpolators\Interpolator;
+use RowBloom\RowBloom\Renderers\Renderer;
+use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
+use RowBloom\RowBloom\RowBloom;
+use RowBloom\RowBloom\Types\Table;
 
 app()->get(RowBloom::class)
     ->addTable([
@@ -126,7 +126,7 @@ The available interpolators are:
 - Php.
 - Blade (todo).
 
-All interpolators are available in `ElaborateCode\RowBloom\Interpolators\Interpolator` enum, and you can provide a custom one as long as you implement `ElaborateCode\RowBloom\InterpolatorContract`
+All interpolators are available in `RowBloom\RowBloom\Interpolators\Interpolator` enum, and you can provide a custom one as long as you implement `RowBloom\RowBloom\InterpolatorContract`
 
 ### Rendering
 
@@ -139,7 +139,7 @@ The available renderers are:
 - Php chrome (experimental).
 - Browsershot (experimental).
 
-All renderers are available in `ElaborateCode\RowBloom\Renderers\Renderer` enum, and you can provide a custom one as long as you implement `ElaborateCode\RowBloom\RendererContract`
+All renderers are available in `RowBloom\RowBloom\Renderers\Renderer` enum, and you can provide a custom one as long as you implement `RowBloom\RowBloom\RendererContract`
 
 ### Options
 
@@ -173,10 +173,10 @@ The main options are the ones offered by the browser print UI.
 
 ### Support info
 
-When I was building an application to consume this library, I found it useful to get lists of what is supported by `RowBloom` as drivers, file extensions, and options per rendering driver... So here comes `ElaborateCode\RowBloom\Support` class.
+When I was building an application to consume this library, I found it useful to get lists of what is supported by `RowBloom` as drivers, file extensions, and options per rendering driver... So here comes `RowBloom\RowBloom\Support` class.
 
 ```php
-use ElaborateCode\RowBloom\Support;
+use RowBloom\RowBloom\Support;
 
 /** @var Support */
 $support = app()->get(Support::class);

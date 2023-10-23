@@ -1,9 +1,9 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
-use ElaborateCode\RowBloom\Renderers\Sizing\LengthUnit;
-use ElaborateCode\RowBloom\Renderers\Sizing\PaperFormat;
+use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
+use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 
 class Options
 {

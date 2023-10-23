@@ -1,8 +1,8 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Fs;
+namespace RowBloom\RowBloom\Fs;
 
-use ElaborateCode\RowBloom\RowBloomException;
+use RowBloom\RowBloom\RowBloomException;
 
 class FsException extends RowBloomException
 {

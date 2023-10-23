@@ -7,7 +7,7 @@
         "generation",
         "rendering"
     ],
-    "homepage": "https://github.com/elaborate-code/row-bloom",
+    "homepage": "https://github.com/row-bloom/row-bloom",
     "license": "MIT",
     "authors": [
         {
@@ -37,12 +37,12 @@
     },
     "autoload": {
         "psr-4": {
-            "ElaborateCode\\RowBloom\\": "src/"
+            "RowBloom\\RowBloom\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ElaborateCode\\RowBloom\\Tests\\": "tests/"
+            "RowBloom\\RowBloom\\Tests\\": "tests/"
         }
     },
     "scripts": {

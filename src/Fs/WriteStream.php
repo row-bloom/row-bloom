@@ -1,6 +1,6 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Fs;
+namespace RowBloom\RowBloom\Fs;
 
 use InvalidArgumentException;
 

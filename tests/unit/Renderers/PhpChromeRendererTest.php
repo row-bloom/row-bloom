@@ -1,12 +1,12 @@
 <?php
 
-use ElaborateCode\RowBloom\Config;
-use ElaborateCode\RowBloom\Options;
-use ElaborateCode\RowBloom\Renderers\PhpChromeRenderer;
-use ElaborateCode\RowBloom\Renderers\Renderer;
-use ElaborateCode\RowBloom\Renderers\RendererFactory;
-use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\Html;
+use RowBloom\RowBloom\Config;
+use RowBloom\RowBloom\Options;
+use RowBloom\RowBloom\Renderers\PhpChromeRenderer;
+use RowBloom\RowBloom\Renderers\Renderer;
+use RowBloom\RowBloom\Renderers\RendererFactory;
+use RowBloom\RowBloom\Types\Css;
+use RowBloom\RowBloom\Types\Html;
 
 it('factorize')
     ->expect(fn () => app()->make(RendererFactory::class)->make(Renderer::PhpChrome))

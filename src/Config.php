@@ -1,6 +1,6 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
 class Config
 {

@@ -1,12 +1,12 @@
 <?php
 
-use ElaborateCode\RowBloom\Interpolators\Interpolator;
-use ElaborateCode\RowBloom\Renderers\HtmlRenderer;
-use ElaborateCode\RowBloom\Renderers\Renderer;
-use ElaborateCode\RowBloom\RowBloom;
-use ElaborateCode\RowBloom\Types\Css;
-use ElaborateCode\RowBloom\Types\Html;
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\Interpolators\Interpolator;
+use RowBloom\RowBloom\Renderers\HtmlRenderer;
+use RowBloom\RowBloom\Renderers\Renderer;
+use RowBloom\RowBloom\RowBloom;
+use RowBloom\RowBloom\Types\Css;
+use RowBloom\RowBloom\Types\Html;
+use RowBloom\RowBloom\Types\Table;
 
 it('Basic html output', function (RowBloom $r, $css, $template, $table) {
     $r->setRenderer(Renderer::Html)->setInterpolator(Interpolator::Twig)

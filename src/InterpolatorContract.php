@@ -1,9 +1,9 @@
 <?php
 
-namespace ElaborateCode\RowBloom;
+namespace RowBloom\RowBloom;
 
-use ElaborateCode\RowBloom\Types\Html;
-use ElaborateCode\RowBloom\Types\Table;
+use RowBloom\RowBloom\Types\Html;
+use RowBloom\RowBloom\Types\Table;
 
 interface InterpolatorContract
 {

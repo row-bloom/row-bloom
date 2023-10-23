@@ -1,10 +1,10 @@
 <?php
 
-namespace ElaborateCode\RowBloom\DataCollectors;
+namespace RowBloom\RowBloom\DataCollectors;
 
-use ElaborateCode\RowBloom\DataCollectorContract;
-use ElaborateCode\RowBloom\Fs\File;
-use ElaborateCode\RowBloom\RowBloomException;
+use RowBloom\RowBloom\DataCollectorContract;
+use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\RowBloomException;
 
 // TODO: improve factory to allow user to register new drivers and what they support
 final class DataCollectorFactory

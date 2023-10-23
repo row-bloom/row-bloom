@@ -1,6 +1,6 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Renderers;
+namespace RowBloom\RowBloom\Renderers;
 
 enum Renderer: string
 {

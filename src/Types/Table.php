@@ -1,10 +1,10 @@
 <?php
 
-namespace ElaborateCode\RowBloom\Types;
+namespace RowBloom\RowBloom\Types;
 
 use Countable;
-use ElaborateCode\RowBloom\RowBloomException;
 use Iterator;
+use RowBloom\RowBloom\RowBloomException;
 
 final class Table implements Countable, Iterator
 {

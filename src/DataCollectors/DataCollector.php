@@ -1,10 +1,10 @@
 <?php
 
-namespace ElaborateCode\RowBloom\DataCollectors;
+namespace RowBloom\RowBloom\DataCollectors;
 
-use ElaborateCode\RowBloom\DataCollectors\Folder\FolderDataCollector;
-use ElaborateCode\RowBloom\DataCollectors\Json\JsonDataCollector;
-use ElaborateCode\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
+use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
+use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
+use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 
 enum DataCollector: string
 {

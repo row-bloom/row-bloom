@@ -12,9 +12,10 @@ use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 use Spatie\Browsershot\Browsershot;
 
-// TODO: handle binaries paths
 class BrowsershotRenderer implements RendererContract
 {
+    public const NAME = 'Browsershot';
+
     protected string $rendering;
 
     protected Html $html;

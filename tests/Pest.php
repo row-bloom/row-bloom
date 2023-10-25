@@ -3,10 +3,11 @@
 use RowBloom\RowBloom\RowBloomServiceProvider;
 
 app()->make(RowBloomServiceProvider::class)->register();
+app()->make(RowBloomServiceProvider::class)->boot();
 
 uses()
     ->beforeEach(function () {
-        app()->forgetInstances();
+        // app()->forgetInstances();
         Mockery::close();
     })
     ->beforeAll(function () {

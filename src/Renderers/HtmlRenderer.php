@@ -11,6 +11,8 @@ use RowBloom\RowBloom\Types\Html;
 
 class HtmlRenderer implements RendererContract
 {
+    public const NAME = 'HTML';
+
     protected string $rendering;
 
     protected Html $html;

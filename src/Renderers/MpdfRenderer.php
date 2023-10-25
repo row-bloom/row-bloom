@@ -15,6 +15,8 @@ use RowBloom\RowBloom\Types\Html;
 
 class MpdfRenderer implements RendererContract
 {
+    public const NAME = 'mPDF';
+
     private string $rendering;
 
     private Html $html;

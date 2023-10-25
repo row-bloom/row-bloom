@@ -3,13 +3,12 @@
 use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Renderers\MpdfRenderer;
-use RowBloom\RowBloom\Renderers\Renderer;
 use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 
 it('factorize')
-    ->expect(fn () => app()->make(RendererFactory::class)->make(Renderer::Mpdf))
+    ->expect(fn () => app()->make(RendererFactory::class)->make(MpdfRenderer::NAME))
     ->toBeInstanceOf(MpdfRenderer::class);
 
 it('renders and get (basic)')
@@ -22,7 +21,7 @@ it('renders and get (basic)')
         ],
     ])
     ->expect(function ($template, $css, $options, $config) {
-        return app()->make(RendererFactory::class)->make(Renderer::Mpdf)
+        return app()->make(RendererFactory::class)->make(MpdfRenderer::NAME)
             ->render($template, $css, $options, $config)->get();
     })
     // ? more assertions

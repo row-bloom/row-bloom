@@ -4,7 +4,6 @@ namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataCollectors\DataCollector;
 use RowBloom\RowBloom\Interpolators\Interpolator;
-use RowBloom\RowBloom\Renderers\Renderer;
 
 class Support
 {
@@ -12,6 +11,7 @@ class Support
 
     private array $interpolatorDrivers = [];
 
+    /** @var array<string, string> */
     private array $rendererDrivers = [];
 
     private array $supportedTableFileExtensions = [];
@@ -20,8 +20,7 @@ class Support
     {
         $this->setDataCollectorDrivers()
             ->setSupportedTableFileExtensions()
-            ->setInterpolatorDrivers()
-            ->setRendererDrivers();
+            ->setInterpolatorDrivers();
     }
 
     public function setDataCollectorDrivers(): static
@@ -64,24 +63,28 @@ class Support
         return $this->interpolatorDrivers;
     }
 
-    public function setRendererDrivers(): static
+    // --------------------------------------------
+
+    public function registerRendererDriver(string $driverName, string $className): static
     {
-        foreach (Renderer::cases() as $renderer) {
-            $className = $renderer->value;
-
-            if (! class_exists($className)) {
-                continue;
-            }
-
-            $this->rendererDrivers[$renderer->name] = $className;
-        }
+        $this->rendererDrivers[$driverName] = $className;
 
         return $this;
+    }
+
+    public function hasRendererDriver(string $driverName): bool
+    {
+        return array_key_exists($driverName, $this->rendererDrivers);
     }
 
     public function getRendererDrivers(): array
     {
         return $this->rendererDrivers;
+    }
+
+    public function getRendererDriver(string $driverName): ?string
+    {
+        return $this->rendererDrivers[$driverName];
     }
 
     public function setSupportedTableFileExtensions(): static
@@ -104,14 +107,12 @@ class Support
     /**
      * @return ?array An associative array of 'optionName' => \<bool\> or null if $renderer is invalid
      */
-    public function getRendererOptionsSupport(Renderer|string $renderer): ?array
+    public function getRendererOptionsSupport(string $renderer): ?array
     {
-        $className = $renderer instanceof Renderer ? $renderer->value : $renderer;
-
-        if (! class_exists($className) || ! is_a($className, RendererContract::class, true)) {
+        if (! $this->hasRendererDriver($renderer)) {
             return null;
         }
 
-        return $className::getOptionsSupport();
+        return $this->getRendererDriver($renderer)::getOptionsSupport();
     }
 }

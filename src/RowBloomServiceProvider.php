@@ -30,16 +30,16 @@ class RowBloomServiceProvider
         /** @var Support */
         $support = app()->get(Support::class);
 
-        $support->registerDataCollectorDriver(FolderDataCollector::NAME, FolderDataCollector::class);
-        $support->registerDataCollectorDriver(JsonDataCollector::NAME, JsonDataCollector::class);
-        $support->registerDataCollectorDriver(SpreadsheetDataCollector::NAME, SpreadsheetDataCollector::class);
+        $support->registerDataCollectorDriver(FolderDataCollector::NAME, FolderDataCollector::class)
+            ->registerDataCollectorDriver(JsonDataCollector::NAME, JsonDataCollector::class)
+            ->registerDataCollectorDriver(SpreadsheetDataCollector::NAME, SpreadsheetDataCollector::class);
 
-        $support->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class);
-        $support->registerInterpolatorDriver(TwigInterpolator::NAME, TwigInterpolator::class);
+        $support->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class)
+            ->registerInterpolatorDriver(TwigInterpolator::NAME, TwigInterpolator::class);
 
-        $support->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class);
-        $support->registerRendererDriver(MpdfRenderer::NAME, MpdfRenderer::class);
-        $support->registerRendererDriver(BrowsershotRenderer::NAME, BrowsershotRenderer::class);
-        $support->registerRendererDriver(PhpChromeRenderer::NAME, PhpChromeRenderer::class);
+        $support->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class)
+            ->registerRendererDriver(MpdfRenderer::NAME, MpdfRenderer::class)
+            ->registerRendererDriver(BrowsershotRenderer::NAME, BrowsershotRenderer::class)
+            ->registerRendererDriver(PhpChromeRenderer::NAME, PhpChromeRenderer::class);
     }
 }

@@ -43,6 +43,8 @@ class Support
         return $this->dataCollectorDrivers;
     }
 
+    // --------------------------------------------
+
     public function setInterpolatorDrivers(): static
     {
         foreach (Interpolator::cases() as $interpolator) {
@@ -87,6 +89,20 @@ class Support
         return $this->rendererDrivers[$driverName];
     }
 
+    /**
+     * @return ?array An associative array of 'optionName' => \<bool\> or null if $renderer is invalid
+     */
+    public function getRendererOptionsSupport(string $renderer): ?array
+    {
+        if (! $this->hasRendererDriver($renderer)) {
+            return null;
+        }
+
+        return $this->getRendererDriver($renderer)::getOptionsSupport();
+    }
+
+    // --------------------------------------------
+
     public function setSupportedTableFileExtensions(): static
     {
         foreach ($this->dataCollectorDrivers as $className) {
@@ -102,17 +118,5 @@ class Support
     public function getSupportedTableFileExtensions(): array
     {
         return $this->supportedTableFileExtensions;
-    }
-
-    /**
-     * @return ?array An associative array of 'optionName' => \<bool\> or null if $renderer is invalid
-     */
-    public function getRendererOptionsSupport(string $renderer): ?array
-    {
-        if (! $this->hasRendererDriver($renderer)) {
-            return null;
-        }
-
-        return $this->getRendererDriver($renderer)::getOptionsSupport();
     }
 }

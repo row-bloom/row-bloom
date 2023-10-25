@@ -20,7 +20,7 @@ it('lists capabilities', function () {
         ->toContain(SpreadsheetDataCollector::class);
 
     expect($support->getInterpolatorDrivers())
-        ->toHaveKeys(['Php', 'Twig'])
+        ->toHaveKeys(['PHP', 'Twig'])
         ->toContain(TwigInterpolator::class, PhpInterpolator::class);
 
     expect($support->getRendererDrivers())

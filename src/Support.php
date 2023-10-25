@@ -3,12 +3,12 @@
 namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataCollectors\DataCollector;
-use RowBloom\RowBloom\Interpolators\Interpolator;
 
 class Support
 {
     private array $dataCollectorDrivers = [];
 
+    /** @var array<string, string> */
     private array $interpolatorDrivers = [];
 
     /** @var array<string, string> */
@@ -19,8 +19,7 @@ class Support
     public function __construct()
     {
         $this->setDataCollectorDrivers()
-            ->setSupportedTableFileExtensions()
-            ->setInterpolatorDrivers();
+            ->setSupportedTableFileExtensions();
     }
 
     public function setDataCollectorDrivers(): static
@@ -45,24 +44,26 @@ class Support
 
     // --------------------------------------------
 
-    public function setInterpolatorDrivers(): static
+    public function registerInterpolatorDriver(string $driverName, string $className): static
     {
-        foreach (Interpolator::cases() as $interpolator) {
-            $className = $interpolator->value;
-
-            if (! class_exists($className)) {
-                continue;
-            }
-
-            $this->interpolatorDrivers[$interpolator->name] = $className;
-        }
+        $this->interpolatorDrivers[$driverName] = $className;
 
         return $this;
+    }
+
+    public function hasInterpolatorDriver(string $driverName): bool
+    {
+        return array_key_exists($driverName, $this->interpolatorDrivers);
     }
 
     public function getInterpolatorDrivers(): array
     {
         return $this->interpolatorDrivers;
+    }
+
+    public function getInterpolatorDriver(string $driverName): ?string
+    {
+        return $this->interpolatorDrivers[$driverName];
     }
 
     // --------------------------------------------

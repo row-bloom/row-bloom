@@ -4,6 +4,8 @@ namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
+use RowBloom\RowBloom\Interpolators\PhpInterpolator;
+use RowBloom\RowBloom\Interpolators\TwigInterpolator;
 use RowBloom\RowBloom\Renderers\BrowsershotRenderer;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Renderers\MpdfRenderer;
@@ -24,6 +26,9 @@ class RowBloomServiceProvider
     {
         /** @var Support */
         $support = app()->get(Support::class);
+
+        $support->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class);
+        $support->registerInterpolatorDriver(TwigInterpolator::NAME, TwigInterpolator::class);
 
         $support->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class);
         $support->registerRendererDriver(MpdfRenderer::NAME, MpdfRenderer::class);

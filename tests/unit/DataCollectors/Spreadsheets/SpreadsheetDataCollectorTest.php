@@ -1,11 +1,10 @@
 <?php
 
-use RowBloom\RowBloom\DataCollectors\DataCollector;
 use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
 use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 
 it('parses', function () {
-    $dataCollector = app()->make(DataCollectorFactory::class)->make(DataCollector::Spreadsheet);
+    $dataCollector = app()->make(DataCollectorFactory::class)->make(SpreadsheetDataCollector::NAME);
 
     expect($dataCollector)->toBeInstanceOf(SpreadsheetDataCollector::class);
 

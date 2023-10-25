@@ -16,7 +16,7 @@ it('lists capabilities', function () {
         ->toHaveKeys(['json', 'csv', 'xlsx']);
 
     expect($support->getDataCollectorDrivers())
-        ->toHaveKeys(['Spreadsheet', 'Folder', 'Json'])
+        ->toHaveKeys(['Spreadsheet', 'Folder', 'JSON'])
         ->toContain(SpreadsheetDataCollector::class);
 
     expect($support->getInterpolatorDrivers())
@@ -34,5 +34,5 @@ it('lists capabilities', function () {
         ->toBeTrue();
 
     expect($support->getRendererOptionsSupport('yo'))
-        ->toBeNull();
+        ->toHaveCount(0);
 });

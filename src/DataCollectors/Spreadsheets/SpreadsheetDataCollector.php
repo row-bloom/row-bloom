@@ -17,6 +17,8 @@ use RowBloom\RowBloom\Types\Table;
 
 class SpreadsheetDataCollector implements DataCollectorContract
 {
+    public const NAME = 'Spreadsheet';
+
     public function getTable(File|string $file): Table
     {
         $file = $file instanceof File ? $file : app()->make(File::class, ['path' => $file]);

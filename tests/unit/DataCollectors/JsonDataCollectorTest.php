@@ -1,13 +1,12 @@
 <?php
 
 use Mockery\Mock;
-use RowBloom\RowBloom\DataCollectors\DataCollector;
 use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
 use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
 use RowBloom\RowBloom\Fs\File;
 
 it('parses', function () {
-    $dataCollector = app()->make(DataCollectorFactory::class)->make(DataCollector::Json);
+    $dataCollector = app()->make(DataCollectorFactory::class)->make(JsonDataCollector::NAME);
 
     expect($dataCollector)->toBeInstanceOf(JsonDataCollector::class);
 

@@ -2,8 +2,6 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\DataCollectors\DataCollector;
-
 class Support
 {
     private array $dataCollectorDrivers = [];
@@ -16,30 +14,39 @@ class Support
 
     private array $supportedTableFileExtensions = [];
 
-    public function __construct()
+    // --------------------------------------------
+
+    public function registerDataCollectorDriver(string $driverName, string $className): static
     {
-        $this->setDataCollectorDrivers()
-            ->setSupportedTableFileExtensions();
-    }
+        $this->dataCollectorDrivers[$driverName] = $className;
 
-    public function setDataCollectorDrivers(): static
-    {
-        foreach (DataCollector::cases() as $dataCollector) {
-            $className = $dataCollector->value;
-
-            if (! class_exists($className)) {
-                continue;
-            }
-
-            $this->dataCollectorDrivers[$dataCollector->name] = $className;
-        }
+        // TODO: validate interface
+        $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
 
         return $this;
+    }
+
+    public function hasDataCollectorDriver(string $driverName): bool
+    {
+        return array_key_exists($driverName, $this->dataCollectorDrivers);
     }
 
     public function getDataCollectorDrivers(): array
     {
         return $this->dataCollectorDrivers;
+    }
+
+    public function getDataCollectorDriver(string $driverName): ?string
+    {
+        return $this->dataCollectorDrivers[$driverName];
+    }
+
+    /**
+     * @return array An associative array that contains supported extensions as keys, all values are set to true
+     */
+    public function getSupportedTableFileExtensions(): array
+    {
+        return $this->supportedTableFileExtensions;
     }
 
     // --------------------------------------------
@@ -91,33 +98,16 @@ class Support
     }
 
     /**
-     * @return ?array An associative array of 'optionName' => \<bool\> or null if $renderer is invalid
+     * @return ?array An associative array of 'optionName' => \<bool\>
      */
     public function getRendererOptionsSupport(string $renderer): ?array
     {
         if (! $this->hasRendererDriver($renderer)) {
-            return null;
+            return [];
         }
 
         return $this->getRendererDriver($renderer)::getOptionsSupport();
     }
 
     // --------------------------------------------
-
-    public function setSupportedTableFileExtensions(): static
-    {
-        foreach ($this->dataCollectorDrivers as $className) {
-            $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return array An associative array that contains supported extensions as keys, all values are set to true
-     */
-    public function getSupportedTableFileExtensions(): array
-    {
-        return $this->supportedTableFileExtensions;
-    }
 }

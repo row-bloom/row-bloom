@@ -3,6 +3,9 @@
 namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
+use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
+use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
+use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Interpolators\TwigInterpolator;
@@ -26,6 +29,10 @@ class RowBloomServiceProvider
     {
         /** @var Support */
         $support = app()->get(Support::class);
+
+        $support->registerDataCollectorDriver(FolderDataCollector::NAME, FolderDataCollector::class);
+        $support->registerDataCollectorDriver(JsonDataCollector::NAME, JsonDataCollector::class);
+        $support->registerDataCollectorDriver(SpreadsheetDataCollector::NAME, SpreadsheetDataCollector::class);
 
         $support->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class);
         $support->registerInterpolatorDriver(TwigInterpolator::NAME, TwigInterpolator::class);

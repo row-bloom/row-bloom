@@ -9,6 +9,8 @@ use RowBloom\RowBloom\Types\Table;
 
 class JsonDataCollector implements DataCollectorContract
 {
+    public const NAME = 'JSON';
+
     public function getTable(File|string $file): Table
     {
         // ! make() blocks using mocked instance in container

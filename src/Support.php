@@ -18,9 +18,12 @@ class Support
 
     public function registerDataCollectorDriver(string $driverName, string $className): static
     {
+        if (! is_a($className, DataCollectorContract::class, true)) {
+            throw new RowBloomException("'{$driverName}' is not a valid data collector");
+        }
+
         $this->dataCollectorDrivers[$driverName] = $className;
 
-        // TODO: validate interface
         $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
 
         return $this;
@@ -53,6 +56,10 @@ class Support
 
     public function registerInterpolatorDriver(string $driverName, string $className): static
     {
+        if (! is_a($className, InterpolatorContract::class, true)) {
+            throw new RowBloomException("'{$driverName}' is not a valid interpolator");
+        }
+
         $this->interpolatorDrivers[$driverName] = $className;
 
         return $this;
@@ -77,6 +84,10 @@ class Support
 
     public function registerRendererDriver(string $driverName, string $className): static
     {
+        if (! is_a($className, RendererContract::class, true)) {
+            throw new RowBloomException("'{$driverName}' is not a valid renderer");
+        }
+
         $this->rendererDrivers[$driverName] = $className;
 
         return $this;

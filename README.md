@@ -23,6 +23,7 @@ Call `RowBloomServiceProvider::register()` at the entry point of your applicatio
 use RowBloom\RowBloom\RowBloomServiceProvider;
 
 app()->make(RowBloomServiceProvider::class)->register();
+app()->make(RowBloomServiceProvider::class)->boot();
 ```
 
 Requires:
@@ -33,8 +34,9 @@ Requires:
 ## Usage
 
 ```php
-use RowBloom\RowBloom\Interpolators\Interpolator;
-use RowBloom\RowBloom\Renderers\Renderer;
+use RowBloom\RowBloom\Interpolators\PhpInterpolator;
+use RowBloom\RowBloom\Interpolators\TwigInterpolator;
+use RowBloom\RowBloom\Renderers\PhpChromeRenderer;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\RowBloom;
 use RowBloom\RowBloom\Types\Table;
@@ -49,14 +51,14 @@ app()->get(RowBloom::class)
         ['title' => 'Title4', 'body' => 'body4'],
     ]))
     // ---------------------------
-    // ->setInterpolator(Interpolator::Twig)
+    // ->setInterpolator(TwigInterpolator::NAME)
     // ->setTemplate('
     //     <h1>{{ title }}</h1>
     //     <p>Bold text</p>
     //     <div>{{ body }}</div>
     // ')
     // ---------------------------
-    ->setInterpolator(Interpolator::Php)
+    ->setInterpolator(PhpInterpolator::class)
     ->setTemplate('
         <h1><?= $title ?></h1>
         <p>Bold text</p>
@@ -74,12 +76,12 @@ app()->get(RowBloom::class)
         div {color: red;}
     ')
     // ---------------------------
-    // ->setRenderer(Renderer::Mpdf)
+    // ->setRenderer('mPDF')
     // ->setOption('margin', '25.4 mm')
     // ->setOption('rawHeader', '{DATE j-m-Y}|center|right')
     // ->setOption('rawFooter', 'left|center|{PAGENO}/{nb}')
     // ---------------------------
-    ->setRenderer(Renderer::PhpChrome)
+    ->setRenderer(PhpChromeRenderer::class)
     ->setOption('margin', '1 in')
     ->setOption('rawHeader', '
         <div class="header" style="font-size:10px">
@@ -171,7 +173,7 @@ The main options are the ones offered by the browser print UI.
 | `metadataKeywords`    | `string`        | `null`   | ❌   | ✔️ | ❌         |
 |                       |                 |          |      |      |            |
 
-### Support info
+### Support
 
 When I was building an application to consume this library, I found it useful to get lists of what is supported by `RowBloom` as drivers, file extensions, and options per rendering driver... So here comes `RowBloom\RowBloom\Support` class.
 
@@ -189,6 +191,10 @@ $support->getSupportedTableFileExtensions();
 
 $support->getRendererOptionsSupport('driverName');
 ```
+
+### Registering new drivers
+
+After calling `app()->make(RowBloomServiceProvider::class)->register()` you can make use of `RowBloom\RowBloom\Support::registerDataCollectorDriver`, `RowBloom\RowBloom\Support::registerInterpolatorDriver`, and `RowBloom\RowBloom\Support::registerRendererDriver` to extend the capabilities of the library;
 
 ### Config
 

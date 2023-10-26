@@ -2,8 +2,15 @@
 
 namespace RowBloom\RowBloom;
 
+use RowBloom\RowBloom\Drivers\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\InterpolatorContract;
+use RowBloom\RowBloom\Drivers\RendererContract;
+use RowBloom\RowBloom\Drivers\ValidateDriverConcern;
+
 class Support
 {
+    use ValidateDriverConcern;
+
     /** @var array<string, string> */
     private array $dataCollectorDrivers = [];
 
@@ -21,9 +28,7 @@ class Support
 
     public function registerDataCollectorDriver(string $driverName, string $className): static
     {
-        if (! is_a($className, DataCollectorContract::class, true)) {
-            throw new RowBloomException("'{$driverName}' is not a valid data collector");
-        }
+        $this->validateContract($className, DataCollectorContract::class);
 
         $this->dataCollectorDrivers[$driverName] = $className;
 
@@ -59,7 +64,7 @@ class Support
 
     public function getDataCollectorDriver(string $driverName): ?string
     {
-        return $this->dataCollectorDrivers[$driverName];
+        return $this->dataCollectorDrivers[$driverName] ?? null;
     }
 
     /**
@@ -74,9 +79,7 @@ class Support
 
     public function registerInterpolatorDriver(string $driverName, string $className): static
     {
-        if (! is_a($className, InterpolatorContract::class, true)) {
-            throw new RowBloomException("'{$driverName}' is not a valid interpolator");
-        }
+        $this->validateContract($className, InterpolatorContract::class);
 
         $this->interpolatorDrivers[$driverName] = $className;
 
@@ -104,16 +107,14 @@ class Support
 
     public function getInterpolatorDriver(string $driverName): ?string
     {
-        return $this->interpolatorDrivers[$driverName];
+        return $this->interpolatorDrivers[$driverName] ?? null;
     }
 
     // --------------------------------------------
 
     public function registerRendererDriver(string $driverName, string $className): static
     {
-        if (! is_a($className, RendererContract::class, true)) {
-            throw new RowBloomException("'{$driverName}' is not a valid renderer");
-        }
+        $this->validateContract($className, RendererContract::class);
 
         $this->rendererDrivers[$driverName] = $className;
 
@@ -141,7 +142,7 @@ class Support
 
     public function getRendererDriver(string $driverName): ?string
     {
-        return $this->rendererDrivers[$driverName];
+        return $this->rendererDrivers[$driverName] ?? null;
     }
 
     /**

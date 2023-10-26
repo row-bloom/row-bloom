@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom;
+namespace RowBloom\RowBloom\Drivers;
 
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;

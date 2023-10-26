@@ -2,21 +2,16 @@
 
 namespace RowBloom\RowBloom\DataCollectors;
 
-use RowBloom\RowBloom\DataCollectorContract;
 use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
 use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
 use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
+use RowBloom\RowBloom\Drivers\BaseDriverFactory;
+use RowBloom\RowBloom\Drivers\DataCollectorContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
-use RowBloom\RowBloom\Support;
 
-final class DataCollectorFactory
+final class DataCollectorFactory extends BaseDriverFactory
 {
-    // TODO: base driver factory
-    public function __construct(private Support $support)
-    {
-    }
-
     public function make(string $driver): DataCollectorContract
     {
         $className = $driver;
@@ -25,9 +20,7 @@ final class DataCollectorFactory
             $className = $this->support->getDataCollectorDriver($driver);
         }
 
-        if (! is_a($className, DataCollectorContract::class, true)) {
-            throw new RowBloomException("'{$driver}' is not a valid data collector");
-        }
+        $this->validateContract($className, DataCollectorContract::class);
 
         return app()->make($className);
     }

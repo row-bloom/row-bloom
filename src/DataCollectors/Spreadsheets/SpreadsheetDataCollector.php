@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Slk;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\Xml;
-use RowBloom\RowBloom\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\DataCollectorContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Types\Table;
 

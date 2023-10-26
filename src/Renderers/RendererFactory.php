@@ -2,16 +2,11 @@
 
 namespace RowBloom\RowBloom\Renderers;
 
-use RowBloom\RowBloom\RendererContract;
-use RowBloom\RowBloom\RowBloomException;
-use RowBloom\RowBloom\Support;
+use RowBloom\RowBloom\Drivers\BaseDriverFactory;
+use RowBloom\RowBloom\Drivers\RendererContract;
 
-final class RendererFactory
+final class RendererFactory extends BaseDriverFactory
 {
-    public function __construct(private Support $support)
-    {
-    }
-
     public function make(string $driver): RendererContract
     {
         $className = $driver;
@@ -20,9 +15,7 @@ final class RendererFactory
             $className = $this->support->getRendererDriver($driver);
         }
 
-        if (! is_a($className, RendererContract::class, true)) {
-            throw new RowBloomException("'{$driver}' is not a valid renderer");
-        }
+        $this->validateContract($className, RendererContract::class);
 
         return app()->make($className);
     }

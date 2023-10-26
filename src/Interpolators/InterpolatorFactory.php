@@ -2,16 +2,11 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
-use RowBloom\RowBloom\InterpolatorContract;
-use RowBloom\RowBloom\RowBloomException;
-use RowBloom\RowBloom\Support;
+use RowBloom\RowBloom\Drivers\BaseDriverFactory;
+use RowBloom\RowBloom\Drivers\InterpolatorContract;
 
-final class InterpolatorFactory
+final class InterpolatorFactory extends BaseDriverFactory
 {
-    public function __construct(private Support $support)
-    {
-    }
-
     public function make(string $driver): InterpolatorContract
     {
         $className = $driver;
@@ -20,9 +15,7 @@ final class InterpolatorFactory
             $className = $this->support->getInterpolatorDriver($driver);
         }
 
-        if (! is_a($className, InterpolatorContract::class, true)) {
-            throw new RowBloomException("'{$driver}' is not a valid interpolator");
-        }
+        $this->validateContract($className, InterpolatorContract::class);
 
         return app()->make($className);
     }

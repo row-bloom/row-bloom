@@ -4,6 +4,7 @@ namespace RowBloom\RowBloom;
 
 class Support
 {
+    /** @var array<string, string> */
     private array $dataCollectorDrivers = [];
 
     /** @var array<string, string> */
@@ -12,6 +13,8 @@ class Support
     /** @var array<string, string> */
     private array $rendererDrivers = [];
 
+    // ? improve extension - driver link shape
+    /** @var array<string, true> */
     private array $supportedTableFileExtensions = [];
 
     // --------------------------------------------

@@ -12,6 +12,7 @@ use RowBloom\RowBloom\Support;
 
 final class DataCollectorFactory
 {
+    // TODO: base driver factory
     public function __construct(private Support $support)
     {
     }
@@ -36,6 +37,8 @@ final class DataCollectorFactory
         /** @var File */
         $file = app()->make(File::class, ['path' => $path]);
 
+        // ? add canHandlePath() to DataCollectorContract
+
         $driver = match (true) {
             $file->exists() => $this->resolveFsDriver($file),
             default => throw new RowBloomException("Couldn't resolve a driver for the path '{$path}'"),
@@ -50,7 +53,6 @@ final class DataCollectorFactory
             return $this->support->getDataCollectorDriver(FolderDataCollector::NAME);
         }
 
-        // TODO: improve extension - driver link shape
         if ($file->extension() === 'json') {
             return $this->support->getDataCollectorDriver(JsonDataCollector::NAME);
         }

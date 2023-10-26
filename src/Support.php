@@ -34,7 +34,7 @@ class Support
 
     public function removeDataCollectorDriver(string $driverName): static
     {
-        if($this->hasDataCollectorDriver($driverName)) {
+        if ($this->hasDataCollectorDriver($driverName)) {
             unset($this->dataCollectorDrivers[$driverName]);
         }
 
@@ -79,7 +79,7 @@ class Support
 
     public function removeInterpolatorDriver(string $driverName): static
     {
-        if($this->hasInterpolatorDriver($driverName)) {
+        if ($this->hasInterpolatorDriver($driverName)) {
             unset($this->interpolatorDrivers[$driverName]);
         }
 
@@ -116,7 +116,7 @@ class Support
 
     public function removeRendererDriver(string $driverName): static
     {
-        if($this->hasRendererDriver($driverName)) {
+        if ($this->hasRendererDriver($driverName)) {
             unset($this->rendererDrivers[$driverName]);
         }
 

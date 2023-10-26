@@ -28,15 +28,13 @@ app()->make(RowBloomServiceProvider::class)->boot();
 
 Requires:
 
-- PHP 8.1
-- sockets extension
+- PHP >= 8.1
 
 ## Usage
 
 ```php
+use RowBloom\ChromePhpRenderer\ChromePhpRenderer;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
-use RowBloom\RowBloom\Interpolators\TwigInterpolator;
-use RowBloom\RowBloom\Renderers\PhpChromeRenderer;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\RowBloom;
 use RowBloom\RowBloom\Types\Table;
@@ -50,14 +48,6 @@ app()->get(RowBloom::class)
         ['title' => 'Title3', 'body' => 'body3'],
         ['title' => 'Title4', 'body' => 'body4'],
     ]))
-    // ---------------------------
-    // ->setInterpolator(TwigInterpolator::NAME)
-    // ->setTemplate('
-    //     <h1>{{ title }}</h1>
-    //     <p>Bold text</p>
-    //     <div>{{ body }}</div>
-    // ')
-    // ---------------------------
     ->setInterpolator(PhpInterpolator::class)
     ->setTemplate('
         <h1><?= $title ?></h1>
@@ -81,7 +71,7 @@ app()->get(RowBloom::class)
     // ->setOption('rawHeader', '{DATE j-m-Y}|center|right')
     // ->setOption('rawFooter', 'left|center|{PAGENO}/{nb}')
     // ---------------------------
-    ->setRenderer(PhpChromeRenderer::class)
+    ->setRenderer(ChromePhpRenderer::class)
     ->setOption('margin', '1 in')
     ->setOption('rawHeader', '
         <div class="header" style="font-size:10px">
@@ -124,11 +114,9 @@ Pick a driver using `setInterpolator`, and provide a template with `setTemplate`
 
 The available interpolators are:
 
-- Twig.
-- Php.
+- Php `RowBloom\RowBloom\Interpolators\PhpInterpolator`.
+- [Twig](https://github.com/row-bloom/twig-interpolator).
 - Blade (todo).
-
-All interpolators are available in `RowBloom\RowBloom\Interpolators\Interpolator` enum, and you can provide a custom one as long as you implement `RowBloom\RowBloom\InterpolatorContract`
 
 ### Rendering
 
@@ -136,12 +124,10 @@ Pick a driver using `setRenderer`, and optionally provide css with `addCss` or `
 
 The available renderers are:
 
-- Html.
-- Mpdf.
-- Php chrome (experimental).
-- Browsershot (experimental).
-
-All renderers are available in `RowBloom\RowBloom\Renderers\Renderer` enum, and you can provide a custom one as long as you implement `RowBloom\RowBloom\RendererContract`
+- Html `RowBloom\RowBloom\Renderers\HtmlRenderer`.
+- [mPDF](https://github.com/row-bloom/mpdf-renderer).
+- [Chrome php](https://github.com/row-bloom/chrome-php-renderer).
+- [Browsershot](https://github.com/row-bloom/browsershot-renderer).
 
 ### Options
 
@@ -153,7 +139,7 @@ The main options are the ones offered by the browser print UI.
 
 ![browser print options](./browser_print_options.png)
 
-| Option                | type            | default  | Html | Mpdf | Php chrome |
+| Option                | type            | default  | Html | mPDF | Chrome php |
 | --------------------- | --------------- | -------- | ---- | ---- | ---------- |
 | `perPage`             | `int`           | `null`   | ✔️ | ✔️ | ✔️       |
 | `displayHeaderFooter` | `bool`          | `true`   | ❌   | ✔️ | ✔️       |
@@ -190,23 +176,21 @@ $support->getRendererDrivers();
 $support->getSupportedTableFileExtensions();
 
 $support->getRendererOptionsSupport('driverName');
+
+// ...
 ```
 
-### Registering new drivers
+#### Registering additional drivers
 
-After calling `app()->make(RowBloomServiceProvider::class)->register()` you can make use of `RowBloom\RowBloom\Support::registerDataCollectorDriver`, `RowBloom\RowBloom\Support::registerInterpolatorDriver`, and `RowBloom\RowBloom\Support::registerRendererDriver` to extend the capabilities of the library;
+After calling `app()->make(RowBloomServiceProvider::class)->register()` you can extend the capabilities of the library and register first party, third party, and custom drivers using:
+
+- `Support::registerDataCollectorDriver` (must implement: `RowBloom\RowBloom\Drivers\DataCollectorContract`).
+- `Support::registerInterpolatorDriver` (must implement: `RowBloom\RowBloom\Drivers\InterpolatorContract`).
+- `Support::registerRendererDriver` (must implement: `RowBloom\RowBloom\Drivers\RendererContract`).
 
 ### Config
 
-`RowBloom\RowBloom\Config`
-
-## Gotchas
-
-- npm path
-- node path
-- Puppeteer installation.
-- Chromium path.
-- Web process permissions.
+`RowBloom\RowBloom\Config` is currently used to store external binaries paths.
 
 ## Changelog
 

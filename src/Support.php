@@ -29,6 +29,15 @@ class Support
         return $this;
     }
 
+    public function removeDataCollectorDriver(string $driverName): static
+    {
+        if($this->hasDataCollectorDriver($driverName)) {
+            unset($this->dataCollectorDrivers[$driverName]);
+        }
+
+        return $this;
+    }
+
     public function hasDataCollectorDriver(string $driverName): bool
     {
         return array_key_exists($driverName, $this->dataCollectorDrivers);
@@ -65,6 +74,15 @@ class Support
         return $this;
     }
 
+    public function removeInterpolatorDriver(string $driverName): static
+    {
+        if($this->hasInterpolatorDriver($driverName)) {
+            unset($this->interpolatorDrivers[$driverName]);
+        }
+
+        return $this;
+    }
+
     public function hasInterpolatorDriver(string $driverName): bool
     {
         return array_key_exists($driverName, $this->interpolatorDrivers);
@@ -89,6 +107,15 @@ class Support
         }
 
         $this->rendererDrivers[$driverName] = $className;
+
+        return $this;
+    }
+
+    public function removeRendererDriver(string $driverName): static
+    {
+        if($this->hasRendererDriver($driverName)) {
+            unset($this->rendererDrivers[$driverName]);
+        }
 
         return $this;
     }

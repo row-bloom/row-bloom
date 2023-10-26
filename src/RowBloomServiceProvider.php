@@ -10,7 +10,6 @@ use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Interpolators\TwigInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
-use RowBloom\RowBloom\Renderers\MpdfRenderer;
 use RowBloom\RowBloom\Renderers\RendererFactory;
 
 class RowBloomServiceProvider
@@ -35,7 +34,6 @@ class RowBloomServiceProvider
         $support->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class)
             ->registerInterpolatorDriver(TwigInterpolator::NAME, TwigInterpolator::class);
 
-        $support->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class)
-            ->registerRendererDriver(MpdfRenderer::NAME, MpdfRenderer::class);
+        $support->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class);
     }
 }

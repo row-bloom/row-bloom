@@ -5,7 +5,6 @@ use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Interpolators\TwigInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Renderers\MpdfRenderer;
-use RowBloom\RowBloom\Renderers\PhpChromeRenderer;
 use RowBloom\RowBloom\Support;
 
 it('lists capabilities', function () {
@@ -25,7 +24,7 @@ it('lists capabilities', function () {
 
     expect($support->getRendererDrivers())
         ->toHaveKeys(['HTML'])
-        ->toContain(PhpChromeRenderer::class, MpdfRenderer::class);
+        ->toContain(MpdfRenderer::class);
 
     expect($support->getRendererOptionsSupport(HtmlRenderer::NAME)['metadataKeywords'])
         ->toBeFalse();

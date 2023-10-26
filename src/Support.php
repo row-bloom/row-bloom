@@ -40,7 +40,7 @@ class Support
 
         $this->supportedTableFileExtensions = [];
 
-        foreach($this->dataCollectorDrivers as $className) {
+        foreach ($this->dataCollectorDrivers as $className) {
             $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
         }
 

@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom\DataCollectors\Json;
 
-use RowBloom\RowBloom\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\DataCollectorContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Table;

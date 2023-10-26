@@ -2,10 +2,10 @@
 
 namespace RowBloom\RowBloom\DataCollectors;
 
-use RowBloom\RowBloom\DataCollectorContract;
 use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
 use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
 use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
+use RowBloom\RowBloom\Drivers\DataCollectorContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Support;

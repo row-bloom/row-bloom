@@ -3,6 +3,8 @@
 namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
+use RowBloom\RowBloom\Drivers\InterpolatorContract;
+use RowBloom\RowBloom\Drivers\RendererContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Renderers\RendererFactory;

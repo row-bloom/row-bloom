@@ -2,6 +2,10 @@
 
 namespace RowBloom\RowBloom;
 
+use RowBloom\RowBloom\Drivers\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\InterpolatorContract;
+use RowBloom\RowBloom\Drivers\RendererContract;
+
 class Support
 {
     /** @var array<string, string> */

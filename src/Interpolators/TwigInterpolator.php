@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
-use RowBloom\RowBloom\InterpolatorContract;
+use RowBloom\RowBloom\Drivers\InterpolatorContract;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
 use Twig\Environment;

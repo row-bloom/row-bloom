@@ -1,8 +1,10 @@
 <?php
 
-namespace RowBloom\RowBloom;
+namespace RowBloom\RowBloom\Drivers;
 
+use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\Fs\File;
+use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 

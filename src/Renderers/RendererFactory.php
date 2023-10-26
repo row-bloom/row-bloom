@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom\Renderers;
 
-use RowBloom\RowBloom\RendererContract;
+use RowBloom\RowBloom\Drivers\RendererContract;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Support;
 

@@ -2,8 +2,8 @@
 
 namespace RowBloom\RowBloom\DataCollectors\Folder;
 
-use RowBloom\RowBloom\DataCollectorContract;
 use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
+use RowBloom\RowBloom\Drivers\DataCollectorContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Types\Table;
 

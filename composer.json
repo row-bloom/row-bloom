@@ -29,11 +29,7 @@
         "pestphp/pest-plugin-laravel": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "row-bloom/browsershot-renderer": "dev-main",
-        "row-bloom/chrome-php-renderer": "dev-main",
-        "row-bloom/mpdf-renderer": "dev-main",
-        "row-bloom/twig-interpolator": "dev-main"
+        "phpstan/phpstan-phpunit": "^1.0"
     },
     "autoload": {
         "psr-4": {

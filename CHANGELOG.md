@@ -2,6 +2,16 @@
 
 All notable changes to `row-bloom` will be documented in this file.
 
+## v0.3.0 - 2023-10-26
+
+### What's Changed
+
+- 18 improve drivers handling by @medilies in https://github.com/row-bloom/row-bloom/pull/22
+- 23 organize common drivers code in one namespace by @medilies in https://github.com/row-bloom/row-bloom/pull/24
+- 26 extract heavy drivers by @medilies in https://github.com/row-bloom/row-bloom/pull/27
+
+**Full Changelog**: https://github.com/row-bloom/row-bloom/compare/v0.2.0-beta...v0.3.0
+
 ## v0.1.0-beta - 2023-07-24
 
 ### What's Changed

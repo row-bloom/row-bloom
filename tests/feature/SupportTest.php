@@ -2,10 +2,7 @@
 
 use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
-use RowBloom\RowBloom\Interpolators\TwigInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
-use RowBloom\RowBloom\Renderers\MpdfRenderer;
-use RowBloom\RowBloom\Renderers\PhpChromeRenderer;
 use RowBloom\RowBloom\Support;
 
 it('lists capabilities', function () {
@@ -20,18 +17,15 @@ it('lists capabilities', function () {
         ->toContain(SpreadsheetDataCollector::class);
 
     expect($support->getInterpolatorDrivers())
-        ->toHaveKeys(['PHP', 'Twig'])
-        ->toContain(TwigInterpolator::class, PhpInterpolator::class);
+        ->toHaveKeys(['PHP'])
+        ->toContain(PhpInterpolator::class);
 
     expect($support->getRendererDrivers())
         ->toHaveKeys(['HTML'])
-        ->toContain(PhpChromeRenderer::class, MpdfRenderer::class);
+        ->toContain(HtmlRenderer::class);
 
     expect($support->getRendererOptionsSupport(HtmlRenderer::NAME)['metadataKeywords'])
         ->toBeFalse();
-
-    expect($support->getRendererOptionsSupport(MpdfRenderer::NAME)['metadataKeywords'])
-        ->toBeTrue();
 
     expect($support->getRendererOptionsSupport('yo'))
         ->toHaveCount(0);

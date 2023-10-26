@@ -18,12 +18,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "chrome-php/chrome": "^1.9",
         "illuminate/container": "*",
-        "mpdf/mpdf": "^8.1",
-        "phpoffice/phpspreadsheet": "^1.28",
-        "spatie/browsershot": "^3.58",
-        "twig/twig": "^3.6"
+        "phpoffice/phpspreadsheet": "^1.28"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -33,7 +29,11 @@
         "pestphp/pest-plugin-laravel": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0"
+        "phpstan/phpstan-phpunit": "^1.0",
+        "row-bloom/browsershot-renderer": "dev-main",
+        "row-bloom/chrome-php-renderer": "dev-main",
+        "row-bloom/mpdf-renderer": "dev-main",
+        "row-bloom/twig-interpolator": "dev-main"
     },
     "autoload": {
         "psr-4": {

@@ -1,6 +1,6 @@
 <?php
 
-use RowBloom\RowBloom\Interpolators\TwigInterpolator;
+use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\RowBloom;
 use RowBloom\RowBloom\Types\Css;
@@ -8,7 +8,7 @@ use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
 
 it('Basic html output', function (RowBloom $r, $css, $template, $table) {
-    $r->setRenderer(HtmlRenderer::NAME)->setInterpolator(TwigInterpolator::NAME)
+    $r->setRenderer(HtmlRenderer::NAME)->setInterpolator(PhpInterpolator::NAME)
         ->addCss($css)
         ->setTemplate($template)
         ->addTable($table);
@@ -19,8 +19,6 @@ it('Basic html output', function (RowBloom $r, $css, $template, $table) {
 })
     ->with([
         'Default' => app()->make(RowBloom::class),
-        'Twig' => (app()->make(RowBloom::class))
-            ->setInterpolator(TwigInterpolator::NAME),
         'Html' => (app()->make(RowBloom::class))
             ->setRenderer(HtmlRenderer::NAME),
         'HtmlRenderer instance' => (app()->make(RowBloom::class))
@@ -29,12 +27,12 @@ it('Basic html output', function (RowBloom $r, $css, $template, $table) {
     ->with([
         'primitives' => [
             'css' => '',
-            'template' => '<h1>hey {{ name }}</h1>',
+            'template' => '<h1>hey <?= $name ?> </h1>',
             'table' => [['name' => 'mohamed'], ['name' => 'ilies']],
         ],
         'types' => [
             'css' => Css::fromString(''),
-            'template' => Html::fromString('<h1>hey {{ name }}</h1>'),
+            'template' => Html::fromString('<h1>hey <?= $name ?> </h1>'),
             'table' => Table::fromArray([['name' => 'mohamed'], ['name' => 'ilies']]),
         ],
     ]);

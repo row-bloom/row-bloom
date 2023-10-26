@@ -12,6 +12,8 @@ class TwigInterpolator implements InterpolatorContract
 {
     use GlueHtmlConcern;
 
+    public const NAME = 'Twig';
+
     public function interpolate(Html $template, Table $table, int $perPage = null): Html
     {
         $loader = app()->make(ArrayLoader::class, ['templates' => ['template' => $template]]);

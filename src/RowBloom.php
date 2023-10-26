@@ -4,9 +4,7 @@ namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
 use RowBloom\RowBloom\Fs\File;
-use RowBloom\RowBloom\Interpolators\Interpolator;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
-use RowBloom\RowBloom\Renderers\Renderer;
 use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
@@ -14,9 +12,9 @@ use RowBloom\RowBloom\Types\Table;
 
 class RowBloom
 {
-    private Interpolator|InterpolatorContract|string $interpolator;
+    private InterpolatorContract|string $interpolator;
 
-    private Renderer|RendererContract|string $renderer;
+    private RendererContract|string $renderer;
 
     /** @var (Table|array)[] */
     private array $tables = [];
@@ -201,14 +199,14 @@ class RowBloom
     //
     // ============================================================
 
-    public function setInterpolator(Interpolator|InterpolatorContract|string $interpolator): static
+    public function setInterpolator(InterpolatorContract|string $interpolator): static
     {
         $this->interpolator = $interpolator;
 
         return $this;
     }
 
-    public function setRenderer(Renderer|RendererContract|string $renderer): static
+    public function setRenderer(RendererContract|string $renderer): static
     {
         $this->renderer = $renderer;
 

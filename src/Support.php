@@ -2,41 +2,54 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\DataCollectors\DataCollector;
-use RowBloom\RowBloom\Interpolators\Interpolator;
-use RowBloom\RowBloom\Renderers\Renderer;
-
 class Support
 {
+    /** @var array<string, string> */
     private array $dataCollectorDrivers = [];
 
+    /** @var array<string, string> */
     private array $interpolatorDrivers = [];
 
+    /** @var array<string, string> */
     private array $rendererDrivers = [];
 
+    // ? improve extension - driver link shape
+    /** @var array<string, true> */
     private array $supportedTableFileExtensions = [];
 
-    public function __construct()
+    // --------------------------------------------
+
+    public function registerDataCollectorDriver(string $driverName, string $className): static
     {
-        $this->setDataCollectorDrivers()
-            ->setSupportedTableFileExtensions()
-            ->setInterpolatorDrivers()
-            ->setRendererDrivers();
+        if (! is_a($className, DataCollectorContract::class, true)) {
+            throw new RowBloomException("'{$driverName}' is not a valid data collector");
+        }
+
+        $this->dataCollectorDrivers[$driverName] = $className;
+
+        $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
+
+        return $this;
     }
 
-    public function setDataCollectorDrivers(): static
+    public function removeDataCollectorDriver(string $driverName): static
     {
-        foreach (DataCollector::cases() as $dataCollector) {
-            $className = $dataCollector->value;
+        if ($this->hasDataCollectorDriver($driverName)) {
+            unset($this->dataCollectorDrivers[$driverName]);
+        }
 
-            if (! class_exists($className)) {
-                continue;
-            }
+        $this->supportedTableFileExtensions = [];
 
-            $this->dataCollectorDrivers[$dataCollector->name] = $className;
+        foreach ($this->dataCollectorDrivers as $className) {
+            $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
         }
 
         return $this;
+    }
+
+    public function hasDataCollectorDriver(string $driverName): bool
+    {
+        return array_key_exists($driverName, $this->dataCollectorDrivers);
     }
 
     public function getDataCollectorDrivers(): array
@@ -44,53 +57,9 @@ class Support
         return $this->dataCollectorDrivers;
     }
 
-    public function setInterpolatorDrivers(): static
+    public function getDataCollectorDriver(string $driverName): ?string
     {
-        foreach (Interpolator::cases() as $interpolator) {
-            $className = $interpolator->value;
-
-            if (! class_exists($className)) {
-                continue;
-            }
-
-            $this->interpolatorDrivers[$interpolator->name] = $className;
-        }
-
-        return $this;
-    }
-
-    public function getInterpolatorDrivers(): array
-    {
-        return $this->interpolatorDrivers;
-    }
-
-    public function setRendererDrivers(): static
-    {
-        foreach (Renderer::cases() as $renderer) {
-            $className = $renderer->value;
-
-            if (! class_exists($className)) {
-                continue;
-            }
-
-            $this->rendererDrivers[$renderer->name] = $className;
-        }
-
-        return $this;
-    }
-
-    public function getRendererDrivers(): array
-    {
-        return $this->rendererDrivers;
-    }
-
-    public function setSupportedTableFileExtensions(): static
-    {
-        foreach ($this->dataCollectorDrivers as $className) {
-            $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
-        }
-
-        return $this;
+        return $this->dataCollectorDrivers[$driverName];
     }
 
     /**
@@ -101,17 +70,91 @@ class Support
         return $this->supportedTableFileExtensions;
     }
 
-    /**
-     * @return ?array An associative array of 'optionName' => \<bool\> or null if $renderer is invalid
-     */
-    public function getRendererOptionsSupport(Renderer|string $renderer): ?array
-    {
-        $className = $renderer instanceof Renderer ? $renderer->value : $renderer;
+    // --------------------------------------------
 
-        if (! class_exists($className) || ! is_a($className, RendererContract::class, true)) {
-            return null;
+    public function registerInterpolatorDriver(string $driverName, string $className): static
+    {
+        if (! is_a($className, InterpolatorContract::class, true)) {
+            throw new RowBloomException("'{$driverName}' is not a valid interpolator");
         }
 
-        return $className::getOptionsSupport();
+        $this->interpolatorDrivers[$driverName] = $className;
+
+        return $this;
     }
+
+    public function removeInterpolatorDriver(string $driverName): static
+    {
+        if ($this->hasInterpolatorDriver($driverName)) {
+            unset($this->interpolatorDrivers[$driverName]);
+        }
+
+        return $this;
+    }
+
+    public function hasInterpolatorDriver(string $driverName): bool
+    {
+        return array_key_exists($driverName, $this->interpolatorDrivers);
+    }
+
+    public function getInterpolatorDrivers(): array
+    {
+        return $this->interpolatorDrivers;
+    }
+
+    public function getInterpolatorDriver(string $driverName): ?string
+    {
+        return $this->interpolatorDrivers[$driverName];
+    }
+
+    // --------------------------------------------
+
+    public function registerRendererDriver(string $driverName, string $className): static
+    {
+        if (! is_a($className, RendererContract::class, true)) {
+            throw new RowBloomException("'{$driverName}' is not a valid renderer");
+        }
+
+        $this->rendererDrivers[$driverName] = $className;
+
+        return $this;
+    }
+
+    public function removeRendererDriver(string $driverName): static
+    {
+        if ($this->hasRendererDriver($driverName)) {
+            unset($this->rendererDrivers[$driverName]);
+        }
+
+        return $this;
+    }
+
+    public function hasRendererDriver(string $driverName): bool
+    {
+        return array_key_exists($driverName, $this->rendererDrivers);
+    }
+
+    public function getRendererDrivers(): array
+    {
+        return $this->rendererDrivers;
+    }
+
+    public function getRendererDriver(string $driverName): ?string
+    {
+        return $this->rendererDrivers[$driverName];
+    }
+
+    /**
+     * @return ?array An associative array of 'optionName' => \<bool\>
+     */
+    public function getRendererOptionsSupport(string $renderer): ?array
+    {
+        if (! $this->hasRendererDriver($renderer)) {
+            return [];
+        }
+
+        return $this->getRendererDriver($renderer)::getOptionsSupport();
+    }
+
+    // --------------------------------------------
 }

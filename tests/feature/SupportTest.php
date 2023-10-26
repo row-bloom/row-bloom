@@ -3,9 +3,9 @@
 use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Interpolators\TwigInterpolator;
+use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Renderers\MpdfRenderer;
 use RowBloom\RowBloom\Renderers\PhpChromeRenderer;
-use RowBloom\RowBloom\Renderers\Renderer;
 use RowBloom\RowBloom\Support;
 
 it('lists capabilities', function () {
@@ -16,23 +16,23 @@ it('lists capabilities', function () {
         ->toHaveKeys(['json', 'csv', 'xlsx']);
 
     expect($support->getDataCollectorDrivers())
-        ->toHaveKeys(['Spreadsheet', 'Folder', 'Json'])
+        ->toHaveKeys(['Spreadsheet', 'Folder', 'JSON'])
         ->toContain(SpreadsheetDataCollector::class);
 
     expect($support->getInterpolatorDrivers())
-        ->toHaveKeys(['Php', 'Twig'])
+        ->toHaveKeys(['PHP', 'Twig'])
         ->toContain(TwigInterpolator::class, PhpInterpolator::class);
 
     expect($support->getRendererDrivers())
-        ->toHaveKeys(['Mpdf', 'Html', 'PhpChrome'])
+        ->toHaveKeys(['HTML'])
         ->toContain(PhpChromeRenderer::class, MpdfRenderer::class);
 
-    expect($support->getRendererOptionsSupport(Renderer::Html)['metadataKeywords'])
+    expect($support->getRendererOptionsSupport(HtmlRenderer::NAME)['metadataKeywords'])
         ->toBeFalse();
 
-    expect($support->getRendererOptionsSupport(Renderer::Mpdf)['metadataKeywords'])
+    expect($support->getRendererOptionsSupport(MpdfRenderer::NAME)['metadataKeywords'])
         ->toBeTrue();
 
     expect($support->getRendererOptionsSupport('yo'))
-        ->toBeNull();
+        ->toHaveCount(0);
 });

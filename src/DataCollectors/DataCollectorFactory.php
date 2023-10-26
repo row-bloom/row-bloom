@@ -3,29 +3,41 @@
 namespace RowBloom\RowBloom\DataCollectors;
 
 use RowBloom\RowBloom\DataCollectorContract;
+use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
+use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
+use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
+use RowBloom\RowBloom\Support;
 
-// TODO: improve factory to allow user to register new drivers and what they support
 final class DataCollectorFactory
 {
-    public function make(DataCollector|string $driver): DataCollectorContract
+    // TODO: base driver factory
+    public function __construct(private Support $support)
     {
-        if ($driver instanceof DataCollector) {
-            return app()->make($driver->value);
+    }
+
+    public function make(string $driver): DataCollectorContract
+    {
+        $className = $driver;
+
+        if (! class_exists($driver) && $this->support->hasDataCollectorDriver($driver)) {
+            $className = $this->support->getDataCollectorDriver($driver);
         }
 
-        if (is_a($driver, DataCollectorContract::class, true)) {
-            return app()->make($driver);
+        if (! is_a($className, DataCollectorContract::class, true)) {
+            throw new RowBloomException("'{$driver}' is not a valid data collector");
         }
 
-        throw new RowBloomException("'{$driver}' is not a valid data collector");
+        return app()->make($className);
     }
 
     public function makeFromPath(string $path): DataCollectorContract
     {
         /** @var File */
         $file = app()->make(File::class, ['path' => $path]);
+
+        // ? add canHandlePath() to DataCollectorContract
 
         $driver = match (true) {
             $file->exists() => $this->resolveFsDriver($file),
@@ -35,18 +47,18 @@ final class DataCollectorFactory
         return $this->make($driver);
     }
 
-    private function resolveFsDriver(File $file): DataCollector
+    private function resolveFsDriver(File $file): string
     {
         if ($file->isDir()) {
-            return DataCollector::Folder;
+            return $this->support->getDataCollectorDriver(FolderDataCollector::NAME);
         }
 
         if ($file->extension() === 'json') {
-            return DataCollector::Json;
+            return $this->support->getDataCollectorDriver(JsonDataCollector::NAME);
         }
 
-        if (in_array($file->extension(), ['xlsx', 'xls', 'xml', 'ods', 'slk', 'gnumeric', 'html', 'csv'], true)) {
-            return DataCollector::Spreadsheet;
+        if (SpreadsheetDataCollector::getSupportedFileExtensions()[$file->extension()]) {
+            return $this->support->getDataCollectorDriver(SpreadsheetDataCollector::NAME);
         }
 
         throw new RowBloomException("Couldn't resolve a driver for the file '{$file}'");

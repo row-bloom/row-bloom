@@ -1,14 +1,14 @@
 <?php
 
-use RowBloom\RowBloom\Interpolators\Interpolator;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
+use RowBloom\RowBloom\Interpolators\TwigInterpolator;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
 
 test('twig', function (array|Table $data, string|Html $template, string $match) {
     expect(
         app()->make(InterpolatorFactory::class)
-            ->make(Interpolator::Twig)
+            ->make(TwigInterpolator::NAME)
             ->interpolate(Html::fromString($template), Table::fromArray($data))
     )
         // ! expect contain

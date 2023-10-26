@@ -11,6 +11,8 @@ class PhpInterpolator implements InterpolatorContract
 {
     use GlueHtmlConcern;
 
+    public const NAME = 'PHP';
+
     public function interpolate(Html $template, Table $table, int $perPage = null): Html
     {
         $body = '';

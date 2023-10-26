@@ -9,6 +9,8 @@ use RowBloom\RowBloom\Types\Table;
 
 class FolderDataCollector implements DataCollectorContract
 {
+    public const NAME = 'Folder';
+
     public function getTable(File|string $file): Table
     {
         /** @var File */

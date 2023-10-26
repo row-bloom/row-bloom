@@ -6,6 +6,8 @@ use RowBloom\RowBloom\Support;
 
 abstract class BaseDriverFactory
 {
+    use ValidateDriverConcern;
+
     public function __construct(protected Support $support)
     {
     }

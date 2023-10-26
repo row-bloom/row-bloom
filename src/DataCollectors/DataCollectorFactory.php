@@ -20,9 +20,7 @@ final class DataCollectorFactory extends BaseDriverFactory
             $className = $this->support->getDataCollectorDriver($driver);
         }
 
-        if (! is_a($className, DataCollectorContract::class, true)) {
-            throw new RowBloomException("'{$driver}' is not a valid data collector");
-        }
+        $this->validateContract($className, DataCollectorContract::class);
 
         return app()->make($className);
     }

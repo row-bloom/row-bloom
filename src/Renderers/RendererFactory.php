@@ -2,16 +2,12 @@
 
 namespace RowBloom\RowBloom\Renderers;
 
+use RowBloom\RowBloom\Drivers\BaseDriverFactory;
 use RowBloom\RowBloom\Drivers\RendererContract;
 use RowBloom\RowBloom\RowBloomException;
-use RowBloom\RowBloom\Support;
 
-final class RendererFactory
+final class RendererFactory extends BaseDriverFactory
 {
-    public function __construct(private Support $support)
-    {
-    }
-
     public function make(string $driver): RendererContract
     {
         $className = $driver;

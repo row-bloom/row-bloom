@@ -2,16 +2,12 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
+use RowBloom\RowBloom\Drivers\BaseDriverFactory;
 use RowBloom\RowBloom\Drivers\InterpolatorContract;
 use RowBloom\RowBloom\RowBloomException;
-use RowBloom\RowBloom\Support;
 
-final class InterpolatorFactory
+final class InterpolatorFactory extends BaseDriverFactory
 {
-    public function __construct(private Support $support)
-    {
-    }
-
     public function make(string $driver): InterpolatorContract
     {
         $className = $driver;

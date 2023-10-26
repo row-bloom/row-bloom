@@ -38,6 +38,12 @@ class Support
             unset($this->dataCollectorDrivers[$driverName]);
         }
 
+        $this->supportedTableFileExtensions = [];
+
+        foreach($this->dataCollectorDrivers as $className) {
+            $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
+        }
+
         return $this;
     }
 

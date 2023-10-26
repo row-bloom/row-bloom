@@ -64,7 +64,7 @@ class Support
 
     public function getDataCollectorDriver(string $driverName): ?string
     {
-        return $this->dataCollectorDrivers[$driverName];
+        return $this->dataCollectorDrivers[$driverName] ?? null;
     }
 
     /**
@@ -107,7 +107,7 @@ class Support
 
     public function getInterpolatorDriver(string $driverName): ?string
     {
-        return $this->interpolatorDrivers[$driverName];
+        return $this->interpolatorDrivers[$driverName] ?? null;
     }
 
     // --------------------------------------------
@@ -142,7 +142,7 @@ class Support
 
     public function getRendererDriver(string $driverName): ?string
     {
-        return $this->rendererDrivers[$driverName];
+        return $this->rendererDrivers[$driverName] ?? null;
     }
 
     /**

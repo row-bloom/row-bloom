@@ -8,19 +8,23 @@ use RowBloom\RowBloom\RowBloomException;
 
 final class Table implements Countable, Iterator
 {
-    protected int $iteratorPosition = 0;
+    private int $iteratorPosition = 0;
+
+    private int $count = 0;
 
     public static function fromArray(array $data): static
     {
         return new self($data);
     }
 
-    private function __construct(protected array $data)
+    private function __construct(private array $data)
     {
         $this->validate();
+
+        $this->count = count($this->data);
     }
 
-    protected function validate(): void
+    private function validate(): void
     {
         foreach ($this->data as $i => $row) {
             if (! is_array($row)) {
@@ -48,16 +52,18 @@ final class Table implements Countable, Iterator
             $this->data[] = $newRow;
         }
 
+        $this->count = count($this->data);
+
         return $this;
     }
 
     // ============================================================
-    // Iterator interface methods
+    // Iterator + Countable interface methods
     // ============================================================
 
     public function count(): int
     {
-        return count($this->data);
+        return $this->count;
     }
 
     public function rewind(): void

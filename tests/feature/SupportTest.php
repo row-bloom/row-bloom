@@ -1,6 +1,6 @@
 <?php
 
-use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
+use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Support;
@@ -10,11 +10,11 @@ it('lists capabilities', function () {
     $support = app()->get(Support::class);
 
     expect($support->getSupportedTableFileExtensions())
-        ->toHaveKeys(['json', 'csv', 'xlsx']);
+        ->toHaveKeys(['json']);
 
     expect($support->getDataCollectorDrivers())
-        ->toHaveKeys(['Spreadsheet', 'Folder', 'JSON'])
-        ->toContain(SpreadsheetDataCollector::class);
+        ->toHaveKeys(['Folder', JsonDataCollector::NAME])
+        ->toContain(JsonDataCollector::class);
 
     expect($support->getInterpolatorDrivers())
         ->toHaveKeys(['PHP'])
@@ -29,4 +29,20 @@ it('lists capabilities', function () {
 
     expect($support->getRendererOptionsSupport('yo'))
         ->toHaveCount(0);
+});
+
+it('remove and register data collector', function () {
+    /** @var Support */
+    $support = app()->get(Support::class);
+
+    $support->removeDataCollectorDriver(JsonDataCollector::NAME);
+
+    expect($support->getSupportedTableFileExtensions())
+        ->toBeArray()
+        ->not->toHaveKeys(['json']);
+
+    $support->registerDataCollectorDriver(JsonDataCollector::NAME, JsonDataCollector::class);
+
+    expect($support->getSupportedTableFileExtensions())
+        ->toHaveKeys(['json']);
 });

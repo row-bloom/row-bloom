@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom\DataLoaders\Folder;
+namespace RowBloom\RowBloom\DataLoaders;
 
 use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
 use RowBloom\RowBloom\Drivers\DataLoaderContract;

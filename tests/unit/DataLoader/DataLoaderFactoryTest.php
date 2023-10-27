@@ -1,7 +1,7 @@
 <?php
 
 use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
-use RowBloom\RowBloom\DataLoaders\Json\JsonDataLoader;
+use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\RowBloomException;
 
 test('makeFromPath')

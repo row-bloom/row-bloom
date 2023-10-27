@@ -3,8 +3,8 @@
 namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
-use RowBloom\RowBloom\DataLoaders\Folder\FolderDataLoader;
-use RowBloom\RowBloom\DataLoaders\Json\JsonDataLoader;
+use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
+use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;

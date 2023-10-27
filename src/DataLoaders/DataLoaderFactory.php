@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom\DataLoaders;
 
-use RowBloom\RowBloom\DataLoaders\Folder\FolderDataLoader;
+use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
 use RowBloom\RowBloom\Drivers\BaseDriverFactory;
 use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Fs\File;

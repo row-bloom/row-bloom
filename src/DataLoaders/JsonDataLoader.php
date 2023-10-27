@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom\DataLoaders\Json;
+namespace RowBloom\RowBloom\DataLoaders;
 
 use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Fs\File;

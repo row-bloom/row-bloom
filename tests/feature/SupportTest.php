@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom\Tests\feature\SupportTest;
 
-use RowBloom\RowBloom\DataLoaders\Json\JsonDataLoader;
+use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Support;

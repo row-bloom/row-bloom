@@ -20,8 +20,7 @@ class Support
     /** @var array<string, string> */
     private array $rendererDrivers = [];
 
-    // ? improve extension - driver link shape
-    /** @var array<string, true> */
+    /** @var array<string, array<string, int>> */
     private array $supportedTableFileExtensions = [];
 
     // --------------------------------------------
@@ -32,21 +31,35 @@ class Support
 
         $this->dataCollectorDrivers[$driverName] = $className;
 
-        $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
+        /** @var string $fileExtension */
+        foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
+            if (! array_key_exists($fileExtension, $this->supportedTableFileExtensions)) {
+                $this->supportedTableFileExtensions[$fileExtension] = [$className => $priority];
+            }
+
+            $this->supportedTableFileExtensions[$fileExtension][$className] = $priority;
+            asort($this->supportedTableFileExtensions[$fileExtension]);
+        }
 
         return $this;
     }
 
     public function removeDataCollectorDriver(string $driverName): static
     {
-        if ($this->hasDataCollectorDriver($driverName)) {
-            unset($this->dataCollectorDrivers[$driverName]);
+        if (! $this->hasDataCollectorDriver($driverName)) {
+            return $this;
         }
 
-        $this->supportedTableFileExtensions = [];
+        $className = $this->dataCollectorDrivers[$driverName];
 
-        foreach ($this->dataCollectorDrivers as $className) {
-            $this->supportedTableFileExtensions += $className::getSupportedFileExtensions();
+        unset($this->dataCollectorDrivers[$driverName]);
+
+        foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
+            unset($this->supportedTableFileExtensions[$fileExtension][$className]);
+
+            if (count($this->supportedTableFileExtensions[$fileExtension]) === 0) {
+                unset($this->supportedTableFileExtensions[$fileExtension]);
+            }
         }
 
         return $this;

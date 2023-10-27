@@ -51,20 +51,20 @@ class SpreadsheetDataCollector implements DataCollectorContract
     public static function getSupportedFileExtensions(): array
     {
         return [
-            'xlsx' => true,
-            'xlsm' => true,
-            'xltx' => true,
-            'xltm' => true,
-            'xls' => true,
-            'xlt' => true,
-            'ods' => true,
-            'ots' => true,
-            'slk' => true,
-            'xml' => true,
-            'gnumeric' => true,
-            'htm' => true,
-            'html' => true,
-            'csv' => true,
+            'xlsx' => 100,
+            'xlsm' => 100,
+            'xltx' => 100,
+            'xltm' => 100,
+            'xls' => 100,
+            'xlt' => 100,
+            'ods' => 100,
+            'ots' => 100,
+            'slk' => 100,
+            'xml' => 100,
+            'gnumeric' => 100,
+            'htm' => 100,
+            'html' => 100,
+            'csv' => 100,
         ];
     }
 

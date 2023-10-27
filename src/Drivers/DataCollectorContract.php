@@ -9,7 +9,9 @@ interface DataCollectorContract
     public function getTable(string $path): Table;
 
     /**
-     * Associative array 'extension' => true
+     * @return array<string, int>
+     * - Key: file extension
+     * - Value: priority (in case another driver supports the same extension)
      */
     public static function getSupportedFileExtensions(): array;
 }

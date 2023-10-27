@@ -30,7 +30,7 @@ class JsonDataCollector implements DataCollectorContract
     public static function getSupportedFileExtensions(): array
     {
         return [
-            'json' => true,
+            'json' => 100,
         ];
     }
 }

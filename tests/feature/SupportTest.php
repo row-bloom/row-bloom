@@ -61,11 +61,6 @@ it('picks json data collector based on priority', function () {
 
     $support->registerDataCollectorDriver(DummyDataCollector101::NAME, DummyDataCollector101::class);
     expect($support->getFileExtensionDataCollectorDriver('json'))->toBe(DummyDataCollector101::class);
-
-    // ! cleanup. shouldn't be necessary
-    $support->registerDataCollectorDriver(JsonDataCollector::NAME, JsonDataCollector::class);
-    $support->removeDataCollectorDriver(DummyDataCollector99::NAME);
-    $support->removeDataCollectorDriver(DummyDataCollector101::NAME);
 });
 
 class DummyDataCollector99 extends JsonDataCollector

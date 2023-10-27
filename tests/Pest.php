@@ -9,6 +9,9 @@ uses()
     ->beforeEach(function () {
         // app()->forgetInstances();
         Mockery::close();
+
+        app()->make(RowBloomServiceProvider::class)->register();
+        app()->make(RowBloomServiceProvider::class)->boot();
     })
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';

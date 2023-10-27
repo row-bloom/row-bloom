@@ -9,19 +9,21 @@ use RowBloom\RowBloom\Types\Table;
 
 class PhpInterpolator implements InterpolatorContract
 {
-    use GlueHtmlConcern;
-
     public const NAME = 'PHP';
 
     public function interpolate(Html $template, Table $table, int $perPage = null): Html
     {
         $body = '';
-        $dataCount = count($table);
-
         foreach ($table as $i => $rowData) {
-            $t = $this->render($template, $rowData);
+            $body .= $this->render($template, $rowData);
 
-            $body = $this->glue($body, $t, $i, $dataCount, $perPage);
+            if (is_null($perPage)) {
+                continue;
+            }
+
+            if (($i + 1) % $perPage === 0 && ($i + 1) !== $table->count()) {
+                $body .= '<div style="page-break-before: always;"></div>';
+            }
         }
 
         return Html::fromString($body);

@@ -102,10 +102,10 @@ A driver will be picked automatically for each table path.
 
 Available drivers:
 
-- Spreadsheet (`xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv`).
-- Json.
+- [Spreadsheet](https://github.com/row-bloom/spreadsheet-data-loader).
+- JSON.
 - Folder.
-- Csv (todo).
+- CSV (todo).
 - Db (todo).
 
 ### Template
@@ -114,7 +114,7 @@ Pick a driver using `setInterpolator`, and provide a template with `setTemplate`
 
 The available interpolators are:
 
-- Php `RowBloom\RowBloom\Interpolators\PhpInterpolator`.
+- PHP `RowBloom\RowBloom\Interpolators\PhpInterpolator`.
 - [Twig](https://github.com/row-bloom/twig-interpolator).
 - Blade (todo).
 
@@ -124,10 +124,10 @@ Pick a driver using `setRenderer`, and optionally provide css with `addCss` or `
 
 The available renderers are:
 
-- Html `RowBloom\RowBloom\Renderers\HtmlRenderer`.
-- [mPDF](https://github.com/row-bloom/mpdf-renderer).
 - [Chrome php](https://github.com/row-bloom/chrome-php-renderer).
+- [mPDF](https://github.com/row-bloom/mpdf-renderer).
 - [Browsershot](https://github.com/row-bloom/browsershot-renderer).
+- HTML `RowBloom\RowBloom\Renderers\HtmlRenderer`.
 
 ### Options
 

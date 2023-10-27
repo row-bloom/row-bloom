@@ -4,7 +4,7 @@ use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
 use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
 use RowBloom\RowBloom\RowBloomException;
 
-it('makes')
+test ('makeFromPath')
     ->expect(app()->make(DataCollectorFactory::class)->makeFromPath(__DIR__.'/../../stubs/foo.json'))
     ->toBeInstanceOf(JsonDataCollector::class);
 

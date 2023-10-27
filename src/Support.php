@@ -23,6 +23,8 @@ class Support
     /** @var array<string, array<string, int>> */
     private array $supportedTableFileExtensions = [];
 
+    // ? add map extension => user fav driver (checked before $supportedTableFileExtensions)
+
     // --------------------------------------------
 
     public function registerDataCollectorDriver(string $driverName, string $className): static

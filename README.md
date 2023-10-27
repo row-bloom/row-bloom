@@ -11,13 +11,13 @@ The goal is to allow the usage of any templating engine with any PDF generation 
 
 ![illustration](./illustration.png)
 
-## Installation
+## Setup
 
 ```bash
 composer require row-bloom/row-bloom
 ```
 
-Call `RowBloomServiceProvider::register()` at the entry point of your application.
+Call at the entry point of your application:
 
 ```php
 use RowBloom\RowBloom\RowBloomServiceProvider;

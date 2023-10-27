@@ -80,12 +80,19 @@ class Support
         return $this->dataCollectorDrivers[$driverName] ?? null;
     }
 
-    /**
-     * @return array An associative array that contains supported extensions as keys, all values are set to true
-     */
+    /** @return array<string, array<string, int>> */
     public function getSupportedTableFileExtensions(): array
     {
         return $this->supportedTableFileExtensions;
+    }
+
+    public function getFileExtensionDataCollectorDriver(string $extension): ?string
+    {
+        if(!array_key_exists($extension, $this->supportedTableFileExtensions)) {
+            return null;
+        }
+
+        return array_key_first($this->supportedTableFileExtensions[$extension]);
     }
 
     // --------------------------------------------

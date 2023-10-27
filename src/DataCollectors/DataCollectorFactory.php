@@ -3,8 +3,6 @@
 namespace RowBloom\RowBloom\DataCollectors;
 
 use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
-use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
-use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
 use RowBloom\RowBloom\Drivers\BaseDriverFactory;
 use RowBloom\RowBloom\Drivers\DataCollectorContract;
 use RowBloom\RowBloom\Fs\File;
@@ -44,14 +42,7 @@ final class DataCollectorFactory extends BaseDriverFactory
             return $this->support->getDataCollectorDriver(FolderDataCollector::NAME);
         }
 
-        if ($file->extension() === 'json') {
-            return $this->support->getDataCollectorDriver(JsonDataCollector::NAME);
-        }
-
-        if (SpreadsheetDataCollector::getSupportedFileExtensions()[$file->extension()]) {
-            return $this->support->getDataCollectorDriver(SpreadsheetDataCollector::NAME);
-        }
-
-        throw new RowBloomException("Couldn't resolve a driver for the file '{$file}'");
+        return $this->support->getFileExtensionDataCollectorDriver($file->extension()) ??
+            throw new RowBloomException("Couldn't resolve a driver for the file '{$file}'");
     }
 }

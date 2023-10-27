@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom\DataCollectors\Spreadsheets;
+namespace RowBloom\RowBloom\DataLoaders\Spreadsheets;
 
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Gnumeric;
@@ -11,11 +11,11 @@ use PhpOffice\PhpSpreadsheet\Reader\Slk;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\Xml;
-use RowBloom\RowBloom\Drivers\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Types\Table;
 
-class SpreadsheetDataCollector implements DataCollectorContract
+class SpreadsheetDataLoader implements DataLoaderContract
 {
     public const NAME = 'Spreadsheet';
 

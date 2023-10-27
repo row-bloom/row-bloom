@@ -4,7 +4,7 @@ namespace RowBloom\RowBloom\Drivers;
 
 use RowBloom\RowBloom\Types\Table;
 
-interface DataCollectorContract
+interface DataLoaderContract
 {
     public function getTable(string $path): Table;
 

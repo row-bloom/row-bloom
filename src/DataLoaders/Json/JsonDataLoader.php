@@ -1,13 +1,13 @@
 <?php
 
-namespace RowBloom\RowBloom\DataCollectors\Json;
+namespace RowBloom\RowBloom\DataLoaders\Json;
 
-use RowBloom\RowBloom\Drivers\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Table;
 
-class JsonDataCollector implements DataCollectorContract
+class JsonDataLoader implements DataLoaderContract
 {
     public const NAME = 'JSON';
 

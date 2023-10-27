@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom\DataCollectors\Spreadsheets;
+namespace RowBloom\RowBloom\DataLoaders\Spreadsheets;
 
 use RowBloom\RowBloom\RowBloomException;
 

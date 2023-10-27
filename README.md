@@ -169,7 +169,7 @@ use RowBloom\RowBloom\Support;
 /** @var Support */
 $support = app()->get(Support::class);
 
-$support->getDataCollectorDrivers();
+$support->getDataLoaderDrivers();
 $support->getInterpolatorDrivers();
 $support->getRendererDrivers();
 
@@ -184,7 +184,7 @@ $support->getRendererOptionsSupport('driverName');
 
 After calling `app()->make(RowBloomServiceProvider::class)->register()` you can extend the capabilities of the library and register first party, third party, and custom drivers using:
 
-- `Support::registerDataCollectorDriver` (must implement: `RowBloom\RowBloom\Drivers\DataCollectorContract`).
+- `Support::registerDataLoaderDriver` (must implement: `RowBloom\RowBloom\Drivers\DataLoaderContract`).
 - `Support::registerInterpolatorDriver` (must implement: `RowBloom\RowBloom\Drivers\InterpolatorContract`).
 - `Support::registerRendererDriver` (must implement: `RowBloom\RowBloom\Drivers\RendererContract`).
 

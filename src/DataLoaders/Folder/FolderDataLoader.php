@@ -1,13 +1,13 @@
 <?php
 
-namespace RowBloom\RowBloom\DataCollectors\Folder;
+namespace RowBloom\RowBloom\DataLoaders\Folder;
 
-use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
-use RowBloom\RowBloom\Drivers\DataCollectorContract;
+use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
+use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Types\Table;
 
-class FolderDataCollector implements DataCollectorContract
+class FolderDataLoader implements DataLoaderContract
 {
     public const NAME = 'Folder';
 
@@ -22,7 +22,7 @@ class FolderDataCollector implements DataCollectorContract
 
         foreach ($file->ls() as $path) {
             $table->append(
-                app()->make(DataCollectorFactory::class)->makeFromPath($path)->getTable($path)
+                app()->make(DataLoaderFactory::class)->makeFromPath($path)->getTable($path)
             );
         }
 

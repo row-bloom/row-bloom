@@ -2,10 +2,10 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
-use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
-use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
-use RowBloom\RowBloom\DataCollectors\Spreadsheets\SpreadsheetDataCollector;
+use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
+use RowBloom\RowBloom\DataLoaders\Folder\FolderDataLoader;
+use RowBloom\RowBloom\DataLoaders\Json\JsonDataLoader;
+use RowBloom\RowBloom\DataLoaders\Spreadsheets\SpreadsheetDataLoader;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
@@ -15,7 +15,7 @@ class RowBloomServiceProvider
 {
     public function register(): void
     {
-        app()->singleton(DataCollectorFactory::class, DataCollectorFactory::class);
+        app()->singleton(DataLoaderFactory::class, DataLoaderFactory::class);
         app()->singleton(InterpolatorFactory::class, InterpolatorFactory::class);
         app()->singleton(RendererFactory::class, RendererFactory::class);
         app()->singleton(Support::class, Support::class);
@@ -26,9 +26,9 @@ class RowBloomServiceProvider
         /** @var Support */
         $support = app()->get(Support::class);
 
-        $support->registerDataCollectorDriver(FolderDataCollector::NAME, FolderDataCollector::class)
-            ->registerDataCollectorDriver(JsonDataCollector::NAME, JsonDataCollector::class)
-            ->registerDataCollectorDriver(SpreadsheetDataCollector::NAME, SpreadsheetDataCollector::class);
+        $support->registerDataLoaderDriver(FolderDataLoader::NAME, FolderDataLoader::class)
+            ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class)
+            ->registerDataLoaderDriver(SpreadsheetDataLoader::NAME, SpreadsheetDataLoader::class);
 
         $support->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class);
 

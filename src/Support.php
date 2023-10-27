@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\Drivers\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Drivers\InterpolatorContract;
 use RowBloom\RowBloom\Drivers\RendererContract;
 use RowBloom\RowBloom\Drivers\ValidateDriverConcern;
@@ -12,7 +12,7 @@ class Support
     use ValidateDriverConcern;
 
     /** @var array<string, string> */
-    private array $dataCollectorDrivers = [];
+    private array $DataLoaderDrivers = [];
 
     /** @var array<string, string> */
     private array $interpolatorDrivers = [];
@@ -27,11 +27,11 @@ class Support
 
     // --------------------------------------------
 
-    public function registerDataCollectorDriver(string $driverName, string $className): static
+    public function registerDataLoaderDriver(string $driverName, string $className): static
     {
-        $this->validateContract($className, DataCollectorContract::class);
+        $this->validateContract($className, DataLoaderContract::class);
 
-        $this->dataCollectorDrivers[$driverName] = $className;
+        $this->DataLoaderDrivers[$driverName] = $className;
 
         /** @var string $fileExtension */
         foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
@@ -46,15 +46,15 @@ class Support
         return $this;
     }
 
-    public function removeDataCollectorDriver(string $driverName): static
+    public function removeDataLoaderDriver(string $driverName): static
     {
-        if (! $this->hasDataCollectorDriver($driverName)) {
+        if (! $this->hasDataLoaderDriver($driverName)) {
             return $this;
         }
 
-        $className = $this->dataCollectorDrivers[$driverName];
+        $className = $this->DataLoaderDrivers[$driverName];
 
-        unset($this->dataCollectorDrivers[$driverName]);
+        unset($this->DataLoaderDrivers[$driverName]);
 
         foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
             unset($this->supportedTableFileExtensions[$fileExtension][$className]);
@@ -67,19 +67,19 @@ class Support
         return $this;
     }
 
-    public function hasDataCollectorDriver(string $driverName): bool
+    public function hasDataLoaderDriver(string $driverName): bool
     {
-        return array_key_exists($driverName, $this->dataCollectorDrivers);
+        return array_key_exists($driverName, $this->DataLoaderDrivers);
     }
 
-    public function getDataCollectorDrivers(): array
+    public function getDataLoaderDrivers(): array
     {
-        return $this->dataCollectorDrivers;
+        return $this->DataLoaderDrivers;
     }
 
-    public function getDataCollectorDriver(string $driverName): ?string
+    public function getDataLoaderDriver(string $driverName): ?string
     {
-        return $this->dataCollectorDrivers[$driverName] ?? null;
+        return $this->DataLoaderDrivers[$driverName] ?? null;
     }
 
     /** @return array<string, array<string, int>> */
@@ -88,7 +88,7 @@ class Support
         return $this->supportedTableFileExtensions;
     }
 
-    public function getFileExtensionDataCollectorDriver(string $extension): ?string
+    public function getFileExtensionDataLoaderDriver(string $extension): ?string
     {
         if (! array_key_exists($extension, $this->supportedTableFileExtensions)) {
             return null;

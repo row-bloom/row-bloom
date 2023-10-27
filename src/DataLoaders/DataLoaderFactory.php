@@ -1,29 +1,29 @@
 <?php
 
-namespace RowBloom\RowBloom\DataCollectors;
+namespace RowBloom\RowBloom\DataLoaders;
 
-use RowBloom\RowBloom\DataCollectors\Folder\FolderDataCollector;
+use RowBloom\RowBloom\DataLoaders\Folder\FolderDataLoader;
 use RowBloom\RowBloom\Drivers\BaseDriverFactory;
-use RowBloom\RowBloom\Drivers\DataCollectorContract;
+use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 
-final class DataCollectorFactory extends BaseDriverFactory
+final class DataLoaderFactory extends BaseDriverFactory
 {
-    public function make(string $driver): DataCollectorContract
+    public function make(string $driver): DataLoaderContract
     {
         $className = $driver;
 
-        if (! class_exists($driver) && $this->support->hasDataCollectorDriver($driver)) {
-            $className = $this->support->getDataCollectorDriver($driver);
+        if (! class_exists($driver) && $this->support->hasDataLoaderDriver($driver)) {
+            $className = $this->support->getDataLoaderDriver($driver);
         }
 
-        $this->validateContract($className, DataCollectorContract::class);
+        $this->validateContract($className, DataLoaderContract::class);
 
         return app()->make($className);
     }
 
-    public function makeFromPath(string $path): DataCollectorContract
+    public function makeFromPath(string $path): DataLoaderContract
     {
         /** @var File */
         $file = app()->make(File::class, ['path' => $path]);
@@ -39,10 +39,10 @@ final class DataCollectorFactory extends BaseDriverFactory
     private function resolveFsDriver(File $file): string
     {
         if ($file->isDir()) {
-            return $this->support->getDataCollectorDriver(FolderDataCollector::NAME);
+            return $this->support->getDataLoaderDriver(FolderDataLoader::NAME);
         }
 
-        return $this->support->getFileExtensionDataCollectorDriver($file->extension()) ??
+        return $this->support->getFileExtensionDataLoaderDriver($file->extension()) ??
             throw new RowBloomException("Couldn't resolve a driver for the file '{$file}'");
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
 use Mockery\Mock;
-use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
-use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
+use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
+use RowBloom\RowBloom\DataLoaders\Json\JsonDataLoader;
 use RowBloom\RowBloom\Fs\File;
 
 it('parses', function () {
-    $dataCollector = app()->make(DataCollectorFactory::class)->make(JsonDataCollector::NAME);
+    $DataLoader = app()->make(DataLoaderFactory::class)->make(JsonDataLoader::NAME);
 
-    expect($dataCollector)->toBeInstanceOf(JsonDataCollector::class);
+    expect($DataLoader)->toBeInstanceOf(JsonDataLoader::class);
 
     $file = mockJsonFile();
 
@@ -23,7 +23,7 @@ it('parses', function () {
         }
     ]');
 
-    expect($dataCollector->getTable($file)->toArray())->toEqual([
+    expect($DataLoader->getTable($file)->toArray())->toEqual([
         ['a' => '2', 'b' => '2'],
         ['a' => '3', 'b' => '3'],
     ]);

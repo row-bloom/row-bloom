@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\DataCollectors\DataCollectorFactory;
+use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
 use RowBloom\RowBloom\Drivers\InterpolatorContract;
 use RowBloom\RowBloom\Drivers\RendererContract;
 use RowBloom\RowBloom\Fs\File;
@@ -81,17 +81,17 @@ class RowBloom
 
     private function tableFromPath(array $tablePath): Table
     {
-        $dataCollectorFactory = app()->make(DataCollectorFactory::class);
+        $DataLoaderFactory = app()->make(DataLoaderFactory::class);
 
-        $dataCollector = null;
+        $DataLoader = null;
 
         if (isset($tablePath['driver'])) {
-            $dataCollector = $dataCollectorFactory->make($tablePath['driver']);
+            $DataLoader = $DataLoaderFactory->make($tablePath['driver']);
         } else {
-            $dataCollector = $dataCollectorFactory->makeFromPath($tablePath['path']);
+            $DataLoader = $DataLoaderFactory->makeFromPath($tablePath['path']);
         }
 
-        return $dataCollector->getTable($tablePath['path']);
+        return $DataLoader->getTable($tablePath['path']);
     }
 
     private function template(): Html

@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom\Tests\feature\SupportTest;
 
-use RowBloom\RowBloom\DataCollectors\Json\JsonDataCollector;
+use RowBloom\RowBloom\DataLoaders\Json\JsonDataLoader;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Support;
@@ -14,9 +14,9 @@ it('lists capabilities', function () {
     expect($support->getSupportedTableFileExtensions())
         ->toHaveKeys(['json']);
 
-    expect($support->getDataCollectorDrivers())
-        ->toHaveKeys(['Folder', JsonDataCollector::NAME])
-        ->toContain(JsonDataCollector::class);
+    expect($support->getDataLoaderDrivers())
+        ->toHaveKeys(['Folder', JsonDataLoader::NAME])
+        ->toContain(JsonDataLoader::class);
 
     expect($support->getInterpolatorDrivers())
         ->toHaveKeys(['PHP'])
@@ -33,37 +33,37 @@ it('lists capabilities', function () {
         ->toHaveCount(0);
 });
 
-it('remove and register data collector', function () {
+it('remove and register data loader', function () {
     /** @var Support */
     $support = app()->get(Support::class);
 
-    $support->removeDataCollectorDriver(JsonDataCollector::NAME);
+    $support->removeDataLoaderDriver(JsonDataLoader::NAME);
 
     expect($support->getSupportedTableFileExtensions())
         ->toBeArray()
         ->not->toHaveKeys(['json']);
 
-    $support->registerDataCollectorDriver(JsonDataCollector::NAME, JsonDataCollector::class);
+    $support->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class);
 
     expect($support->getSupportedTableFileExtensions())
         ->toHaveKeys(['json']);
 });
 
-it('picks json data collector based on priority', function () {
+it('picks json data loader based on priority', function () {
     /** @var Support */
     $support = app()->get(Support::class);
 
-    $support->removeDataCollectorDriver(JsonDataCollector::NAME);
-    expect($support->getFileExtensionDataCollectorDriver('json'))->toBeNull();
+    $support->removeDataLoaderDriver(JsonDataLoader::NAME);
+    expect($support->getFileExtensionDataLoaderDriver('json'))->toBeNull();
 
-    $support->registerDataCollectorDriver(DummyDataCollector99::NAME, DummyDataCollector99::class);
-    expect($support->getFileExtensionDataCollectorDriver('json'))->toBe(DummyDataCollector99::class);
+    $support->registerDataLoaderDriver(DummyDataLoader99::NAME, DummyDataLoader99::class);
+    expect($support->getFileExtensionDataLoaderDriver('json'))->toBe(DummyDataLoader99::class);
 
-    $support->registerDataCollectorDriver(DummyDataCollector101::NAME, DummyDataCollector101::class);
-    expect($support->getFileExtensionDataCollectorDriver('json'))->toBe(DummyDataCollector101::class);
+    $support->registerDataLoaderDriver(DummyDataLoader101::NAME, DummyDataLoader101::class);
+    expect($support->getFileExtensionDataLoaderDriver('json'))->toBe(DummyDataLoader101::class);
 });
 
-class DummyDataCollector99 extends JsonDataCollector
+class DummyDataLoader99 extends JsonDataLoader
 {
     public const NAME = 'Dummy99';
 
@@ -75,7 +75,7 @@ class DummyDataCollector99 extends JsonDataCollector
     }
 }
 
-class DummyDataCollector101 extends JsonDataCollector
+class DummyDataLoader101 extends JsonDataLoader
 {
     public const NAME = 'Dummy101';
 

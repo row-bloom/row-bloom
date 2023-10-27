@@ -94,7 +94,7 @@ class Support
             return null;
         }
 
-        return array_key_first($this->supportedTableFileExtensions[$extension]);
+        return array_key_last($this->supportedTableFileExtensions[$extension]);
     }
 
     // --------------------------------------------

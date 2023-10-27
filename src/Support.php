@@ -88,7 +88,7 @@ class Support
 
     public function getFileExtensionDataCollectorDriver(string $extension): ?string
     {
-        if(!array_key_exists($extension, $this->supportedTableFileExtensions)) {
+        if (! array_key_exists($extension, $this->supportedTableFileExtensions)) {
             return null;
         }
 

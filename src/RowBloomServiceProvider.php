@@ -5,7 +5,6 @@ namespace RowBloom\RowBloom;
 use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
 use RowBloom\RowBloom\DataLoaders\Folder\FolderDataLoader;
 use RowBloom\RowBloom\DataLoaders\Json\JsonDataLoader;
-use RowBloom\RowBloom\DataLoaders\Spreadsheets\SpreadsheetDataLoader;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
@@ -27,8 +26,7 @@ class RowBloomServiceProvider
         $support = app()->get(Support::class);
 
         $support->registerDataLoaderDriver(FolderDataLoader::NAME, FolderDataLoader::class)
-            ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class)
-            ->registerDataLoaderDriver(SpreadsheetDataLoader::NAME, SpreadsheetDataLoader::class);
+            ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class);
 
         $support->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class);
 

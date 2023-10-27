@@ -13,15 +13,13 @@ it('Basic html output', function (RowBloom $r, $css, $template, $table) {
         ->setTemplate($template)
         ->addTable($table);
 
-    expect($r->get())
-        ->toBeString()
-        ->toContain('ilies', 'mohamed');
+    expect($r->get())->toBeString()->toContain('ilies', 'mohamed');
 })
     ->with([
         'Default' => app()->make(RowBloom::class),
-        'Html' => (app()->make(RowBloom::class))
+        'HTML render by name' => (app()->make(RowBloom::class))
             ->setRenderer(HtmlRenderer::NAME),
-        'HtmlRenderer instance' => (app()->make(RowBloom::class))
+        'HTML renderer by class' => (app()->make(RowBloom::class))
             ->setRenderer(app()->make(HtmlRenderer::class)),
     ])
     ->with([

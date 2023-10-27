@@ -11,7 +11,6 @@ test('php interpolator', function (array|Table $data, string|Html $template, str
             ->make(PhpInterpolator::NAME)
             ->interpolate(Html::fromString($template), Table::fromArray($data))
     )
-        // ! expect contain
         ->toEqual($match);
 })->with([
     'example 1' => [

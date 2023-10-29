@@ -11,13 +11,13 @@ The goal is to allow the usage of any templating engine with any PDF generation 
 
 ![illustration](./illustration.png)
 
-## Installation
+## Setup
 
 ```bash
 composer require row-bloom/row-bloom
 ```
 
-Call `RowBloomServiceProvider::register()` at the entry point of your application.
+Call at the entry point of your application:
 
 ```php
 use RowBloom\RowBloom\RowBloomServiceProvider;
@@ -96,9 +96,7 @@ After finishing the fluent build, the execution goes through three main steps:
 
 ### Data
 
-Provide data using `addTable` or `addTablePath`.
-
-A driver will be picked automatically for each table path.
+Provide data using `addTable` or `addTablePath` (A driver will be picked automatically for each table path).
 
 Available drivers:
 
@@ -107,6 +105,8 @@ Available drivers:
 - Folder.
 - CSV (todo).
 - Db (todo).
+
+The officially supported file extensions are: `xlsx`, `xls`, `xml`, `ods`, `slk`, `gnumeric`, `html`, `csv`, `json`.
 
 ### Template
 
@@ -139,25 +139,25 @@ The main options are the ones offered by the browser print UI.
 
 ![browser print options](./browser_print_options.png)
 
-| Option                | type            | default  | Html | mPDF | Chrome php |
-| --------------------- | --------------- | -------- | ---- | ---- | ---------- |
-| `perPage`             | `int`           | `null`   | ✔️ | ✔️ | ✔️       |
-| `displayHeaderFooter` | `bool`          | `true`   | ❌   | ✔️ | ✔️       |
-| `rawHeader`           | `string`        | `null`   | ❌   | ✔️ | ✔️       |
-| `rawFooter`           | `string`        | `null`   | ❌   | ✔️ | ✔️       |
-| `printBackground`     | `bool`          | `false`  | ❌   | ❌   | ✔️       |
-| `preferCSSPageSize`   | `bool`          | `false`  | ❌   | ❌   | ✔️       |
-| `landscape`           | `bool`          | `false`  | ❌   | ✔️ | ✔️       |
-| `format`              | `PaperFormat`   | `null`   | ❌   | ✔️ | ✔️       |
-| `width`               | `string`        | `null`   | ❌   | ✔️ | ✔️       |
-| `height`              | `string`        | `null`   | ❌   | ✔️ | ✔️       |
-| `margin`              | `array\|string` | `'1 in'` | ❌   | ✔️ | ✔️       |
-| `metadataTitle`       | `string`        | `null`   | ❌   | ✔️ | ❌         |
-| `metadataAuthor`      | `string`        | `null`   | ❌   | ✔️ | ❌         |
-| `metadataCreator`     | `string`        | `null`   | ❌   | ✔️ | ❌         |
-| `metadataSubject`     | `string`        | `null`   | ❌   | ✔️ | ❌         |
-| `metadataKeywords`    | `string`        | `null`   | ❌   | ✔️ | ❌         |
-|                       |                 |          |      |      |            |
+| Option                | type            | default  | Html | mPDF | Chrome php & Browsershot |
+| --------------------- | --------------- | -------- | ---- | ---- | ------------------------ |
+| `perPage`             | `int`           | `null`   | ✔️ | ✔️ | ✔️                     |
+| `displayHeaderFooter` | `bool`          | `true`   | ❌   | ✔️ | ✔️                     |
+| `rawHeader`           | `string`        | `null`   | ❌   | ✔️ | ✔️                     |
+| `rawFooter`           | `string`        | `null`   | ❌   | ✔️ | ✔️                     |
+| `printBackground`     | `bool`          | `false`  | ❌   | ❌   | ✔️                     |
+| `preferCSSPageSize`   | `bool`          | `false`  | ❌   | ❌   | ✔️                     |
+| `landscape`           | `bool`          | `false`  | ❌   | ✔️ | ✔️                     |
+| `format`              | `PaperFormat`   | `null`   | ❌   | ✔️ | ✔️                     |
+| `width`               | `string`        | `null`   | ❌   | ✔️ | ✔️                     |
+| `height`              | `string`        | `null`   | ❌   | ✔️ | ✔️                     |
+| `margin`              | `array\|string` | `'1 in'` | ❌   | ✔️ | ✔️                     |
+| `metadataTitle`       | `string`        | `null`   | ❌   | ✔️ | ❌                       |
+| `metadataAuthor`      | `string`        | `null`   | ❌   | ✔️ | ❌                       |
+| `metadataCreator`     | `string`        | `null`   | ❌   | ✔️ | ❌                       |
+| `metadataSubject`     | `string`        | `null`   | ❌   | ✔️ | ❌                       |
+| `metadataKeywords`    | `string`        | `null`   | ❌   | ✔️ | ❌                       |
+|                       |                 |          |      |      |                          |
 
 ### Support
 

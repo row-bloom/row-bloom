@@ -142,7 +142,6 @@ class RowBloom
         return $this;
     }
 
-    // ? addSpreadsheetPath() ,addJsonPath(), ...
     public function addTablePath(string $tablePath, string $driver = null): static
     {
         // ? improve type (TablePath...)
@@ -190,9 +189,16 @@ class RowBloom
         return $this;
     }
 
-    public function setOption(string $key, mixed $value): static
+    public function tapOptions(callable $callback): static
     {
-        $this->options->$key = $value;
+        $callback($this->options);
+
+        return $this;
+    }
+
+    public function tapConfig(callable $callback): static
+    {
+        $callback($this->config);
 
         return $this;
     }

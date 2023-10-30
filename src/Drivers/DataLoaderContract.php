@@ -2,11 +2,12 @@
 
 namespace RowBloom\RowBloom\Drivers;
 
+use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Types\Table;
 
 interface DataLoaderContract
 {
-    public function getTable(string $path): Table;
+    public function getTable(File $path): Table;
 
     /**
      * @return array<string, int>

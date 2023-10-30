@@ -11,11 +11,8 @@ class JsonDataLoader implements DataLoaderContract
 {
     public const NAME = 'JSON';
 
-    public function getTable(File|string $file): Table
+    public function getTable(File $file): Table
     {
-        // ! make() blocks using mocked instance in container
-        $file = $file instanceof File ? $file : app()->make(File::class, ['path' => $file]);
-
         $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('json');
 
         $data = json_decode($file->readFileContent(), true);

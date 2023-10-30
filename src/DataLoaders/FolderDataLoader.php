@@ -10,11 +10,8 @@ class FolderDataLoader implements DataLoaderContract
 {
     public const NAME = 'Folder';
 
-    public function getTable(File|string $file): Table
+    public function getTable(File $file): Table
     {
-        /** @var File */
-        $file = $file instanceof File ? $file : app()->make(File::class, ['path' => $file]);
-
         $file->mustExist()->mustBeReadable()->mustBeDir();
 
         $table = Table::fromArray([]);

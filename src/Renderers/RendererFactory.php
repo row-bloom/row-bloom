@@ -2,8 +2,7 @@
 
 namespace RowBloom\RowBloom\Renderers;
 
-use RowBloom\RowBloom\Drivers\BaseDriverFactory;
-use RowBloom\RowBloom\Drivers\RendererContract;
+use RowBloom\RowBloom\BaseDriverFactory;
 
 final class RendererFactory extends BaseDriverFactory
 {

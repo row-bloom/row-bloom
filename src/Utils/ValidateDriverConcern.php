@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom\Drivers;
+namespace RowBloom\RowBloom\Utils;
 
 use RowBloom\RowBloom\RowBloomException;
 

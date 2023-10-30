@@ -2,8 +2,7 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
-use RowBloom\RowBloom\Drivers\BaseDriverFactory;
-use RowBloom\RowBloom\Drivers\InterpolatorContract;
+use RowBloom\RowBloom\BaseDriverFactory;
 
 final class InterpolatorFactory extends BaseDriverFactory
 {

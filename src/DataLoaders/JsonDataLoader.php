@@ -2,7 +2,6 @@
 
 namespace RowBloom\RowBloom\DataLoaders;
 
-use RowBloom\RowBloom\Drivers\DataLoaderContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Table;

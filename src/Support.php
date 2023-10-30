@@ -2,10 +2,10 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\Drivers\DataLoaderContract;
-use RowBloom\RowBloom\Drivers\InterpolatorContract;
-use RowBloom\RowBloom\Drivers\RendererContract;
-use RowBloom\RowBloom\Drivers\ValidateDriverConcern;
+use RowBloom\RowBloom\DataLoaders\DataLoaderContract;
+use RowBloom\RowBloom\Interpolators\InterpolatorContract;
+use RowBloom\RowBloom\Renderers\RendererContract;
+use RowBloom\RowBloom\Utils\ValidateDriverConcern;
 
 class Support
 {

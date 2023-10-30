@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom\Drivers;
+namespace RowBloom\RowBloom\DataLoaders;
 
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Types\Table;

@@ -2,8 +2,7 @@
 
 namespace RowBloom\RowBloom\DataLoaders;
 
-use RowBloom\RowBloom\Drivers\BaseDriverFactory;
-use RowBloom\RowBloom\Drivers\DataLoaderContract;
+use RowBloom\RowBloom\BaseDriverFactory;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 

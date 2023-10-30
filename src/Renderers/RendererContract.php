@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\RowBloom\Drivers;
+namespace RowBloom\RowBloom\Renderers;
 
 use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\Fs\File;

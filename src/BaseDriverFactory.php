@@ -1,8 +1,8 @@
 <?php
 
-namespace RowBloom\RowBloom\Drivers;
+namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\Support;
+use RowBloom\RowBloom\Utils\ValidateDriverConcern;
 
 abstract class BaseDriverFactory
 {

@@ -2,7 +2,6 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
-use RowBloom\RowBloom\Drivers\InterpolatorContract;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;

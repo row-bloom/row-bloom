@@ -3,7 +3,6 @@
 namespace RowBloom\RowBloom\Renderers;
 
 use RowBloom\RowBloom\Config;
-use RowBloom\RowBloom\Drivers\RendererContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Types\Css;

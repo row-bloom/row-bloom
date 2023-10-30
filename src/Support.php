@@ -82,10 +82,10 @@ class Support
         return $this->DataLoaderDrivers[$driverName] ?? null;
     }
 
-    /** @return array<string, array<string, int>> */
+    /** @return array<string, true> */
     public function getSupportedTableFileExtensions(): array
     {
-        return $this->supportedTableFileExtensions;
+        return array_fill_keys(array_keys($this->supportedTableFileExtensions), true);
     }
 
     public function getFileExtensionDataLoaderDriver(string $extension): ?string

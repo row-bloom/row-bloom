@@ -8,7 +8,6 @@ use RowBloom\RowBloom\Drivers\RendererContract;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Renderers\RendererFactory;
-use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
@@ -190,125 +189,16 @@ class RowBloom
         return $this;
     }
 
-    // ------------------------------------------------------------
-    // Options setters
-    // ------------------------------------------------------------
-
-    public function setOption(string $key, mixed $value): static
+    public function tapOptions(callable $callback): static
     {
-        $this->options->$key = $value;
+        $callback($this->options);
 
         return $this;
     }
 
-    public function setDisplayHeaderFooterOption(bool $value): static
+    public function tapConfig(callable $callback): static
     {
-        $this->options->displayHeaderFooter = $value;
-
-        return $this;
-    }
-
-    public function setRawHeaderOption(?string $value): static
-    {
-        $this->options->rawHeader = $value;
-
-        return $this;
-    }
-
-    public function setRawFooterOption(?string $value): static
-    {
-        $this->options->rawFooter = $value;
-
-        return $this;
-    }
-
-    public function setPrintBackgroundOption(bool $value): static
-    {
-        $this->options->printBackground = $value;
-
-        return $this;
-    }
-
-    public function setPreferCSSPageSizeOption(bool $value): static
-    {
-        $this->options->preferCSSPageSize = $value;
-
-        return $this;
-    }
-
-    public function setPerPageOption(?int $value): static
-    {
-        $this->options->perPage = $value;
-
-        return $this;
-    }
-
-    public function setLandscapeOption(bool $value): static
-    {
-        $this->options->landscape = $value;
-
-        return $this;
-    }
-
-    public function setFormatOption(?PaperFormat $value): static
-    {
-        $this->options->format = $value;
-
-        return $this;
-    }
-
-    public function setWidthOption(?string $value): static
-    {
-        $this->options->width = $value;
-
-        return $this;
-    }
-
-    public function setHeightOption(?string $value): static
-    {
-        $this->options->height = $value;
-
-        return $this;
-    }
-
-    public function setMarginOption(array|string $value): static
-    {
-        $this->options->margin = $value;
-
-        return $this;
-    }
-
-    public function setMetadataTitleOption(?string $value): static
-    {
-        $this->options->metadataTitle = $value;
-
-        return $this;
-    }
-
-    public function setMetadataAuthorOption(?string $value): static
-    {
-        $this->options->metadataAuthor = $value;
-
-        return $this;
-    }
-
-    public function setMetadataCreatorOption(?string $value): static
-    {
-        $this->options->metadataCreator = $value;
-
-        return $this;
-    }
-
-    public function setMetadataSubjectOption(?string $value): static
-    {
-        $this->options->metadataSubject = $value;
-
-        return $this;
-    }
-
-    public function setMetadataKeywordsOption(?string $value): static
-    {
-        $this->options->metadataKeywords = $value;
+        $callback($this->config);
 
         return $this;
     }

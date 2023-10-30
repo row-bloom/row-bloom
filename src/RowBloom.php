@@ -60,6 +60,32 @@ class RowBloom
 
     // ------------------------------------------------------------
 
+    private function resolveInterpolator(): InterpolatorContract
+    {
+        if (! isset($this->interpolator)) {
+            throw new RowBloomException('Interpolator must be set');
+        }
+
+        if ($this->interpolator instanceof InterpolatorContract) {
+            return $this->interpolator;
+        }
+
+        return app()->make(InterpolatorFactory::class)->make($this->interpolator);
+    }
+
+    private function resolveRenderer(): RendererContract
+    {
+        if (! isset($this->renderer)) {
+            throw new RowBloomException('Renderer must be set');
+        }
+
+        if ($this->renderer instanceof RendererContract) {
+            return $this->renderer;
+        }
+
+        return app()->make(RendererFactory::class)->make($this->renderer);
+    }
+
     private function table(): Table
     {
         if (empty($this->tables)) {
@@ -203,10 +229,6 @@ class RowBloom
         return $this;
     }
 
-    // ============================================================
-    //
-    // ============================================================
-
     public function setInterpolator(InterpolatorContract|string $interpolator): static
     {
         $this->interpolator = $interpolator;
@@ -219,31 +241,5 @@ class RowBloom
         $this->renderer = $renderer;
 
         return $this;
-    }
-
-    private function resolveInterpolator(): InterpolatorContract
-    {
-        if (! isset($this->interpolator)) {
-            throw new RowBloomException('Interpolator must be set');
-        }
-
-        if ($this->interpolator instanceof InterpolatorContract) {
-            return $this->interpolator;
-        }
-
-        return app()->make(InterpolatorFactory::class)->make($this->interpolator);
-    }
-
-    private function resolveRenderer(): RendererContract
-    {
-        if (! isset($this->renderer)) {
-            throw new RowBloomException('Renderer must be set');
-        }
-
-        if ($this->renderer instanceof RendererContract) {
-            return $this->renderer;
-        }
-
-        return app()->make(RendererFactory::class)->make($this->renderer);
     }
 }

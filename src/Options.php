@@ -8,7 +8,6 @@ use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options
 {
-
     /**
      * .
      *
@@ -55,13 +54,13 @@ class Options
     ) {
     }
 
-    /** @param array<string, mixed> $options */
+    /** @param  array<string, mixed>  $options */
     public function setFromArray(array $options): static
     {
         foreach ($options as $key => $value) {
             $key = CaseConverter::snakeToCamel($key);
 
-            if (!property_exists($this, $key)) {
+            if (! property_exists($this, $key)) {
                 continue;
             }
 

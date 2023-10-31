@@ -64,7 +64,7 @@ class HtmlRenderer implements RendererContract
             'rawHeader' => false,
             'rawFooter' => false,
             'printBackground' => false,
-            'preferCSSPageSize' => false,
+            'preferCssPageSize' => false,
             'landscape' => false,
             'format' => false,
             'width' => false,

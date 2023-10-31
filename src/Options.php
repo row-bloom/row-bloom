@@ -4,6 +4,7 @@ namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
+use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options
 {
@@ -27,7 +28,7 @@ class Options
         // TODO: handle special classes: date, url, title, pageNumber, totalPages [, header, footer]
 
         public bool $printBackground = false,
-        public bool $preferCSSPageSize = false,
+        public bool $preferCssPageSize = false,
 
         public ?int $perPage = null,
 
@@ -51,6 +52,22 @@ class Options
         // security ?
         // compression ?
     ) {
+    }
+
+    /** @param  array<string, mixed>  $options */
+    public function setFromArray(array $options): static
+    {
+        foreach ($options as $key => $value) {
+            $key = CaseConverter::snakeToCamel($key);
+
+            if (! property_exists($this, $key)) {
+                continue;
+            }
+
+            $this->$key = $value;
+        }
+
+        return $this;
     }
 
     /**

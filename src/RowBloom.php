@@ -154,6 +154,7 @@ class RowBloom
     // Fluent build methods
     // ============================================================
 
+    // TODO: overrideConfig() overrideOptions()
     public function setConfig(Config $config): static
     {
         $this->config = $config;
@@ -239,6 +240,27 @@ class RowBloom
     public function setRenderer(RendererContract|string $renderer): static
     {
         $this->renderer = $renderer;
+
+        return $this;
+    }
+
+    public function setFromArray(array $params): static
+    {
+        foreach ($params as $key => $value) {
+            match($key) {
+                'template' => $this->setTemplate($value),
+                'templatePath', 'template_path' => $this->setTemplatePath($value),
+                'table' => $this->addTable($value),
+                // TODO: addTablePath -> TablePath type
+                // ? tables
+                'css' => $this->addCss($value),
+                'cssPath', 'css_path' => $this->addCssPath($value),
+                'interpolator' => $this->setInterpolator($value),
+                'renderer' => $this->setRenderer($value),
+                'options' => $this->options->setFromArray($value),
+                default => null,
+            };
+        }
 
         return $this;
     }

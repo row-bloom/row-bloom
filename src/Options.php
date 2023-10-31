@@ -4,9 +4,11 @@ namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
+use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options
 {
+
     /**
      * .
      *
@@ -51,6 +53,22 @@ class Options
         // security ?
         // compression ?
     ) {
+    }
+
+    /** @param array<string, mixed> $options */
+    public function setFromArray(array $options): static
+    {
+        foreach ($options as $key => $value) {
+            $key = CaseConverter::snakeToCamel($key);
+
+            if (!property_exists($this, $key)) {
+                continue;
+            }
+
+            $this->$key = $value;
+        }
+
+        return $this;
     }
 
     /**

@@ -155,10 +155,16 @@ class RowBloom
     // Fluent build methods
     // ============================================================
 
-    // TODO: overrideConfig() overrideOptions()
-    public function setConfig(Config $config): static
+    public function overrideConfig(Config $config): static
     {
         $this->config = $config;
+
+        return $this;
+    }
+
+    public function overrideOptions(Options $options): static
+    {
+        $this->options = $options;
 
         return $this;
     }

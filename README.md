@@ -146,7 +146,7 @@ The main options are the ones offered by the browser print UI.
 | `rawHeader`           | `string`        | `null`   | ❌   | ✔️ | ✔️                     |
 | `rawFooter`           | `string`        | `null`   | ❌   | ✔️ | ✔️                     |
 | `printBackground`     | `bool`          | `false`  | ❌   | ❌   | ✔️                     |
-| `preferCSSPageSize`   | `bool`          | `false`  | ❌   | ❌   | ✔️                     |
+| `preferCssPageSize`   | `bool`          | `false`  | ❌   | ❌   | ✔️                     |
 | `landscape`           | `bool`          | `false`  | ❌   | ✔️ | ✔️                     |
 | `format`              | `PaperFormat`   | `null`   | ❌   | ✔️ | ✔️                     |
 | `width`               | `string`        | `null`   | ❌   | ✔️ | ✔️                     |

@@ -27,7 +27,7 @@ class Options
         // TODO: handle special classes: date, url, title, pageNumber, totalPages [, header, footer]
 
         public bool $printBackground = false,
-        public bool $preferCSSPageSize = false,
+        public bool $preferCssPageSize = false,
 
         public ?int $perPage = null,
 

@@ -43,8 +43,8 @@ test('setFromArray()')
         'template' => '<h1>hey <?= $name ?> </h1>',
         'table' => [['name' => 'mohamed'], ['name' => 'ilies']],
         'options' => [
-            'raw_header' => 'the Prime'
-        ]
+            'raw_header' => 'the Prime',
+        ],
     ])->get())
     ->toBeString()
     ->toContain('ilies', 'mohamed');

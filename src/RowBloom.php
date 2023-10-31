@@ -11,6 +11,7 @@ use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
+use RowBloom\RowBloom\Types\TablePath;
 
 class RowBloom
 {
@@ -18,7 +19,7 @@ class RowBloom
 
     private RendererContract|string $renderer;
 
-    /** @var (Table|array)[] */
+    /** @var (Table|TablePath)[] */
     private array $tables = [];
 
     private Html|File|null $template = null;
@@ -28,6 +29,7 @@ class RowBloom
 
     // ------------------------------------------------------------
 
+    // TODO: inject factories and eliminate app()->make()
     public function __construct(private Options $options, private Config $config)
     {
     }
@@ -95,29 +97,28 @@ class RowBloom
         $finalTable = Table::fromArray([]);
 
         foreach ($this->tables as $table) {
-            if ($table instanceof Table) {
-                $finalTable->append($table);
-            } else {
-                $finalTable->append($this->tableFromPath($table));
-            }
+            $finalTable->append(match (true) {
+                $table instanceof Table => $table,
+                $table instanceof TablePath => $this->tableFromPath($table),
+            });
         }
 
         return $finalTable;
     }
 
-    private function tableFromPath(array $tablePath): Table
+    private function tableFromPath(TablePath $tablePath): Table
     {
         $DataLoaderFactory = app()->make(DataLoaderFactory::class);
 
         $DataLoader = null;
 
-        if (isset($tablePath['driver'])) {
-            $DataLoader = $DataLoaderFactory->make($tablePath['driver']);
+        if ($tablePath->driver) {
+            $DataLoader = $DataLoaderFactory->make($tablePath->driver);
         } else {
-            $DataLoader = $DataLoaderFactory->makeFromPath($tablePath['path']);
+            $DataLoader = $DataLoaderFactory->makeFromPath($tablePath->path);
         }
 
-        return $DataLoader->getTable($tablePath['path']);
+        return $DataLoader->getTable($tablePath->path);
     }
 
     private function template(): Html
@@ -169,13 +170,12 @@ class RowBloom
         return $this;
     }
 
-    public function addTablePath(string $tablePath, string $driver = null): static
+    public function addTablePath(TablePath|string $tablePath): static
     {
-        // ? improve type (TablePath...)
-        $this->tables[] = [
-            'path' => $tablePath,
-            'driver' => $driver,
-        ];
+        $this->tables[] = match (true) {
+            $tablePath instanceof TablePath => $tablePath,
+            is_string($tablePath) => TablePath::fromPath($tablePath),
+        };
 
         return $this;
     }
@@ -247,14 +247,14 @@ class RowBloom
     public function setFromArray(array $params): static
     {
         foreach ($params as $key => $value) {
-            match($key) {
+            match ($key) {
                 'template' => $this->setTemplate($value),
                 'templatePath', 'template_path' => $this->setTemplatePath($value),
                 'table' => $this->addTable($value),
-                // TODO: addTablePath -> TablePath type
-                // ? tables
+                'tablePath', 'table_path' => $this->addTablePath($value),
                 'css' => $this->addCss($value),
                 'cssPath', 'css_path' => $this->addCssPath($value),
+                // ? add many (tables, tablePaths, css, cssPaths)
                 'interpolator' => $this->setInterpolator($value),
                 'renderer' => $this->setRenderer($value),
                 'options' => $this->options->setFromArray($value),

@@ -20,6 +20,10 @@ class HtmlRenderer implements RendererContract
 
     protected Options $options;
 
+    public function __construct(protected ?Config $config = null)
+    {
+    }
+
     public function get(): string
     {
         return $this->rendering;
@@ -32,11 +36,12 @@ class HtmlRenderer implements RendererContract
             ->save($this->rendering);
     }
 
-    public function render(Html $html, Css $css, Options $options, Config $config): static
+    public function render(Html $html, Css $css, Options $options, Config $config = null): static
     {
         $this->html = $html;
         $this->css = $css;
         $this->options = $options;
+        $this->config = $config ?? $this->config;
 
         // TODO: handle options with CSS @page, @media...
 

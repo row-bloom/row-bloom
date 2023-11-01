@@ -17,7 +17,7 @@ interface RendererContract
 
     // ? echo()
 
-    public function render(Html $template, Css $css, Options $options, Config $config): static;
+    public function render(Html $template, Css $css, Options $options, Config $config = null): static;
 
     public static function getOptionsSupport(): array;
 }

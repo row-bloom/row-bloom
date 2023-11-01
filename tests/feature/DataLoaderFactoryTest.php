@@ -5,7 +5,7 @@ use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\RowBloomException;
 
 test('makeFromPath')
-    ->expect(app()->make(DataLoaderFactory::class)->makeFromPath(__DIR__.'/../../stubs/foo.json'))
+    ->expect(app()->make(DataLoaderFactory::class)->makeFromPath(mockJsonFile()))
     ->toBeInstanceOf(JsonDataLoader::class);
 
 it('throws when extension is not supported')

@@ -21,14 +21,13 @@ final class DataLoaderFactory extends BaseDriverFactory
         return app()->make($className);
     }
 
-    public function makeFromPath(string $path): DataLoaderContract
+    public function makeFromPath(File|string $file): DataLoaderContract
     {
-        /** @var File */
-        $file = app()->make(File::class, ['path' => $path]);
+        $file = $file instanceof File ? $file : File::fromPath($file);
 
         $driver = match (true) {
             $file->exists() => $this->resolveFsDriver($file),
-            default => throw new RowBloomException("Couldn't resolve a driver for the path '{$path}'"),
+            default => throw new RowBloomException("Couldn't resolve a driver for the path '{$file}'"),
         };
 
         return $this->make($driver);

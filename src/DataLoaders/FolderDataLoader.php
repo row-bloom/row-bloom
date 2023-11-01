@@ -9,6 +9,10 @@ class FolderDataLoader implements DataLoaderContract
 {
     public const NAME = 'Folder';
 
+    public function __construct(private DataLoaderFactory $dataLoaderFactory)
+    {
+    }
+
     public function getTable(File $file): Table
     {
         $file->mustExist()->mustBeReadable()->mustBeDir();
@@ -17,7 +21,7 @@ class FolderDataLoader implements DataLoaderContract
 
         foreach ($file->ls() as $path) {
             $table->append(
-                app()->make(DataLoaderFactory::class)->makeFromPath($path)->getTable($path)
+                $this->dataLoaderFactory->makeFromPath($path)->getTable($path)
             );
         }
 

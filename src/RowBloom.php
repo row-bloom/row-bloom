@@ -29,14 +29,18 @@ class RowBloom
 
     // ------------------------------------------------------------
 
-    // TODO: inject factories and eliminate app()->make()
-    public function __construct(private Options $options, private Config $config)
-    {
+    public function __construct(
+        private Options $options,
+        private Config $config,
+        private InterpolatorFactory $interpolatorFactory,
+        private RendererFactory $rendererFactory,
+        private DataLoaderFactory $dataLoaderFactory,
+    ) {
     }
 
     public function save(File|string $file): bool
     {
-        $file = $file instanceof File ? $file : app()->make(File::class, ['path' => $file]);
+        $file = $file instanceof File ? $file : File::fromPath($file);
 
         return $this->render()->save($file);
     }
@@ -72,7 +76,7 @@ class RowBloom
             return $this->interpolator;
         }
 
-        return app()->make(InterpolatorFactory::class)->make($this->interpolator);
+        return $this->interpolatorFactory->make($this->interpolator);
     }
 
     private function resolveRenderer(): RendererContract
@@ -85,7 +89,7 @@ class RowBloom
             return $this->renderer;
         }
 
-        return app()->make(RendererFactory::class)->make($this->renderer);
+        return $this->rendererFactory->make($this->renderer);
     }
 
     private function table(): Table
@@ -108,17 +112,15 @@ class RowBloom
 
     private function tableFromPath(TablePath $tablePath): Table
     {
-        $DataLoaderFactory = app()->make(DataLoaderFactory::class);
-
-        $DataLoader = null;
+        $dataLoader = null;
 
         if ($tablePath->driver) {
-            $DataLoader = $DataLoaderFactory->make($tablePath->driver);
+            $dataLoader = $this->dataLoaderFactory->make($tablePath->driver);
         } else {
-            $DataLoader = $DataLoaderFactory->makeFromPath($tablePath->path);
+            $dataLoader = $this->dataLoaderFactory->makeFromPath($tablePath->path);
         }
 
-        return $DataLoader->getTable($tablePath->path);
+        return $dataLoader->getTable(File::fromPath($tablePath->path));
     }
 
     private function template(): Html
@@ -195,7 +197,7 @@ class RowBloom
 
     public function setTemplatePath(File|string $templateFile): static
     {
-        $templateFile = $templateFile instanceof File ? $templateFile : app()->make(File::class, ['path' => $templateFile]);
+        $templateFile = $templateFile instanceof File ? $templateFile : File::fromPath($templateFile);
 
         $templateFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('html');
 
@@ -213,7 +215,7 @@ class RowBloom
 
     public function addCssPath(File|string $cssFile): static
     {
-        $cssFile = $cssFile instanceof File ? $cssFile : app()->make(File::class, ['path' => $cssFile]);
+        $cssFile = $cssFile instanceof File ? $cssFile : File::fromPath($cssFile);
 
         $cssFile->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('css');
 

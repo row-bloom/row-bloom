@@ -4,7 +4,7 @@ use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Fs\FsException;
 
 it('represents PHP File')
-    ->expect(app()->make(File::class, ['path' => __FILE__]))
+    ->expect(File::fromPath(__FILE__))
     ->exists()->toBeTrue()
     ->isFile()->toBeTrue()
     ->isDir()->toBeFalse()
@@ -12,7 +12,7 @@ it('represents PHP File')
     ->extension()->toBe('php');
 
 it('represents directory')
-    ->expect(app()->make(File::class, ['path' => __DIR__]))
+    ->expect(File::fromPath(__DIR__))
     ->exists()->toBeTrue()
     ->isDir()->toBeTrue()
     ->isFile()->toBeFalse()
@@ -21,5 +21,5 @@ it('represents directory')
     ->extension()->toBe('');
 
 it('throws PHP File is not dir')
-    ->expect(fn () => app()->make(File::class, ['path' => __FILE__])->mustBeDir())
+    ->expect(fn () => File::fromPath(__FILE__)->mustBeDir())
     ->throws(FsException::class);

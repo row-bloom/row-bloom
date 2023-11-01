@@ -1,14 +1,12 @@
 <?php
 
-use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
 
 test('php interpolator', function (array|Table $data, string|Html $template, string $match) {
     expect(
-        app()->make(InterpolatorFactory::class)
-            ->make(PhpInterpolator::NAME)
+        (new PhpInterpolator)
             ->interpolate(Html::fromString($template), Table::fromArray($data))
     )
         ->toEqual($match);

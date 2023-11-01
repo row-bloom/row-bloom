@@ -1,5 +1,7 @@
 <?php
 
+use Mockery\Mock;
+use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomServiceProvider;
 
 app()->make(RowBloomServiceProvider::class)->register();
@@ -23,7 +25,7 @@ uses()
         $folderPath = __DIR__.'/temp';
         deleteFolder($folderPath);
     })
-    ->in('feature', 'unit');
+    ->in('feature');
 
 function deleteFolder($folderPath)
 {
@@ -44,4 +46,23 @@ function deleteFolder($folderPath)
     }
 
     rmdir($folderPath);
+}
+
+function mockJsonFile(): File|Mock
+{
+    /** @var File|Mock */
+    $file = Mockery::mock(File::class);
+
+    $file->shouldReceive('exists')->andReturns(true);
+    $file->shouldReceive('isDir')->andReturns(false);
+    $file->shouldReceive('extension')->andReturns('json');
+    $file->shouldReceive('mustExist')->andReturns($file);
+    $file->shouldReceive('mustNotExist')->andReturns($file);
+    $file->shouldReceive('mustBeDir')->andReturns($file);
+    $file->shouldReceive('mustBeFile')->andReturns($file);
+    $file->shouldReceive('mustBeWritable')->andReturns($file);
+    $file->shouldReceive('mustBeReadable')->andReturns($file);
+    $file->shouldReceive('mustBeExtension')->andReturns($file);
+
+    return $file;
 }

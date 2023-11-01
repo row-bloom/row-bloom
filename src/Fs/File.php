@@ -8,6 +8,11 @@ class File implements Stringable
 {
     protected string $path;
 
+    public static function fromPath(string $path, bool $real = false): static
+    {
+        return new static($path, $real);
+    }
+
     final public function __construct(string $path, bool $real = false)
     {
         if (! $real) {

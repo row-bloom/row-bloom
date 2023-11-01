@@ -3,10 +3,8 @@
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
 use RowBloom\RowBloom\Renderers\Sizing\Margin;
 
-it('constructs', function (array|string $input, array $expected, LengthUnit $unit = LengthUnit::PIXEL_UNIT) {
-    $margin = app()->make(Margin::class, ['margin' => $input, 'unit' => $unit]);
-
-    expect($margin->allRaw())->toEqual($expected);
+it('constructs', function (array|string $input, array $expected, LengthUnit $unit = null) {
+    expect((new Margin($input, $unit))->allRaw())->toEqual($expected);
 })->with([
     'Single value' => [
         'input' => '5',
@@ -16,6 +14,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
             'marginBottom' => 5,
             'marginLeft' => 5,
         ],
+        'unit' => LengthUnit::PIXEL_UNIT,
     ],
     'Two value' => [
         'input' => ['5', 6.1],
@@ -25,6 +24,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
             'marginBottom' => 5,
             'marginLeft' => 6.1,
         ],
+        'unit' => LengthUnit::PIXEL_UNIT,
     ],
     'For value' => [
         'input' => [1, 2, 3, 4],
@@ -34,6 +34,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
             'marginBottom' => 3,
             'marginLeft' => 4,
         ],
+        'unit' => LengthUnit::PIXEL_UNIT,
     ],
     'Picas unit' => [
         'input' => [1],
@@ -47,10 +48,8 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
     ],
 ]);
 
-it('constructs mixed units', function (array $input, array $expected, LengthUnit $unit = LengthUnit::PIXEL_UNIT) {
-    $margin = app()->make(Margin::class, ['margin' => $input, 'unit' => $unit]);
-
-    expect($margin->allRaw())->toEqual($expected);
+it('constructs mixed units', function (array $input, array $expected, LengthUnit $unit = null) {
+    expect((new Margin($input, $unit))->allRaw())->toEqual($expected);
 })->with([
     'cm,in,pt,pc' => [
         'input' => ['1 cm', '1 in', '1 pt', '1 pc'],
@@ -60,13 +59,12 @@ it('constructs mixed units', function (array $input, array $expected, LengthUnit
             'marginBottom' => 1.3333,
             'marginLeft' => 16,
         ],
+        'unit' => LengthUnit::PIXEL_UNIT,
     ],
 ]);
 
 it('converts', function (array $input, array $expected, LengthUnit $unit, LengthUnit $outputUnit) {
-    $margin = app()->make(Margin::class, ['margin' => $input, 'unit' => $unit]);
-
-    expect($margin->allRawIn($outputUnit))->toEqual($expected);
+    expect((new Margin($input, $unit))->allRawIn($outputUnit))->toEqual($expected);
 })->with([
     'pc -> pc' => [
         'input' => [1],

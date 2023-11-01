@@ -2,6 +2,7 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
+use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
@@ -10,8 +11,14 @@ class PhpInterpolator implements InterpolatorContract
 {
     public const NAME = 'PHP';
 
-    public function interpolate(Html $template, Table $table, int $perPage = null): Html
+    public function __construct(protected ?Config $config = null)
     {
+    }
+
+    public function interpolate(Html $template, Table $table, int $perPage = null, Config $config = null): Html
+    {
+        $this->config = $config ?? $this->config;
+
         $body = '';
         foreach ($table as $i => $rowData) {
             $body .= $this->render($template, $rowData);

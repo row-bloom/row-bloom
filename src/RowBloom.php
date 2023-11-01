@@ -59,7 +59,7 @@ class RowBloom
         $finaleTemplate = $this->template();
         $finalCss = $this->css();
 
-        $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable, $this->options->perPage);
+        $interpolatedTemplate = $interpolator->interpolate($finaleTemplate, $finalTable, $this->options->perPage, $this->config);
 
         return $renderer->render($interpolatedTemplate, $finalCss, $this->options, $this->config);
     }
@@ -120,7 +120,7 @@ class RowBloom
             $dataLoader = $this->dataLoaderFactory->makeFromPath($tablePath->path);
         }
 
-        return $dataLoader->getTable(File::fromPath($tablePath->path));
+        return $dataLoader->getTable(File::fromPath($tablePath->path), $this->config);
     }
 
     private function template(): Html

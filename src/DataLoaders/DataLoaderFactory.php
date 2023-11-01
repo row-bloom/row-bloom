@@ -21,6 +21,7 @@ final class DataLoaderFactory extends BaseDriverFactory
         return app()->make($className);
     }
 
+    // TODO: TablePath
     public function makeFromPath(File|string $file): DataLoaderContract
     {
         $file = $file instanceof File ? $file : File::fromPath($file);

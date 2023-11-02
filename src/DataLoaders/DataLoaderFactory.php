@@ -22,9 +22,13 @@ final class DataLoaderFactory extends BaseDriverFactory
         return app()->make($className);
     }
 
+    // TODO: make it possible to distinguish Location required capabilities (http, file IO...)
     public function makeFromLocation(TableLocation $tableLocation): DataLoaderContract
     {
-        // TODO: check ->driver
+        if(!is_null($tableLocation->driver)) {
+            return $this->make($tableLocation->driver);
+        }
+
         $file = $tableLocation->getFile();
 
         $driver = match (true) {

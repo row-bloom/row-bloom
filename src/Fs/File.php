@@ -121,6 +121,7 @@ class File implements Stringable
         return strtolower(pathinfo($this->path, PATHINFO_EXTENSION));
     }
 
+    /** @return string[] */
     public function ls(): array
     {
         if (! $this->exists()) {
@@ -128,7 +129,7 @@ class File implements Stringable
         }
 
         if ($this->isFile()) {
-            return [realpath($this->path)];
+            return [$this->realPath()];
         }
 
         $folderContent = scandir($this->path);
@@ -141,6 +142,17 @@ class File implements Stringable
             fn ($f) => $this->path.'/'.$f,
             array_diff($folderContent, ['..', '.'])
         );
+    }
+
+    public function realPath(): string
+    {
+        $realPath = realpath($this->path);
+
+        if ($realPath === false) {
+            throw new FsException("Cannot resolve real path for '{$this->path}'.");
+        }
+
+        return $realPath;
     }
 
     // ============================================================

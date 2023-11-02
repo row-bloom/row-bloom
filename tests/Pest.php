@@ -3,6 +3,7 @@
 use Mockery\Mock;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomServiceProvider;
+use RowBloom\RowBloom\Types\TableLocation;
 
 app()->make(RowBloomServiceProvider::class)->register();
 app()->make(RowBloomServiceProvider::class)->boot();
@@ -65,4 +66,14 @@ function mockJsonFile(): File|Mock
     $file->shouldReceive('mustBeExtension')->andReturns($file);
 
     return $file;
+}
+
+function mockJsonTableLocation(): TableLocation|Mock
+{
+    /** @var TableLocation|Mock */
+    $location = Mockery::mock(TableLocation::class);
+
+    $location->shouldReceive('getFile')->andReturns(mockJsonFile());
+
+    return $location;
 }

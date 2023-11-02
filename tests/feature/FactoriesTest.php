@@ -9,13 +9,14 @@ use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\RowBloomException;
+use RowBloom\RowBloom\Types\TableLocation;
 
-test('DataLoaderFactory::makeFromPath')
-    ->expect(app()->make(DataLoaderFactory::class)->makeFromPath(mockJsonFile()))
+test('DataLoaderFactory::makeFromLocation')
+    ->expect(app()->make(DataLoaderFactory::class)->makeFromLocation(mockJsonTableLocation()))
     ->toBeInstanceOf(JsonDataLoader::class);
 
-it('DataLoaderFactory::makeFromPath unsupported extension')
-    ->expect(fn () => app()->make(DataLoaderFactory::class)->makeFromPath(__FILE__))
+it('DataLoaderFactory::makeFromLocation unsupported extension')
+    ->expect(fn () => app()->make(DataLoaderFactory::class)->makeFromLocation(TableLocation::make(__FILE__)))
     ->throws(RowBloomException::class);
 
 it('makes', function (BaseDriverFactory $factory, string $driverName, string $instanceOf) {

@@ -11,7 +11,7 @@ use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
-use RowBloom\RowBloom\Types\TablePath;
+use RowBloom\RowBloom\Types\TableLocation;
 
 class RowBloom
 {
@@ -19,7 +19,7 @@ class RowBloom
 
     private RendererContract|string $renderer;
 
-    /** @var (Table|TablePath)[] */
+    /** @var (Table|TableLocation)[] */
     private array $tables = [];
 
     private Html|File|null $template = null;
@@ -103,24 +103,24 @@ class RowBloom
         foreach ($this->tables as $table) {
             $finalTable->append(match (true) {
                 $table instanceof Table => $table,
-                $table instanceof TablePath => $this->tableFromPath($table),
+                $table instanceof TableLocation => $this->tableFromLocation($table),
             });
         }
 
         return $finalTable;
     }
 
-    private function tableFromPath(TablePath $tablePath): Table
+    private function tableFromLocation(TableLocation $tableLocation): Table
     {
         $dataLoader = null;
 
-        if ($tablePath->driver) {
-            $dataLoader = $this->dataLoaderFactory->make($tablePath->driver);
+        if ($tableLocation->driver) {
+            $dataLoader = $this->dataLoaderFactory->make($tableLocation->driver);
         } else {
-            $dataLoader = $this->dataLoaderFactory->makeFromPath($tablePath->path);
+            $dataLoader = $this->dataLoaderFactory->makeFromLocation($tableLocation);
         }
 
-        return $dataLoader->getTable(File::fromPath($tablePath->path), $this->config);
+        return $dataLoader->getTable($tableLocation, $this->config);
     }
 
     private function template(): Html
@@ -178,11 +178,11 @@ class RowBloom
         return $this;
     }
 
-    public function addTablePath(TablePath|string $tablePath): static
+    public function addTableLocation(TableLocation|string $tableLocation): static
     {
         $this->tables[] = match (true) {
-            $tablePath instanceof TablePath => $tablePath,
-            is_string($tablePath) => TablePath::fromPath($tablePath),
+            $tableLocation instanceof TableLocation => $tableLocation,
+            is_string($tableLocation) => TableLocation::make($tableLocation),
         };
 
         return $this;
@@ -259,10 +259,10 @@ class RowBloom
                 'template' => $this->setTemplate($value),
                 'templatePath', 'template_path' => $this->setTemplatePath($value),
                 'table' => $this->addTable($value),
-                'tablePath', 'table_path' => $this->addTablePath($value),
+                'tableLocation', 'table_location' => $this->addTableLocation($value),
                 'css' => $this->addCss($value),
                 'cssPath', 'css_path' => $this->addCssPath($value),
-                // ? add many (tables, tablePaths, css, cssPaths)
+                // ? add many (tables, tableLocations, css, cssPaths)
                 'interpolator' => $this->setInterpolator($value),
                 'renderer' => $this->setRenderer($value),
                 'options' => $this->options->setFromArray($value),

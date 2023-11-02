@@ -1,6 +1,8 @@
 <?php
 
+use Mockery\Mock;
 use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
+use RowBloom\RowBloom\Types\TableLocation;
 
 it('parses', function () {
     $file = mockJsonFile();
@@ -16,7 +18,12 @@ it('parses', function () {
         }
     ]');
 
-    expect((new JsonDataLoader)->getTable($file)->toArray())->toEqual([
+    /** @var TableLocation|Mock */
+    $location = Mockery::mock(TableLocation::class);
+
+    $location->shouldReceive('getFile')->andReturns($file);
+
+    expect((new JsonDataLoader)->getTable($location)->toArray())->toEqual([
         ['a' => '2', 'b' => '2'],
         ['a' => '3', 'b' => '3'],
     ]);

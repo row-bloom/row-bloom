@@ -3,8 +3,8 @@
 namespace RowBloom\RowBloom\DataLoaders;
 
 use RowBloom\RowBloom\Config;
-use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Types\Table;
+use RowBloom\RowBloom\Types\TableLocation;
 
 class FolderDataLoader implements DataLoaderContract
 {
@@ -16,17 +16,20 @@ class FolderDataLoader implements DataLoaderContract
     ) {
     }
 
-    public function getTable(File $file, Config $config = null): Table
+    public function getTable(TableLocation $tableLocation, Config $config = null): Table
     {
         $this->config = $config ?? $this->config;
 
+        $file = $tableLocation->getFile();
         $file->mustExist()->mustBeReadable()->mustBeDir();
 
         $table = Table::fromArray([]);
 
         foreach ($file->ls() as $path) {
+            $path = TableLocation::make($path);
+
             $table->append(
-                $this->dataLoaderFactory->makeFromPath($path)->getTable($path, $config)
+                $this->dataLoaderFactory->makeFromLocation($path)->getTable($path, $config)
             );
         }
 

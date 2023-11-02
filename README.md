@@ -96,7 +96,7 @@ After finishing the fluent build, the execution goes through three main steps:
 
 ### Data
 
-Provide data using `addTable` or `addTablePath` (A driver will be picked automatically for each table path).
+Provide data using `addTable` or `addTableLocation` (A driver will be picked automatically for each table path).
 
 Available drivers:
 

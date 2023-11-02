@@ -39,26 +39,9 @@ class File implements Stringable
     // IO
     // ============================================================
 
-    public function ls(): array
+    public function touch(): bool
     {
-        if (! $this->exists()) {
-            throw new FsException("Cannot find path {$this->path} because it does not exist.");
-        }
-
-        if ($this->isFile()) {
-            return [realpath($this->path)];
-        }
-
-        $folderContent = scandir($this->path);
-
-        if ($folderContent === false) {
-            throw new FsException("Cannot scan folder content of {$this->path}.");
-        }
-
-        return array_map(
-            fn ($f) => $this->path.'/'.$f,
-            array_diff($folderContent, ['..', '.'])
-        );
+        return touch($this->path);
     }
 
     public function readFileContent(): ?string
@@ -96,7 +79,7 @@ class File implements Stringable
     // ? delete()
 
     // ============================================================
-    //
+    // Assertions
     // ============================================================
 
     public function exists(): bool
@@ -124,6 +107,10 @@ class File implements Stringable
         return is_writable($this->path);
     }
 
+    // ============================================================
+    // Info
+    // ============================================================
+
     public function dir(): string
     {
         return dirname($this->path);
@@ -134,9 +121,26 @@ class File implements Stringable
         return strtolower(pathinfo($this->path, PATHINFO_EXTENSION));
     }
 
-    public function touch(): bool
+    public function ls(): array
     {
-        return touch($this->path);
+        if (! $this->exists()) {
+            throw new FsException("Cannot find path {$this->path} because it does not exist.");
+        }
+
+        if ($this->isFile()) {
+            return [realpath($this->path)];
+        }
+
+        $folderContent = scandir($this->path);
+
+        if ($folderContent === false) {
+            throw new FsException("Cannot scan folder content of {$this->path}.");
+        }
+
+        return array_map(
+            fn ($f) => $this->path.'/'.$f,
+            array_diff($folderContent, ['..', '.'])
+        );
     }
 
     // ============================================================

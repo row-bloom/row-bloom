@@ -3,9 +3,9 @@
 namespace RowBloom\RowBloom\DataLoaders;
 
 use RowBloom\RowBloom\Config;
-use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Table;
+use RowBloom\RowBloom\Types\TableLocation;
 
 class JsonDataLoader implements DataLoaderContract
 {
@@ -15,10 +15,11 @@ class JsonDataLoader implements DataLoaderContract
     {
     }
 
-    public function getTable(File $file, Config $config = null): Table
+    public function getTable(TableLocation $tableLocation, Config $config = null): Table
     {
         $this->config = $config ?? $this->config;
 
+        $file = $tableLocation->getFile();
         $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('json');
 
         $data = json_decode($file->readFileContent(), true);

@@ -5,6 +5,7 @@ namespace RowBloom\RowBloom\DataLoaders;
 use RowBloom\RowBloom\BaseDriverFactory;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
+use RowBloom\RowBloom\Types\TableLocation;
 
 final class DataLoaderFactory extends BaseDriverFactory
 {
@@ -21,10 +22,10 @@ final class DataLoaderFactory extends BaseDriverFactory
         return app()->make($className);
     }
 
-    // TODO: TablePath
-    public function makeFromPath(File|string $file): DataLoaderContract
+    public function makeFromLocation(TableLocation $tableLocation): DataLoaderContract
     {
-        $file = $file instanceof File ? $file : File::fromPath($file);
+        // TODO: check ->driver
+        $file = $tableLocation->getFile();
 
         $driver = match (true) {
             $file->exists() => $this->resolveFsDriver($file),

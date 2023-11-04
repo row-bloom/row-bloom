@@ -2,6 +2,18 @@
 
 All notable changes to `row-bloom` will be documented in this file.
 
+## v0.4.0-beta - 2023-11-04
+
+### What's Changed
+
+- 25 enhance resolving data collector from path by @medilies in https://github.com/row-bloom/row-bloom/pull/28
+- 30 config and options setters by @medilies in https://github.com/row-bloom/row-bloom/pull/31
+- 29 rowbloomsetfromarray all in one go by @medilies in https://github.com/row-bloom/row-bloom/pull/32
+- Config on all components by @medilies in https://github.com/row-bloom/row-bloom/pull/35
+- 36 dataloader general data source tablelocation instead of tablepath by @medilies in https://github.com/row-bloom/row-bloom/pull/37
+
+**Full Changelog**: https://github.com/row-bloom/row-bloom/compare/v0.3.0...v0.4.0-beta
+
 ## v0.3.0 - 2023-10-26
 
 ### What's Changed

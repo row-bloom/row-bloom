@@ -22,8 +22,11 @@ class DataLoaderFactory extends BaseDriverFactory
         return app()->make($className);
     }
 
-    public function makeFromLocation(TableLocation $tableLocation): DataLoaderContract
+    public function makeFromLocation(TableLocation|string $tableLocation): DataLoaderContract
     {
+        $tableLocation = $tableLocation instanceof TableLocation ? $tableLocation :
+            TableLocation::make($tableLocation);
+
         if (isset($tableLocation->driver)) {
             return $this->make($tableLocation->driver);
         }

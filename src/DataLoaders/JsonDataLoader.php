@@ -7,7 +7,7 @@ use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Table;
 use RowBloom\RowBloom\Types\TableLocation;
 
-class JsonDataLoader implements DataLoaderContract
+class JsonDataLoader implements FsDataLoaderContract
 {
     public const NAME = 'JSON';
 
@@ -36,5 +36,10 @@ class JsonDataLoader implements DataLoaderContract
         return [
             'json' => 100,
         ];
+    }
+
+    public static function getFolderSupport(): ?int
+    {
+        return null;
     }
 }

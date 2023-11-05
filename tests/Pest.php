@@ -5,16 +5,16 @@ use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomServiceProvider;
 use RowBloom\RowBloom\Types\TableLocation;
 
-app()->make(RowBloomServiceProvider::class)->register();
-app()->make(RowBloomServiceProvider::class)->boot();
+app()->get(RowBloomServiceProvider::class)->register();
+app()->get(RowBloomServiceProvider::class)->boot();
 
 uses()
     ->beforeEach(function () {
         // app()->forgetInstances();
         Mockery::close();
 
-        app()->make(RowBloomServiceProvider::class)->register();
-        app()->make(RowBloomServiceProvider::class)->boot();
+        app()->get(RowBloomServiceProvider::class)->register();
+        app()->get(RowBloomServiceProvider::class)->boot();
     })
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';

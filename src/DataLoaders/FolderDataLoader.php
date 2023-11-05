@@ -6,7 +6,7 @@ use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\Types\Table;
 use RowBloom\RowBloom\Types\TableLocation;
 
-class FolderDataLoader implements DataLoaderContract
+class FolderDataLoader implements FsDataLoaderContract
 {
     public const NAME = 'Folder';
 
@@ -39,5 +39,10 @@ class FolderDataLoader implements DataLoaderContract
     public static function getSupportedFileExtensions(): array
     {
         return [];
+    }
+
+    public static function getFolderSupport(): ?int
+    {
+        return 100;
     }
 }

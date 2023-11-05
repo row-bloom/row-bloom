@@ -3,6 +3,7 @@
 namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\DataLoaders\DataLoaderContract;
+use RowBloom\RowBloom\DataLoaders\FsDataLoaderContract;
 use RowBloom\RowBloom\Interpolators\InterpolatorContract;
 use RowBloom\RowBloom\Renderers\RendererContract;
 use RowBloom\RowBloom\Utils\ValidateDriverConcern;
@@ -21,9 +22,12 @@ class Support
     private array $rendererDrivers = [];
 
     /** @var array<string, array<string, int>> */
-    private array $supportedTableFileExtensions = [];
+    private array $fileExtensionDriversMap = [];
 
-    // ? add map extension => user fav driver (checked before $supportedTableFileExtensions)
+    /** @var array<string, int> */
+    private array $folderDriversList = [];
+
+    // ? add map extension => user fav driver (checked before $fileExtensionDriversMap)
 
     // --------------------------------------------
 
@@ -33,14 +37,11 @@ class Support
 
         $this->DataLoaderDrivers[$driverName] = $className;
 
-        /** @var string $fileExtension */
-        foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
-            if (! array_key_exists($fileExtension, $this->supportedTableFileExtensions)) {
-                $this->supportedTableFileExtensions[$fileExtension] = [$className => $priority];
-            }
-
-            $this->supportedTableFileExtensions[$fileExtension][$className] = $priority;
-            asort($this->supportedTableFileExtensions[$fileExtension]);
+        foreach ((class_implements($className) ?: []) as $contract) {
+            match ($contract) {
+                FsDataLoaderContract::class => $this->registerFsDataLoaderDriver($className),
+                default => null,
+            };
         }
 
         return $this;
@@ -56,11 +57,15 @@ class Support
 
         unset($this->DataLoaderDrivers[$driverName]);
 
-        foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
-            unset($this->supportedTableFileExtensions[$fileExtension][$className]);
+        if (is_null($className::getFolderSupport())) {
+            unset($this->folderDriversList[$className]);
+        }
 
-            if (count($this->supportedTableFileExtensions[$fileExtension]) === 0) {
-                unset($this->supportedTableFileExtensions[$fileExtension]);
+        foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
+            unset($this->fileExtensionDriversMap[$fileExtension][$className]);
+
+            if (count($this->fileExtensionDriversMap[$fileExtension]) === 0) {
+                unset($this->fileExtensionDriversMap[$fileExtension]);
             }
         }
 
@@ -85,16 +90,45 @@ class Support
     /** @return array<string, true> */
     public function getSupportedTableFileExtensions(): array
     {
-        return array_fill_keys(array_keys($this->supportedTableFileExtensions), true);
+        return array_fill_keys(array_keys($this->fileExtensionDriversMap), true);
     }
 
     public function getFileExtensionDataLoaderDriver(string $extension): ?string
     {
-        if (! array_key_exists($extension, $this->supportedTableFileExtensions)) {
+        if (! array_key_exists($extension, $this->fileExtensionDriversMap)) {
             return null;
         }
 
-        return array_key_last($this->supportedTableFileExtensions[$extension]);
+        return array_key_last($this->fileExtensionDriversMap[$extension]);
+    }
+
+    public function getFolderDataLoaderDriver(): ?string
+    {
+        if (count($this->folderDriversList) === 0) {
+            return null;
+        }
+
+        return array_key_last($this->folderDriversList);
+    }
+
+    private function registerFsDataLoaderDriver(string $className): void
+    {
+        /** @var string $fileExtension */
+        foreach ($className::getSupportedFileExtensions() as $fileExtension => $priority) {
+            if (! array_key_exists($fileExtension, $this->fileExtensionDriversMap)) {
+                $this->fileExtensionDriversMap[$fileExtension] = [$className => $priority];
+            }
+
+            $this->fileExtensionDriversMap[$fileExtension][$className] = $priority;
+            asort($this->fileExtensionDriversMap[$fileExtension]);
+        }
+
+        if (is_null($className::getFolderSupport())) {
+            return;
+        }
+
+        $this->folderDriversList[$className] = $className::getFolderSupport();
+        asort($this->folderDriversList);
     }
 
     // --------------------------------------------

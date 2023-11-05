@@ -2,10 +2,6 @@
 
 namespace RowBloom\RowBloom\DataLoaders;
 
-use RowBloom\RowBloom\Config;
-use RowBloom\RowBloom\Types\Table;
-use RowBloom\RowBloom\Types\TableLocation;
-
 interface FsDataLoaderContract extends DataLoaderContract
 {
     /**

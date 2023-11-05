@@ -11,9 +11,13 @@ use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\TableLocation;
 
-test('DataLoaderFactory::makeFromLocation')
+test('DataLoaderFactory::makeFromLocation: Json')
     ->expect(app()->make(DataLoaderFactory::class)->makeFromLocation(mockJsonTableLocation()))
     ->toBeInstanceOf(JsonDataLoader::class);
+
+test('DataLoaderFactory::makeFromLocation: Folder')
+    ->expect(app()->make(DataLoaderFactory::class)->makeFromLocation(TableLocation::make(__DIR__)))
+    ->toBeInstanceOf(FolderDataLoader::class);
 
 it('DataLoaderFactory::makeFromLocation unsupported extension')
     ->expect(fn () => app()->make(DataLoaderFactory::class)->makeFromLocation(TableLocation::make(__FILE__)))

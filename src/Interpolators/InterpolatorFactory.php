@@ -2,7 +2,6 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
-use Illuminate\Container\Container;
 use RowBloom\RowBloom\BaseDriverFactory;
 
 final class InterpolatorFactory extends BaseDriverFactory

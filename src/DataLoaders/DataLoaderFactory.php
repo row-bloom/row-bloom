@@ -2,7 +2,6 @@
 
 namespace RowBloom\RowBloom\DataLoaders;
 
-use Illuminate\Container\Container;
 use RowBloom\RowBloom\BaseDriverFactory;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;

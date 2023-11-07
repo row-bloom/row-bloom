@@ -2,7 +2,6 @@
 
 namespace RowBloom\RowBloom\Renderers;
 
-use Illuminate\Container\Container;
 use RowBloom\RowBloom\BaseDriverFactory;
 
 final class RendererFactory extends BaseDriverFactory

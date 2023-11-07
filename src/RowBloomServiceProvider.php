@@ -13,18 +13,22 @@ use RowBloom\RowBloom\Renderers\RendererFactory;
 
 class RowBloomServiceProvider
 {
+    public function __construct(protected Container $container)
+    {
+    }
+
     public function register(): void
     {
-        Container::getInstance()->singleton(DataLoaderFactory::class, DataLoaderFactory::class);
-        Container::getInstance()->singleton(InterpolatorFactory::class, InterpolatorFactory::class);
-        Container::getInstance()->singleton(RendererFactory::class, RendererFactory::class);
-        Container::getInstance()->singleton(Support::class, Support::class);
+        $this->container->singleton(Support::class);
+        $this->container->singleton(DataLoaderFactory::class);
+        $this->container->singleton(InterpolatorFactory::class);
+        $this->container->singleton(RendererFactory::class);
     }
 
     public function boot(): void
     {
         /** @var Support */
-        $support = Container::getInstance()->get(Support::class);
+        $support = $this->container->get(Support::class);
 
         $support->registerDataLoaderDriver(FolderDataLoader::NAME, FolderDataLoader::class)
             ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class);

@@ -6,16 +6,18 @@ use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomServiceProvider;
 use RowBloom\RowBloom\Types\TableLocation;
 
-Container::getInstance()->get(RowBloomServiceProvider::class)->register();
-Container::getInstance()->get(RowBloomServiceProvider::class)->boot();
+$sp = new RowBloomServiceProvider(Container::getInstance());
+$sp->register();
+$sp->boot();
 
 uses()
-    ->beforeEach(function () {
+    ->beforeEach(function () use ($sp) {
         // Container::getInstance()->forgetInstances();
-        Mockery::close();
 
-        Container::getInstance()->get(RowBloomServiceProvider::class)->register();
-        Container::getInstance()->get(RowBloomServiceProvider::class)->boot();
+        $sp->register();
+        $sp->boot();
+
+        Mockery::close();
     })
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';

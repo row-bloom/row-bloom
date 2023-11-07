@@ -1,20 +1,21 @@
 <?php
 
+use Illuminate\Container\Container;
 use Mockery\Mock;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomServiceProvider;
 use RowBloom\RowBloom\Types\TableLocation;
 
-app()->get(RowBloomServiceProvider::class)->register();
-app()->get(RowBloomServiceProvider::class)->boot();
+Container::getInstance()->get(RowBloomServiceProvider::class)->register();
+Container::getInstance()->get(RowBloomServiceProvider::class)->boot();
 
 uses()
     ->beforeEach(function () {
-        // app()->forgetInstances();
+        // Container::getInstance()->forgetInstances();
         Mockery::close();
 
-        app()->get(RowBloomServiceProvider::class)->register();
-        app()->get(RowBloomServiceProvider::class)->boot();
+        Container::getInstance()->get(RowBloomServiceProvider::class)->register();
+        Container::getInstance()->get(RowBloomServiceProvider::class)->boot();
     })
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';

@@ -2,6 +2,7 @@
 
 namespace RowBloom\RowBloom\Interpolators;
 
+use Illuminate\Container\Container;
 use RowBloom\RowBloom\BaseDriverFactory;
 
 final class InterpolatorFactory extends BaseDriverFactory
@@ -16,6 +17,6 @@ final class InterpolatorFactory extends BaseDriverFactory
 
         $this->validateContract($className, InterpolatorContract::class);
 
-        return app()->make($className);
+        return $this->container->get($className);
     }
 }

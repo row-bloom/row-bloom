@@ -2,6 +2,7 @@
 
 namespace RowBloom\RowBloom;
 
+use Illuminate\Container\Container;
 use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
 use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
 use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
@@ -14,16 +15,16 @@ class RowBloomServiceProvider
 {
     public function register(): void
     {
-        app()->singleton(DataLoaderFactory::class, DataLoaderFactory::class);
-        app()->singleton(InterpolatorFactory::class, InterpolatorFactory::class);
-        app()->singleton(RendererFactory::class, RendererFactory::class);
-        app()->singleton(Support::class, Support::class);
+        Container::getInstance()->singleton(DataLoaderFactory::class, DataLoaderFactory::class);
+        Container::getInstance()->singleton(InterpolatorFactory::class, InterpolatorFactory::class);
+        Container::getInstance()->singleton(RendererFactory::class, RendererFactory::class);
+        Container::getInstance()->singleton(Support::class, Support::class);
     }
 
     public function boot(): void
     {
         /** @var Support */
-        $support = app()->get(Support::class);
+        $support = Container::getInstance()->get(Support::class);
 
         $support->registerDataLoaderDriver(FolderDataLoader::NAME, FolderDataLoader::class)
             ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class);

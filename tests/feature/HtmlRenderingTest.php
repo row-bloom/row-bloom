@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Container\Container;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\RowBloom;
@@ -16,11 +17,11 @@ test('Basic html output', function (RowBloom $r, $css, $template, $table) {
     expect($r->get())->toBeString()->toContain('ilies', 'mohamed');
 })
     ->with([
-        'Default' => app()->make(RowBloom::class),
-        'HTML render by name' => (app()->make(RowBloom::class))
+        'Default' => Container::getInstance()->get(RowBloom::class),
+        'HTML render by name' => (Container::getInstance()->get(RowBloom::class))
             ->setRenderer(HtmlRenderer::NAME),
-        'HTML renderer by class' => (app()->make(RowBloom::class))
-            ->setRenderer(app()->make(HtmlRenderer::class)),
+        'HTML renderer by class' => (Container::getInstance()->get(RowBloom::class))
+            ->setRenderer(Container::getInstance()->get(HtmlRenderer::class)),
     ])
     ->with([
         'primitives' => [
@@ -36,7 +37,7 @@ test('Basic html output', function (RowBloom $r, $css, $template, $table) {
     ]);
 
 test('setFromArray()')
-    ->expect(app()->make(RowBloom::class)->setFromArray([
+    ->expect(Container::getInstance()->get(RowBloom::class)->setFromArray([
         'renderer' => 'HTML',
         'interpolator' => 'PHP',
         'css' => '',

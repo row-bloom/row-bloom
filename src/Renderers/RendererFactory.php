@@ -2,6 +2,7 @@
 
 namespace RowBloom\RowBloom\Renderers;
 
+use Illuminate\Container\Container;
 use RowBloom\RowBloom\BaseDriverFactory;
 
 final class RendererFactory extends BaseDriverFactory
@@ -16,6 +17,6 @@ final class RendererFactory extends BaseDriverFactory
 
         $this->validateContract($className, RendererContract::class);
 
-        return app()->make($className);
+        return $this->container->get($className);
     }
 }

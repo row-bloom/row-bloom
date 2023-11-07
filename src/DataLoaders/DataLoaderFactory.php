@@ -2,6 +2,7 @@
 
 namespace RowBloom\RowBloom\DataLoaders;
 
+use Illuminate\Container\Container;
 use RowBloom\RowBloom\BaseDriverFactory;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
@@ -19,7 +20,7 @@ class DataLoaderFactory extends BaseDriverFactory
 
         $this->validateContract($className, DataLoaderContract::class);
 
-        return app()->make($className);
+        return $this->container->get($className);
     }
 
     public function makeFromLocation(TableLocation|string $tableLocation): DataLoaderContract

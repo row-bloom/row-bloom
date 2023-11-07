@@ -2,6 +2,7 @@
 
 namespace RowBloom\RowBloom\Tests\feature\SupportTest;
 
+use Illuminate\Container\Container;
 use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\HtmlRenderer;
@@ -9,7 +10,7 @@ use RowBloom\RowBloom\Support;
 
 it('lists capabilities', function () {
     /** @var Support */
-    $support = app()->get(Support::class);
+    $support = Container::getInstance()->get(Support::class);
 
     expect($support->getSupportedTableFileExtensions())
         ->toHaveKeys(['json']);
@@ -35,7 +36,7 @@ it('lists capabilities', function () {
 
 it('remove and register data loader', function () {
     /** @var Support */
-    $support = app()->get(Support::class);
+    $support = Container::getInstance()->get(Support::class);
 
     $support->removeDataLoaderDriver(JsonDataLoader::NAME);
 
@@ -51,7 +52,7 @@ it('remove and register data loader', function () {
 
 it('picks json data loader based on priority', function () {
     /** @var Support */
-    $support = app()->get(Support::class);
+    $support = Container::getInstance()->get(Support::class);
 
     $support->removeDataLoaderDriver(JsonDataLoader::NAME);
     expect($support->getFileExtensionDataLoaderDriver('json'))->toBeNull();

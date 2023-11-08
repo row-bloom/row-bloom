@@ -6,13 +6,15 @@ use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomServiceProvider;
 use RowBloom\RowBloom\Types\TableLocation;
 
-$sp = new RowBloomServiceProvider(Container::getInstance());
+Container::getInstance()->singleton(Container::class, fn () => Container::getInstance());
+$sp = Container::getInstance()->get(RowBloomServiceProvider::class);
 $sp->register();
 $sp->boot();
 
 uses()
-    ->beforeEach(function () use ($sp) {
-        // Container::getInstance()->forgetInstances();
+->beforeEach(function () use ($sp) {
+        Container::getInstance()->flush();
+        Container::getInstance()->singleton(Container::class, fn () => Container::getInstance());
 
         $sp->register();
         $sp->boot();

@@ -3,6 +3,7 @@
 namespace RowBloom\RowBloom;
 
 use Illuminate\Container\Container;
+use Psr\Container\ContainerInterface;
 use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
 use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
 use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
@@ -13,12 +14,18 @@ use RowBloom\RowBloom\Renderers\RendererFactory;
 
 class RowBloomServiceProvider
 {
-    public function __construct(protected Container $container)
+    /**
+     * @param ContainerInterface&(Container) $container
+     */
+    public function __construct(protected ContainerInterface $container)
     {
     }
 
     public function register(): void
     {
+        $this->container->singleton(Container::class, fn () => $this->container);
+        $this->container->singleton(ContainerInterface::class, fn () => $this->container);
+
         $this->container->singleton(Support::class);
         $this->container->singleton(DataLoaderFactory::class);
         $this->container->singleton(InterpolatorFactory::class);

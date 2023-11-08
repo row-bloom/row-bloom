@@ -2,14 +2,14 @@
 
 namespace RowBloom\RowBloom;
 
-use Illuminate\Container\Container;
+use Psr\Container\ContainerInterface;
 use RowBloom\RowBloom\Utils\ValidateDriverConcern;
 
 abstract class BaseDriverFactory
 {
     use ValidateDriverConcern;
 
-    public function __construct(protected Container $container, protected Support $support)
+    public function __construct(protected ContainerInterface $container, protected Support $support)
     {
     }
 

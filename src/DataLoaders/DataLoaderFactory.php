@@ -19,7 +19,7 @@ class DataLoaderFactory extends BaseDriverFactory
 
         $this->validateContract($className, DataLoaderContract::class);
 
-        return $this->container->get($className);
+        return $this->instantiate($className);
     }
 
     public function makeFromLocation(TableLocation|string $tableLocation): DataLoaderContract

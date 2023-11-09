@@ -16,6 +16,6 @@ final class InterpolatorFactory extends BaseDriverFactory
 
         $this->validateContract($className, InterpolatorContract::class);
 
-        return $this->container->get($className);
+        return $this->instantiate($className);
     }
 }

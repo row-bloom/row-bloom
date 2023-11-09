@@ -16,6 +16,6 @@ final class RendererFactory extends BaseDriverFactory
 
         $this->validateContract($className, RendererContract::class);
 
-        return $this->container->get($className);
+        return $this->instantiate($className);
     }
 }

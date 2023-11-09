@@ -30,11 +30,11 @@ it('makes', function (BaseDriverFactory $factory, string $driverName, string $in
         'driverName' => JsonDataLoader::NAME,
         'instanceOf' => JsonDataLoader::class,
     ],
-    // [
-    //     'factory' => new DataLoaderFactory(defaultSupport()),
-    //     'driverName' => FolderDataLoader::class,
-    //     'instanceOf' => FolderDataLoader::class,
-    // ],
+    [
+        'factory' => new DataLoaderFactory(defaultSupport()),
+        'driverName' => FolderDataLoader::class,
+        'instanceOf' => FolderDataLoader::class,
+    ],
     [
         'factory' => new InterpolatorFactory(defaultSupport()),
         'driverName' => PhpInterpolator::NAME,

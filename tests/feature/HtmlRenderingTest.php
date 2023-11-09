@@ -8,17 +8,18 @@ use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
 
 test('Basic html output', function (RowBloom $r, $css, $template, $table) {
-    $r->setInterpolator(PhpInterpolator::NAME)
+    $renderingString = $r->setInterpolator(PhpInterpolator::NAME)
         ->addCss($css)
         ->setTemplate($template)
-        ->addTable($table);
+        ->addTable($table)
+        ->get();
 
-    expect($r->get())->toBeString()->toContain('ilies', 'mohamed');
+    expect($renderingString)->toBeString()->toContain('ilies', 'mohamed');
 })
     ->with([
-        'HTML render by name' => defaultRowBloom(),
         'HTML render by name' => defaultRowBloom()->setRenderer(HtmlRenderer::NAME),
-        'HTML renderer by class' => defaultRowBloom()->setRenderer(new HtmlRenderer),
+        'HTML render by class' => defaultRowBloom()->setRenderer(HtmlRenderer::class),
+        'HTML renderer by instance' => defaultRowBloom()->setRenderer(new HtmlRenderer),
     ])
     ->with([
         'primitives' => [

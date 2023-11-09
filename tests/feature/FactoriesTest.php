@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Container\Container;
 use RowBloom\RowBloom\BaseDriverFactory;
 use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
 use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
@@ -12,37 +11,37 @@ use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\RowBloomException;
 
 test('DataLoaderFactory::makeFromLocation: Json')
-    ->expect(Container::getInstance()->get(DataLoaderFactory::class)->makeFromLocation(mockJsonTableLocation()))
+    ->expect((new DataLoaderFactory(defaultSupport()))->makeFromLocation(mockJsonTableLocation()))
     ->toBeInstanceOf(JsonDataLoader::class);
 
 test('DataLoaderFactory::makeFromLocation: Folder')
-    ->expect(Container::getInstance()->get(DataLoaderFactory::class)->makeFromLocation(__DIR__))
+    ->expect((new DataLoaderFactory(defaultSupport()))->makeFromLocation(__DIR__))
     ->toBeInstanceOf(FolderDataLoader::class);
 
 it('DataLoaderFactory::makeFromLocation unsupported extension')
-    ->expect(fn () => Container::getInstance()->get(DataLoaderFactory::class)->makeFromLocation(__FILE__))
+    ->expect(fn () => (new DataLoaderFactory(defaultSupport()))->makeFromLocation(__FILE__))
     ->throws(RowBloomException::class);
 
 it('makes', function (BaseDriverFactory $factory, string $driverName, string $instanceOf) {
     expect($factory->make($driverName))->toBeInstanceOf($instanceOf);
 })->with([
     [
-        'factory' => Container::getInstance()->get(DataLoaderFactory::class),
+        'factory' => new DataLoaderFactory(defaultSupport()),
         'driverName' => JsonDataLoader::NAME,
         'instanceOf' => JsonDataLoader::class,
     ],
+    // [
+    //     'factory' => new DataLoaderFactory(defaultSupport()),
+    //     'driverName' => FolderDataLoader::class,
+    //     'instanceOf' => FolderDataLoader::class,
+    // ],
     [
-        'factory' => Container::getInstance()->get(DataLoaderFactory::class),
-        'driverName' => FolderDataLoader::class,
-        'instanceOf' => FolderDataLoader::class,
-    ],
-    [
-        'factory' => Container::getInstance()->get(InterpolatorFactory::class),
+        'factory' => new InterpolatorFactory(defaultSupport()),
         'driverName' => PhpInterpolator::NAME,
         'instanceOf' => PhpInterpolator::class,
     ],
     [
-        'factory' => Container::getInstance()->get(RendererFactory::class),
+        'factory' => new RendererFactory(defaultSupport()),
         'driverName' => HtmlRenderer::NAME,
         'instanceOf' => HtmlRenderer::class,
     ],

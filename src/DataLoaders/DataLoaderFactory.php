@@ -51,4 +51,13 @@ class DataLoaderFactory extends BaseDriverFactory
         return $this->support->getFileExtensionDataLoaderDriver($file->extension()) ??
             throw new RowBloomException("Couldn't resolve a driver for the file '{$file}'");
     }
+
+    protected function instantiate(string $className): object
+    {
+        if ($className === FolderDataLoader::class && is_null($this->container)) {
+            return new $className($this);
+        }
+
+        return parent::instantiate($className);
+    }
 }

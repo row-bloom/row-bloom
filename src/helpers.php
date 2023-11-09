@@ -9,6 +9,7 @@ use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\RowBloom;
 use RowBloom\RowBloom\Support;
 
+/** @return array{0: RowBloom, 1: Support} */
 function rowBloom(ContainerInterface $container = null, Support $support = null, Config $defaultConfig = null, Options $defaultOptions = null): array
 {
     $support ??= new Support;

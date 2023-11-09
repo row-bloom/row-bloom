@@ -10,7 +10,7 @@ use RowBloom\RowBloom\RowBloom;
 use RowBloom\RowBloom\Support;
 
 test('Container', function () {
-    Container::getInstance()->singleton(ContainerInterface::class, fn() => Container::getInstance());
+    Container::getInstance()->singleton(ContainerInterface::class, fn () => Container::getInstance());
 
     Container::getInstance()->singleton(Support::class);
     Container::getInstance()->singleton(DataLoaderFactory::class);

@@ -16,12 +16,4 @@ abstract class BaseDriverFactory
     }
 
     abstract public function make(string $driver): object;
-
-    protected function instantiate(string $className): object
-    {
-        // TODO: pass config and $this if recursive loader
-        // ! get doesn't take params
-
-        return is_null($this->container) ? new $className : $this->container->get($className);
-    }
 }

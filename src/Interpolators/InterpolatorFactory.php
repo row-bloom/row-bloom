@@ -16,6 +16,9 @@ final class InterpolatorFactory extends BaseDriverFactory
 
         $this->validateContract($className, InterpolatorContract::class);
 
-        return $this->instantiate($className);
+        // TODO: pass config and $this if recursive loader
+        // ! get doesn't take params
+
+        return is_null($this->container) ? new $className : $this->container->get($className);
     }
 }

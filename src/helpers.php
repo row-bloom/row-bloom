@@ -8,9 +8,9 @@ use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Renderers\RendererFactory;
 use RowBloom\RowBloom\RowBloom;
 use RowBloom\RowBloom\Support;
+use RowBloom\RowBloom\Types\Context;
 
-/** @return array{0: RowBloom, 1: Support} */
-function rowBloom(ContainerInterface $container = null, Support $support = null, Config $defaultConfig = null, Options $defaultOptions = null): array
+function rowBloom(ContainerInterface $container = null, Support $support = null, Config $defaultConfig = null, Options $defaultOptions = null): Context
 {
     $support ??= new Support;
 
@@ -22,5 +22,5 @@ function rowBloom(ContainerInterface $container = null, Support $support = null,
         new DataLoaderFactory($support, $container),
     );
 
-    return [$r, $support];
+    return new Context($r, $support);
 }

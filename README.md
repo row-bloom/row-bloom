@@ -12,14 +12,23 @@ The goal is to allow the usage of any templating engine with any PDF generation 
 ![illustration](./illustration.png)
 
 ```php
-use Illuminate\Container\Container;
+use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
+use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
+use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Options;
-use RowBloom\RowBloom\RowBloom;
+use RowBloom\RowBloom\Renderers\HtmlRenderer;
+use RowBloom\RowBloom\Support;
 
-Container::getInstance()->get(RowBloom::class)
-    ->setInterpolator('PHP')
-    ->setRenderer('Chrome')
+$support = (new Support)
+    ->registerDataLoaderDriver(FolderDataLoader::NAME, FolderDataLoader::class)
+    ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class)
+    ->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class)
+    ->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class);
+
+$r = rowBloom(support: $support)->rowBloom;
+
+$r->setInterpolator('PHP')->setRenderer('Chrome')
     ->addTable([
         ['title' => 'Title1', 'body' => 'body1'],
         ['title' => 'Title2', 'body' => 'body2'],

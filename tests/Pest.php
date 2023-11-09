@@ -86,5 +86,5 @@ function defaultSupport(): Support
 
 function defaultRowBloom(): RowBloom
 {
-    return rowBloom(support: defaultSupport())[0];
+    return rowBloom(support: defaultSupport())->rowBloom;
 }

@@ -1,20 +1,18 @@
 <?php
 
 use Mockery\Mock;
+use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
+use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\Fs\File;
-use RowBloom\RowBloom\RowBloomServiceProvider;
+use RowBloom\RowBloom\Interpolators\PhpInterpolator;
+use RowBloom\RowBloom\Renderers\HtmlRenderer;
+use RowBloom\RowBloom\RowBloom;
+use RowBloom\RowBloom\Support;
 use RowBloom\RowBloom\Types\TableLocation;
-
-app()->get(RowBloomServiceProvider::class)->register();
-app()->get(RowBloomServiceProvider::class)->boot();
 
 uses()
     ->beforeEach(function () {
-        // app()->forgetInstances();
         Mockery::close();
-
-        app()->get(RowBloomServiceProvider::class)->register();
-        app()->get(RowBloomServiceProvider::class)->boot();
     })
     ->beforeAll(function () {
         $folderPath = __DIR__.'/temp';
@@ -76,4 +74,17 @@ function mockJsonTableLocation(): TableLocation|Mock
     $location->shouldReceive('getFile')->andReturns(mockJsonFile());
 
     return $location;
+}
+
+function defaultSupport(): Support
+{
+    return (new Support)->registerDataLoaderDriver(FolderDataLoader::NAME, FolderDataLoader::class)
+        ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class)
+        ->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class)
+        ->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class);
+}
+
+function defaultRowBloom(): RowBloom
+{
+    return rowBloom(support: defaultSupport())->rowBloom;
 }

@@ -8,19 +8,18 @@ use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
 
 test('Basic html output', function (RowBloom $r, $css, $template, $table) {
-    $r->setRenderer(HtmlRenderer::NAME)->setInterpolator(PhpInterpolator::NAME)
+    $renderingString = $r->setInterpolator(PhpInterpolator::NAME)
         ->addCss($css)
         ->setTemplate($template)
-        ->addTable($table);
+        ->addTable($table)
+        ->get();
 
-    expect($r->get())->toBeString()->toContain('ilies', 'mohamed');
+    expect($renderingString)->toBeString()->toContain('ilies', 'mohamed');
 })
     ->with([
-        'Default' => app()->make(RowBloom::class),
-        'HTML render by name' => (app()->make(RowBloom::class))
-            ->setRenderer(HtmlRenderer::NAME),
-        'HTML renderer by class' => (app()->make(RowBloom::class))
-            ->setRenderer(app()->make(HtmlRenderer::class)),
+        'HTML render by name' => defaultRowBloom()->setRenderer(HtmlRenderer::NAME),
+        'HTML render by class' => defaultRowBloom()->setRenderer(HtmlRenderer::class),
+        'HTML renderer by instance' => defaultRowBloom()->setRenderer(new HtmlRenderer),
     ])
     ->with([
         'primitives' => [
@@ -36,7 +35,7 @@ test('Basic html output', function (RowBloom $r, $css, $template, $table) {
     ]);
 
 test('setFromArray()')
-    ->expect(app()->make(RowBloom::class)->setFromArray([
+    ->expect(defaultRowBloom()->setFromArray([
         'renderer' => 'HTML',
         'interpolator' => 'PHP',
         'css' => '',

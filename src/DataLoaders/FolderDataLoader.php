@@ -6,15 +6,9 @@ use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\Types\Table;
 use RowBloom\RowBloom\Types\TableLocation;
 
-class FolderDataLoader implements FsDataLoaderContract
+class FolderDataLoader extends RecursiveDataLoader
 {
     public const NAME = 'Folder';
-
-    public function __construct(
-        private DataLoaderFactory $dataLoaderFactory,
-        private ?Config $config = null
-    ) {
-    }
 
     public function getTable(TableLocation $tableLocation, Config $config = null): Table
     {
@@ -29,7 +23,7 @@ class FolderDataLoader implements FsDataLoaderContract
             $path = TableLocation::make($path);
 
             $table->append(
-                $this->dataLoaderFactory->makeFromLocation($path)->getTable($path, $config)
+                $this->getFactory()->makeFromLocation($path)->getTable($path, $config)
             );
         }
 

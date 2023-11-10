@@ -12,19 +12,19 @@ The goal is to allow the usage of any templating engine with any PDF generation 
 ![illustration](./illustration.png)
 
 ```php
+use RowBloom\ChromePhpRenderer\ChromePhpRenderer;
 use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
 use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Options;
-use RowBloom\RowBloom\Renderers\HtmlRenderer;
 use RowBloom\RowBloom\Support;
 
 $support = (new Support)
     ->registerDataLoaderDriver(FolderDataLoader::NAME, FolderDataLoader::class)
     ->registerDataLoaderDriver(JsonDataLoader::NAME, JsonDataLoader::class)
     ->registerInterpolatorDriver(PhpInterpolator::NAME, PhpInterpolator::class)
-    ->registerRendererDriver(HtmlRenderer::NAME, HtmlRenderer::class);
+    ->registerRendererDriver(ChromePhpRenderer::NAME, ChromePhpRenderer::class);
 
 $r = rowBloom(support: $support)->rowBloom;
 

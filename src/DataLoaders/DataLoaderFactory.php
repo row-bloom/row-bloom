@@ -19,14 +19,14 @@ class DataLoaderFactory extends BaseDriverFactory
 
         $this->validateContract($className, DataLoaderContract::class);
 
-        if ($className === FolderDataLoader::class && is_null($this->container)) {
+        if ($className === FolderDataLoader::class) {
             return new $className($this);
         }
 
         // TODO: pass config and $this if recursive loader
         // ! get doesn't take params
 
-        return is_null($this->container) ? new $className : $this->container->get($className);
+        return new $className;
     }
 
     public function makeFromLocation(TableLocation|string $tableLocation): DataLoaderContract

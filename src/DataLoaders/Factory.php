@@ -21,7 +21,7 @@ class Factory extends BaseDriverFactory
 
         $instance = new $className;
 
-        return $instance instanceof RecursiveFsDataLoader ?
+        return $instance instanceof RecursiveContract ?
             $instance->setFactory($this) :
             $instance;
     }

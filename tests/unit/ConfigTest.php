@@ -20,14 +20,14 @@ test('getDriverConfig', function () {
     expect($driverConfig)->toBe($config->getDriverConfig(stdClass::class));
 });
 
-test('mutateDriverConfig', function () {
+test('tapDriverConfig', function () {
     $config = new Config;
     $driverConfig = new stdClass;
 
     $config->setDriverConfig($driverConfig);
 
-    $config->mutateDriverConfig(stdClass::class, fn (stdClass $config) => $config->property = 'value')
-        ->mutateDriverConfig(stdClass::class, fn (stdClass $config) => $config->property = 'value2');
+    $config->tapDriverConfig(stdClass::class, fn (stdClass $config) => $config->property = 'value')
+        ->tapDriverConfig(stdClass::class, fn (stdClass $config) => $config->property = 'value2');
 
     expect($config->getDriverConfig(stdClass::class)->property)->toBe('value2');
 });

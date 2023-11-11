@@ -32,9 +32,10 @@ class Config
     }
 
     /** @param  class-string  $driverConfigName */
-    public function mutateDriverConfig($driverConfigName, callable $callback): static
+    public function tapDriverConfig($driverConfigName, callable $callback): static
     {
         if (! array_key_exists($driverConfigName, $this->driverConfigs)) {
+            // ? throw
             return $this;
         }
 

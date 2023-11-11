@@ -7,7 +7,7 @@ use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Table;
 use RowBloom\RowBloom\Types\TableLocation;
 
-class JsonDataLoader implements FsDataLoaderContract
+class JsonDataLoader implements FsContract
 {
     public const NAME = 'JSON';
 

@@ -4,9 +4,9 @@ namespace RowBloom\RowBloom\Renderers;
 
 use RowBloom\RowBloom\BaseDriverFactory;
 
-final class RendererFactory extends BaseDriverFactory
+final class Factory extends BaseDriverFactory
 {
-    public function make(string $driver): RendererContract
+    public function make(string $driver): Contract
     {
         $className = $driver;
 
@@ -14,7 +14,7 @@ final class RendererFactory extends BaseDriverFactory
             $className = $this->support->getRendererDriver($driver);
         }
 
-        $this->validateContract($className, RendererContract::class);
+        $this->validateContract($className, Contract::class);
 
         return new $className;
     }

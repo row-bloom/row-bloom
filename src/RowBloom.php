@@ -2,12 +2,12 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\DataLoaders\DataLoaderFactory;
+use RowBloom\RowBloom\DataLoaders\Factory as DataLoadersFactory;
 use RowBloom\RowBloom\Fs\File;
-use RowBloom\RowBloom\Interpolators\InterpolatorContract;
-use RowBloom\RowBloom\Interpolators\InterpolatorFactory;
-use RowBloom\RowBloom\Renderers\RendererContract;
-use RowBloom\RowBloom\Renderers\RendererFactory;
+use RowBloom\RowBloom\Interpolators\Contract as InterpolatorsContract;
+use RowBloom\RowBloom\Interpolators\Factory as InterpolatorsFactory;
+use RowBloom\RowBloom\Renderers\Contract as RenderersContract;
+use RowBloom\RowBloom\Renderers\Factory as RenderersFactory;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
@@ -15,9 +15,9 @@ use RowBloom\RowBloom\Types\TableLocation;
 
 class RowBloom
 {
-    private InterpolatorContract|string $interpolator;
+    private InterpolatorsContract|string $interpolator;
 
-    private RendererContract|string $renderer;
+    private RenderersContract|string $renderer;
 
     /** @var (Table|TableLocation)[] */
     private array $tables = [];
@@ -32,9 +32,9 @@ class RowBloom
     public function __construct(
         private Options $options,
         private Config $config,
-        private InterpolatorFactory $interpolatorFactory,
-        private RendererFactory $rendererFactory,
-        private DataLoaderFactory $dataLoaderFactory,
+        private InterpolatorsFactory $interpolatorFactory,
+        private RenderersFactory $rendererFactory,
+        private DataLoadersFactory $dataLoaderFactory,
     ) {
     }
 
@@ -50,7 +50,7 @@ class RowBloom
         return $this->render()->get();
     }
 
-    private function render(): RendererContract
+    private function render(): RenderersContract
     {
         $interpolator = $this->resolveInterpolator();
         $renderer = $this->resolveRenderer();
@@ -66,26 +66,26 @@ class RowBloom
 
     // ------------------------------------------------------------
 
-    private function resolveInterpolator(): InterpolatorContract
+    private function resolveInterpolator(): InterpolatorsContract
     {
         if (! isset($this->interpolator)) {
             throw new RowBloomException('Interpolator must be set');
         }
 
-        if ($this->interpolator instanceof InterpolatorContract) {
+        if ($this->interpolator instanceof InterpolatorsContract) {
             return $this->interpolator;
         }
 
         return $this->interpolatorFactory->make($this->interpolator);
     }
 
-    private function resolveRenderer(): RendererContract
+    private function resolveRenderer(): RenderersContract
     {
         if (! isset($this->renderer)) {
             throw new RowBloomException('Renderer must be set');
         }
 
-        if ($this->renderer instanceof RendererContract) {
+        if ($this->renderer instanceof RenderersContract) {
             return $this->renderer;
         }
 
@@ -238,14 +238,14 @@ class RowBloom
         return $this;
     }
 
-    public function setInterpolator(InterpolatorContract|string $interpolator): static
+    public function setInterpolator(InterpolatorsContract|string $interpolator): static
     {
         $this->interpolator = $interpolator;
 
         return $this;
     }
 
-    public function setRenderer(RendererContract|string $renderer): static
+    public function setRenderer(RenderersContract|string $renderer): static
     {
         $this->renderer = $renderer;
 

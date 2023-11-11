@@ -7,9 +7,9 @@ use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\TableLocation;
 
-class DataLoaderFactory extends BaseDriverFactory
+class Factory extends BaseDriverFactory
 {
-    public function make(string $driver): DataLoaderContract
+    public function make(string $driver): Contract
     {
         $className = $driver;
 
@@ -17,16 +17,16 @@ class DataLoaderFactory extends BaseDriverFactory
             $className = $this->support->getDataLoaderDriver($driver);
         }
 
-        $this->validateContract($className, DataLoaderContract::class);
+        $this->validateContract($className, Contract::class);
 
         $instance = new $className;
 
-        return $instance instanceof RecursiveDataLoader ?
+        return $instance instanceof RecursiveFsDataLoader ?
             $instance->setFactory($this) :
             $instance;
     }
 
-    public function makeFromLocation(TableLocation|string $tableLocation): DataLoaderContract
+    public function makeFromLocation(TableLocation|string $tableLocation): Contract
     {
         $tableLocation = $tableLocation instanceof TableLocation ? $tableLocation :
             TableLocation::make($tableLocation);

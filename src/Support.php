@@ -2,10 +2,10 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\DataLoaders\DataLoaderContract;
-use RowBloom\RowBloom\DataLoaders\FsDataLoaderContract;
-use RowBloom\RowBloom\Interpolators\InterpolatorContract;
-use RowBloom\RowBloom\Renderers\RendererContract;
+use RowBloom\RowBloom\DataLoaders\Contract as DataLoadersContract;
+use RowBloom\RowBloom\DataLoaders\FsContract;
+use RowBloom\RowBloom\Interpolators\Contract as InterpolatorsContract;
+use RowBloom\RowBloom\Renderers\Contract as RenderersContract;
 use RowBloom\RowBloom\Utils\ValidateDriverConcern;
 
 class Support
@@ -33,13 +33,13 @@ class Support
 
     public function registerDataLoaderDriver(string $driverName, string $className): static
     {
-        $this->validateContract($className, DataLoaderContract::class);
+        $this->validateContract($className, DataLoadersContract::class);
 
         $this->DataLoaderDrivers[$driverName] = $className;
 
         foreach ((class_implements($className) ?: []) as $contract) {
             match ($contract) {
-                FsDataLoaderContract::class => $this->registerFsDataLoaderDriver($className),
+                FsContract::class => $this->registerFsDataLoaderDriver($className),
                 default => null,
             };
         }
@@ -135,7 +135,7 @@ class Support
 
     public function registerInterpolatorDriver(string $driverName, string $className): static
     {
-        $this->validateContract($className, InterpolatorContract::class);
+        $this->validateContract($className, InterpolatorsContract::class);
 
         $this->interpolatorDrivers[$driverName] = $className;
 
@@ -170,7 +170,7 @@ class Support
 
     public function registerRendererDriver(string $driverName, string $className): static
     {
-        $this->validateContract($className, RendererContract::class);
+        $this->validateContract($className, RenderersContract::class);
 
         $this->rendererDrivers[$driverName] = $className;
 

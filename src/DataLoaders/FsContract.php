@@ -2,7 +2,7 @@
 
 namespace RowBloom\RowBloom\DataLoaders;
 
-interface FsDataLoaderContract extends DataLoaderContract
+interface FsContract extends Contract
 {
     /**
      * @return array<string, int>

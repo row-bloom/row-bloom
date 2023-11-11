@@ -7,7 +7,7 @@ use RowBloom\RowBloom\RowBloomException;
 use RowBloom\RowBloom\Types\Html;
 use RowBloom\RowBloom\Types\Table;
 
-class PhpInterpolator implements InterpolatorContract
+class PhpInterpolator implements Contract
 {
     public const NAME = 'PHP';
 

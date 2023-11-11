@@ -6,7 +6,7 @@ use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\Types\Table;
 use RowBloom\RowBloom\Types\TableLocation;
 
-class FolderDataLoader extends RecursiveDataLoader
+class FolderDataLoader extends RecursiveFsDataLoader
 {
     public const NAME = 'Folder';
 

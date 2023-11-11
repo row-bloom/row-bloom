@@ -5,22 +5,22 @@ namespace RowBloom\RowBloom\DataLoaders;
 use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\RowBloomException;
 
-abstract class RecursiveDataLoader implements FsDataLoaderContract
+abstract class RecursiveFsDataLoader implements FsContract
 {
-    protected DataLoaderFactory $factory;
+    protected Factory $factory;
 
     public function __construct(protected ?Config $config = null)
     {
     }
 
-    public function setFactory(DataLoaderFactory $factory): static
+    public function setFactory(Factory $factory): static
     {
         $this->factory = $factory;
 
         return $this;
     }
 
-    protected function getFactory(): DataLoaderFactory
+    protected function getFactory(): Factory
     {
         if (! isset($this->factory)) {
             throw new RowBloomException('Use setFactory to set factory on:'.static::class);

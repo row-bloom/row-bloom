@@ -4,9 +4,9 @@ namespace RowBloom\RowBloom\Interpolators;
 
 use RowBloom\RowBloom\BaseDriverFactory;
 
-final class InterpolatorFactory extends BaseDriverFactory
+final class Factory extends BaseDriverFactory
 {
-    public function make(string $driver): InterpolatorContract
+    public function make(string $driver): Contract
     {
         $className = $driver;
 
@@ -14,7 +14,7 @@ final class InterpolatorFactory extends BaseDriverFactory
             $className = $this->support->getInterpolatorDriver($driver);
         }
 
-        $this->validateContract($className, InterpolatorContract::class);
+        $this->validateContract($className, Contract::class);
 
         return new $className;
     }

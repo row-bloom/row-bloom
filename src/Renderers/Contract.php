@@ -8,7 +8,7 @@ use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 
-interface RendererContract
+interface Contract
 {
     // ? keep rendering base64
     public function get(): string;

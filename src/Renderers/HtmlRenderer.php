@@ -8,7 +8,7 @@ use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 
-class HtmlRenderer implements RendererContract
+class HtmlRenderer implements Contract
 {
     public const NAME = 'HTML';
 

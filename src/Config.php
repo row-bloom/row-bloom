@@ -2,19 +2,18 @@
 
 namespace RowBloom\RowBloom;
 
-// ? leave chromePath
+// ? global chromePath
 // ? validate when passed to RowBloom
-// TODO: rename config property
 class Config
 {
-    /** @param  array<class-string, object>  $configs*/
-    public function __construct(protected array $configs = [])
+    /** @param  array<class-string, object>  $driverConfigs */
+    public function __construct(protected array $driverConfigs = [])
     {
     }
 
-    public function setConfig(object $config): static
+    public function setDriverConfig(object $config): static
     {
-        $this->configs[get_class($config)] = $config;
+        $this->driverConfigs[get_class($config)] = $config;
 
         return $this;
     }
@@ -22,22 +21,24 @@ class Config
     /**
      * @template TClassName
      *
-     * @param  class-string<TClassName>  $configClassName
+     * @phpstan-return ?object
+     *
+     * @param  class-string<TClassName>  $driverConfigName
      * @return ?TClassName
      */
-    public function getConfig($configClassName): ?object
+    public function getDriverConfig($driverConfigName): ?object
     {
-        return $this->configs[$configClassName] ?? null;
+        return $this->driverConfigs[$driverConfigName] ?? null;
     }
 
-    /** @param  class-string  $configClassName */
-    public function mutateConfig($configClassName, callable $callback): static
+    /** @param  class-string  $driverConfigName */
+    public function mutateDriverConfig($driverConfigName, callable $callback): static
     {
-        if (! array_key_exists($configClassName, $this->configs)) {
+        if (! array_key_exists($driverConfigName, $this->driverConfigs)) {
             return $this;
         }
 
-        $callback($this->configs[$configClassName]);
+        $callback($this->driverConfigs[$driverConfigName]);
 
         return $this;
     }

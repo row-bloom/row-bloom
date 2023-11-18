@@ -23,8 +23,8 @@ class Options
      */
     public function __construct(
         public bool $displayHeaderFooter = true,
-        public ?string $rawHeader = null,
-        public ?string $rawFooter = null,
+        public ?string $headerTemplate = null,
+        public ?string $footerTemplate = null,
         // TODO: handle special classes: date, url, title, pageNumber, totalPages [, header, footer]
 
         public bool $printBackground = false,

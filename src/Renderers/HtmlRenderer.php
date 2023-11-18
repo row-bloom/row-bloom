@@ -66,8 +66,8 @@ class HtmlRenderer implements Contract
     {
         return [
             'displayHeaderFooter' => false,
-            'rawHeader' => false,
-            'rawFooter' => false,
+            'headerTemplate' => false,
+            'footerTemplate' => false,
             'printBackground' => false,
             'preferCssPageSize' => false,
             'landscape' => false,

@@ -42,7 +42,7 @@ test('setFromArray()')
         'template' => '<h1>hey <?= $name ?> </h1>',
         'table' => [['name' => 'mohamed'], ['name' => 'ilies']],
         'options' => [
-            'raw_header' => 'the Prime',
+            'header_template' => 'the Prime',
         ],
     ])->get())
     ->toBeString()

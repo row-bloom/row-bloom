@@ -35,6 +35,10 @@ class Factory extends BaseDriverFactory
             return $this->make($tableLocation->driver);
         }
 
+        if($tableLocation->scheme !== 'file') {
+            throw new RowBloomException("Only the 'file' URL is currently supported");
+        }
+
         $file = $tableLocation->toFile();
 
         $driver = match (true) {

@@ -22,7 +22,7 @@ class TableLocation
         return true;
     }
 
-    public function getFile(): File
+    public function toFile(): File
     {
         return File::fromPath($this->value);
     }

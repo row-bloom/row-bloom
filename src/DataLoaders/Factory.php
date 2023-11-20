@@ -35,7 +35,7 @@ class Factory extends BaseDriverFactory
             return $this->make($tableLocation->driver);
         }
 
-        $file = $tableLocation->getFile();
+        $file = $tableLocation->toFile();
 
         $driver = match (true) {
             $file->exists() => $this->resolveFsDriver($file),

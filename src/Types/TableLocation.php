@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @see https://en.wikipedia.org/wiki/URL
+ * @see https://en.wikipedia.org/wiki/File_URI_scheme
+ * @see https://datatracker.ietf.org/doc/html/rfc3986 Uniform Resource Identifier (URI): Generic Syntax
+ */
+
 namespace RowBloom\RowBloom\Types;
 
 use RowBloom\RowBloom\Fs\File;
@@ -20,6 +26,7 @@ class TableLocation
 
     final public function __construct(string $url, public readonly ?string $driver = null)
     {
+        // TODO: validate string format instead of being real
         $filePath = realpath($url);
 
         if ($filePath !== false) {
@@ -37,6 +44,7 @@ class TableLocation
 
         $parsedUrl = parse_url($url);
 
+        // ? default path to /
         if (! is_array($parsedUrl) || ! isset($parsedUrl['scheme']) || ! isset($parsedUrl['path'])) {
             throw new RowBloomException($url.' has no valid URL scheme and is not a valid absolute file path');
         }

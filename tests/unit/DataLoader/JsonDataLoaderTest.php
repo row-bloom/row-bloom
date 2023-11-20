@@ -21,7 +21,7 @@ it('parses', function () {
     /** @var TableLocation|Mock */
     $location = Mockery::mock(TableLocation::class);
 
-    $location->shouldReceive('getFile')->andReturns($file);
+    $location->shouldReceive('toFile')->andReturns($file);
 
     expect((new JsonDataLoader)->getTable($location)->toArray())->toEqual([
         ['a' => '2', 'b' => '2'],

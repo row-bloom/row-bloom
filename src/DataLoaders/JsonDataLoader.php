@@ -19,7 +19,7 @@ class JsonDataLoader implements FsContract
     {
         $this->config = $config ?? $this->config;
 
-        $file = $tableLocation->getFile();
+        $file = $tableLocation->toFile();
         $file->mustExist()->mustBeReadable()->mustBeFile()->mustBeExtension('json');
 
         $data = json_decode($file->readFileContent(), true);

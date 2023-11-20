@@ -25,7 +25,7 @@ class FolderDataLoader implements FsContract, RecursiveContract
 
         $this->config = $config ?? $this->config;
 
-        $file = $tableLocation->getFile();
+        $file = $tableLocation->toFile();
         $file->mustExist()->mustBeReadable()->mustBeDir();
 
         $table = Table::fromArray([]);

@@ -46,9 +46,14 @@ class TableLocation
         $this->path = $parsedUrl['path'];
     }
 
+    public function isScheme(string $scheme): bool
+    {
+        return $this->scheme === $scheme;
+    }
+
     public function isFileLocation(): bool
     {
-        return $this->scheme === 'file';
+        return $this->isScheme('file');
     }
 
     public function toFile(): File

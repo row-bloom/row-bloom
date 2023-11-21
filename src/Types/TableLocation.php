@@ -26,32 +26,25 @@ class TableLocation
 
     final public function __construct(string $url, public readonly ?string $driver = null)
     {
-        // TODO: validate string format instead of being real
         $filePath = realpath($url);
 
         if ($filePath !== false) {
-            $this->scheme = 'file';
-            $this->path = $filePath;
-
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $this->url = 'file:///'.$filePath;
-            } else {
-                $this->url = 'file://'.$filePath;
-            }
-
-            return;
+            $url = (substr(PHP_OS, 0, 3) === 'WIN' ? 'file:///' : 'file://').$filePath;
         }
 
         $parsedUrl = parse_url($url);
 
-        // ? default path to /
-        if (! is_array($parsedUrl) || ! isset($parsedUrl['scheme']) || ! isset($parsedUrl['path'])) {
-            throw new RowBloomException($url.' has no valid URL scheme and is not a valid absolute file path');
+        if (
+            ! is_array($parsedUrl) ||
+            ! isset($parsedUrl['scheme']) ||
+            (! isset($parsedUrl['path']) && ! isset($parsedUrl['host']))
+        ) {
+            throw new RowBloomException($url.' is not a valid URL neither an absolute path for an existing file');
         }
 
         $this->url = $url;
         $this->scheme = $parsedUrl['scheme'];
-        $this->path = $parsedUrl['path'];
+        $this->path = $parsedUrl['path'] ?? '/';
     }
 
     public function isScheme(string $scheme): bool

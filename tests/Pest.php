@@ -71,6 +71,7 @@ function mockJsonTableLocation(): TableLocation|Mock
     /** @var TableLocation|Mock */
     $location = Mockery::mock(TableLocation::class);
 
+    $location->shouldReceive('isScheme')->with('file')->andReturns(true);
     $location->shouldReceive('toFile')->andReturns(mockJsonFile());
 
     return $location;

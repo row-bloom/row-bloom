@@ -63,7 +63,6 @@ class TableLocation
             throw new RowBloomException($this->url.' is not a file');
         }
 
-        // TODO: fromUrl
         return File::fromPath($this->path);
     }
 }

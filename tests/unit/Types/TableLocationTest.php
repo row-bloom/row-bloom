@@ -32,7 +32,7 @@ test('invalid URL/path', function (string $url) {
     ['ftp:'],
 ]);
 
-it('isFileLocation', function () {
+test('isFileLocation', function () {
     expect(TableLocation::make(__FILE__)->isFileLocation())->toBeTrue();
     expect(TableLocation::make(__DIR__)->isFileLocation())->toBeTrue();
     expect(TableLocation::make('http://example.com/')->isFileLocation())->toBeFalse();

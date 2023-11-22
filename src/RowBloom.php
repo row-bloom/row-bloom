@@ -142,6 +142,13 @@ class RowBloom
     {
         $finalCss = Css::fromString('');
 
+        if (! is_null($this->config->baseCss)) {
+            $baseCss = File::fromPath($this->config->baseCss->value)
+                ->readFileContent();
+
+            $finalCss->append($baseCss);
+        }
+
         foreach ($this->css as $css) {
             if ($css instanceof Css) {
                 $finalCss->append($css);

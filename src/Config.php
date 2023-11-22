@@ -2,6 +2,8 @@
 
 namespace RowBloom\RowBloom;
 
+use RowBloom\RowBloom\Renderers\Css\BaseCss;
+
 // ? global chromePath
 // ? validate when passed to RowBloom
 class Config
@@ -9,6 +11,7 @@ class Config
     /** @param  array<class-string, object>  $driverConfigs */
     public function __construct(
         protected array $driverConfigs = [],
+        public ?BaseCss $baseCss = null,
         public bool $mergeCssToHeaderFooter = false,
     ) {
     }

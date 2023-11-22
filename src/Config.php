@@ -7,8 +7,10 @@ namespace RowBloom\RowBloom;
 class Config
 {
     /** @param  array<class-string, object>  $driverConfigs */
-    public function __construct(protected array $driverConfigs = [])
-    {
+    public function __construct(
+        protected array $driverConfigs = [],
+        public bool $mergeCssToHeaderFooter = false,
+    ) {
     }
 
     public function setDriverConfig(object $config): static

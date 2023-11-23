@@ -87,11 +87,11 @@ class Options
 
         $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL_UNIT);
 
-        if(($marginArr['marginTop'] + $marginArr['marginBottom']) >= $pageSize[1]) {
+        if (($marginArr['marginTop'] + $marginArr['marginBottom']) >= $pageSize[1]) {
             throw new RowBloomException('Margin top and bottom must not overlap');
         }
 
-        if(($marginArr['marginRight'] + $marginArr['marginLeft']) >= $pageSize[0]) {
+        if (($marginArr['marginRight'] + $marginArr['marginLeft']) >= $pageSize[0]) {
             throw new RowBloomException('Margin right and left must not overlap');
         }
     }

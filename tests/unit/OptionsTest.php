@@ -17,7 +17,7 @@ test('setFromArray()', function () {
     expect($options->printBackground)->toBe(! $defaultOptions->printBackground);
 });
 
-test('validateMargin: fails', function(PaperFormat $paperFormat, string|array $margin) {
+test('validateMargin: fails', function (PaperFormat $paperFormat, string|array $margin) {
     $options = new Options;
     $options->format = $paperFormat;
     $options->margin = $margin;
@@ -27,7 +27,7 @@ test('validateMargin: fails', function(PaperFormat $paperFormat, string|array $m
     ['paperFormat' => PaperFormat::FORMAT_A5, 'margin' => '74mm'],
 ]);
 
-test('validateMargin: passes', function(PaperFormat $paperFormat, string|array $margin) {
+test('validateMargin: passes', function (PaperFormat $paperFormat, string|array $margin) {
     $options = new Options;
     $options->format = $paperFormat;
     $options->margin = $margin;

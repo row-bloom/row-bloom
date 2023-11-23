@@ -7,7 +7,7 @@ use RowBloom\RowBloom\RowBloomException;
 
 final class Margin
 {
-    private static LengthUnit $defaultUnit = LengthUnit::MILLIMETER_UNIT;
+    private static LengthUnit $defaultUnit = LengthUnit::MILLIMETER;
 
     private LengthUnit $unit;
 

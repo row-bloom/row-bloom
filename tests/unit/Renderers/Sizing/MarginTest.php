@@ -14,7 +14,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
             'marginBottom' => 5,
             'marginLeft' => 5,
         ],
-        'unit' => LengthUnit::PIXEL_UNIT,
+        'unit' => LengthUnit::PIXEL,
     ],
     'Two value' => [
         'input' => ['5', 6.1],
@@ -24,7 +24,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
             'marginBottom' => 5,
             'marginLeft' => 6.1,
         ],
-        'unit' => LengthUnit::PIXEL_UNIT,
+        'unit' => LengthUnit::PIXEL,
     ],
     'For value' => [
         'input' => [1, 2, 3, 4],
@@ -34,7 +34,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
             'marginBottom' => 3,
             'marginLeft' => 4,
         ],
-        'unit' => LengthUnit::PIXEL_UNIT,
+        'unit' => LengthUnit::PIXEL,
     ],
     'Picas unit' => [
         'input' => [1],
@@ -44,7 +44,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
             'marginBottom' => 1,
             'marginLeft' => 1,
         ],
-        'unit' => LengthUnit::PICA_UNIT,
+        'unit' => LengthUnit::PICA,
     ],
 ]);
 
@@ -59,7 +59,7 @@ it('constructs mixed units', function (array $input, array $expected, LengthUnit
             'marginBottom' => 1.3333,
             'marginLeft' => 16,
         ],
-        'unit' => LengthUnit::PIXEL_UNIT,
+        'unit' => LengthUnit::PIXEL,
     ],
 ]);
 
@@ -74,8 +74,8 @@ it('converts', function (array $input, array $expected, LengthUnit $unit, Length
             'marginBottom' => 1,
             'marginLeft' => 1,
         ],
-        'unit' => LengthUnit::PICA_UNIT,
-        'outputUnit' => LengthUnit::PICA_UNIT,
+        'unit' => LengthUnit::PICA,
+        'outputUnit' => LengthUnit::PICA,
     ],
     'cm -> mm' => [
         'input' => [1, 2],
@@ -85,7 +85,7 @@ it('converts', function (array $input, array $expected, LengthUnit $unit, Length
             'marginBottom' => 10,
             'marginLeft' => 20,
         ],
-        'unit' => LengthUnit::CENTIMETER_UNIT,
-        'outputUnit' => LengthUnit::MILLIMETER_UNIT,
+        'unit' => LengthUnit::CENTIMETER,
+        'outputUnit' => LengthUnit::MILLIMETER,
     ],
 ]);

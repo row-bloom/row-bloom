@@ -83,9 +83,9 @@ class Options
 
     public function validateMargin(): void
     {
-        $marginArr = Margin::fromOptions($this)->allRawIn(LengthUnit::PIXEL_UNIT);
+        $marginArr = Margin::fromOptions($this)->allRawIn(LengthUnit::PIXEL);
 
-        $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL_UNIT);
+        $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL);
 
         if (($marginArr['marginTop'] + $marginArr['marginBottom']) >= $pageSize[1]) {
             throw new RowBloomException('Margin top and bottom must not overlap');

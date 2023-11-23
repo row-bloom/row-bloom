@@ -60,19 +60,19 @@ enum PaperFormat: string
     case FORMAT_Y = 'Y';
     case FORMAT_ROYAL = 'ROYAL';
 
-    public function size(LengthUnit $to = LengthUnit::MILLIMETER_UNIT): array
+    public function size(LengthUnit $to = LengthUnit::MILLIMETER): array
     {
-        if ($to === LengthUnit::MILLIMETER_UNIT) {
+        if ($to === LengthUnit::MILLIMETER) {
             return $this->mmSize();
-        } elseif ($to === LengthUnit::INCH_UNIT) {
+        } elseif ($to === LengthUnit::INCH) {
             return $this->inSize();
         }
 
         $size = $this->mmSize();
 
         return [
-            Length::fromNumber($size[0], LengthUnit::MILLIMETER_UNIT)->valueIn($to),
-            Length::fromNumber($size[1], LengthUnit::MILLIMETER_UNIT)->valueIn($to),
+            Length::fromNumber($size[0], LengthUnit::MILLIMETER)->valueIn($to),
+            Length::fromNumber($size[1], LengthUnit::MILLIMETER)->valueIn($to),
         ];
     }
 

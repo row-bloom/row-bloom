@@ -4,12 +4,12 @@ namespace RowBloom\RowBloom\Renderers\Sizing;
 
 enum LengthUnit: string
 {
-    case PIXEL_UNIT = 'px';
-    case CENTIMETER_UNIT = 'cm';
-    case MILLIMETER_UNIT = 'mm';
-    case INCH_UNIT = 'in';
-    case POINT_UNIT = 'pt';
-    case PICA_UNIT = 'pc';
+    case PIXEL = 'px';
+    case CENTIMETER = 'cm';
+    case MILLIMETER = 'mm';
+    case INCH = 'in';
+    case POINT = 'pt';
+    case PICA = 'pc';
 
     /**
      * Relative:

@@ -25,7 +25,6 @@ class Options
         public bool $displayHeaderFooter = true,
         public ?string $headerTemplate = null,
         public ?string $footerTemplate = null,
-        // TODO: handle special classes: date, url, title, pageNumber, totalPages [, header, footer]
 
         public bool $printBackground = false,
         public bool $preferCssPageSize = false,
@@ -37,16 +36,7 @@ class Options
         public ?string $width = null,
         public ?string $height = null,
 
-        // TODO: unify behavior across drivers
         public array|string $margin = '1 in',
-
-        public ?string $metadataTitle = null,
-        public ?string $metadataAuthor = null,
-        public ?string $metadataCreator = null,
-        public ?string $metadataSubject = null,
-        public ?string $metadataKeywords = null,
-
-        // TODO: font
 
         // scale ?
         // security ?

@@ -4,11 +4,8 @@ namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\Renderers\Css\BaseCss;
 
-// ? global chromePath
-// ? validate when passed to RowBloom
 class Config
 {
-    /** @param  array<class-string, object>  $driverConfigs */
     public function __construct(
         protected array $driverConfigs = [],
         public ?BaseCss $baseCss = null,
@@ -24,27 +21,24 @@ class Config
     }
 
     /**
-     * @template TClassName
-     *
-     * @phpstan-return ?object
+     * @template TClassName of object
      *
      * @param  class-string<TClassName>  $driverConfigName
      * @return ?TClassName
      */
-    public function getDriverConfig($driverConfigName): ?object
+    public function getDriverConfig(string $driverConfigName): ?object
     {
         return $this->driverConfigs[$driverConfigName] ?? null;
     }
 
     /** @param  class-string  $driverConfigName */
-    public function tapDriverConfig($driverConfigName, callable $callback): static
+    public function tapDriverConfig(string $driverConfigName, callable $callback): static
     {
-        if (! array_key_exists($driverConfigName, $this->driverConfigs)) {
-            // ? throw
+        if (array_key_exists($driverConfigName, $this->driverConfigs)) {
+            $callback($this->driverConfigs[$driverConfigName]);
+
             return $this;
         }
-
-        $callback($this->driverConfigs[$driverConfigName]);
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
+use RowBloom\RowBloom\Renderers\Sizing\Margin;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Utils\CaseConverter;
 
@@ -78,5 +79,20 @@ class Options
         $size = PaperFormat::FORMAT_A4->size($unit);
 
         return $this->landscape ? [$size[1], $size[0]] : $size;
+    }
+
+    public function validateMargin(): void
+    {
+        $marginArr = Margin::fromOptions($this)->allRawIn(LengthUnit::PIXEL_UNIT);
+
+        $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL_UNIT);
+
+        if(($marginArr['marginTop'] + $marginArr['marginBottom']) >= $pageSize[1]) {
+            throw new RowBloomException('Margin top and bottom must not overlap');
+        }
+
+        if(($marginArr['marginRight'] + $marginArr['marginLeft']) >= $pageSize[0]) {
+            throw new RowBloomException('Margin right and left must not overlap');
+        }
     }
 }

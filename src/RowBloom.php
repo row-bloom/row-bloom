@@ -52,6 +52,8 @@ class RowBloom
 
     private function render(): RenderersContract
     {
+        $this->options->validateMargin();
+
         $interpolator = $this->resolveInterpolator();
         $renderer = $this->resolveRenderer();
 

@@ -75,11 +75,6 @@ class HtmlRenderer implements Contract
             'width' => false,
             'height' => false,
             'margin' => false,
-            'metadataTitle' => false,
-            'metadataAuthor' => false,
-            'metadataCreator' => false,
-            'metadataSubject' => false,
-            'metadataKeywords' => false,
         ];
     }
 }

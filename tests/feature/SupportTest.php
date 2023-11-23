@@ -24,7 +24,7 @@ it('lists capabilities', function () {
         ->toHaveKeys(['HTML'])
         ->toContain(HtmlRenderer::class);
 
-    expect($support->getRendererOptionsSupport(HtmlRenderer::NAME)['metadataKeywords'])
+    expect($support->getRendererOptionsSupport(HtmlRenderer::NAME)['format'])
         ->toBeFalse();
 
     expect($support->getRendererOptionsSupport('yo'))

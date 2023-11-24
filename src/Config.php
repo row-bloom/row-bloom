@@ -34,11 +34,11 @@ class Config
     /** @param  class-string  $driverConfigName */
     public function tapDriverConfig(string $driverConfigName, callable $callback): static
     {
-        if (array_key_exists($driverConfigName, $this->driverConfigs)) {
-            $callback($this->driverConfigs[$driverConfigName]);
-
-            return $this;
+        if (! array_key_exists($driverConfigName, $this->driverConfigs)) {
+            throw new RowBloomException('No such config entry as: '.$driverConfigName);
         }
+
+        $callback($this->driverConfigs[$driverConfigName]);
 
         return $this;
     }

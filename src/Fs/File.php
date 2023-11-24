@@ -44,13 +44,18 @@ class File implements Stringable
         return touch($this->path);
     }
 
-    public function readFileContent(): ?string
+    public function readFileContent(): string
     {
-        if (! $this->exists() || $this->isDir()) {
-            return null;
+        if (! $this->exists()) {
+            throw new FsException($this.' is do not exist');
         }
 
-        return file_get_contents($this->path) ?: null;
+        if ($this->isDir()) {
+            throw new FsException($this.' is a directory');
+        }
+
+        return file_get_contents($this->path) ?:
+            throw new FsException('Failed reading the content of '.$this);
     }
 
     public function startSaving(): WriteStream

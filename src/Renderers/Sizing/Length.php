@@ -4,14 +4,14 @@ namespace RowBloom\RowBloom\Renderers\Sizing;
 
 use RowBloom\RowBloom\RowBloomException;
 
-final class Length
+class Length
 {
     /**
      * @var (int|float)[][] Absolute units only
      *
      * ? enum keys
      */
-    private const RATIOS_TABLE = [
+    protected const RATIOS_TABLE = [
         'px' => [
             'cm' => 0.02646,
             'mm' => 0.2646,
@@ -56,7 +56,7 @@ final class Length
         ],
     ];
 
-    public static function fromValue(int|float|string $value, LengthUnit $readUnit): self
+    public static function fromValue(int|float|string $value, LengthUnit $readUnit): static
     {
         if (is_numeric($value)) {
             return Length::fromNumber($value, $readUnit);
@@ -65,7 +65,7 @@ final class Length
         return Length::fromString($value, $readUnit);
     }
 
-    public static function fromNumber(float|int|string $value, LengthUnit $readUnit, LengthUnit $sourceUnit = null): self
+    public static function fromNumber(float|int|string $value, LengthUnit $readUnit, LengthUnit $sourceUnit = null): static
     {
         if (! is_numeric($value)) {
             throw new RowBloomException("Not numeric value '{$value}'");
@@ -73,10 +73,10 @@ final class Length
 
         $sourceUnit ??= $readUnit;
 
-        return new self((float) $value, $readUnit, $sourceUnit);
+        return new static((float) $value, $readUnit, $sourceUnit);
     }
 
-    public static function fromString(string $value, LengthUnit $readUnit): self
+    public static function fromString(string $value, LengthUnit $readUnit): static
     {
         $value = trim((string) $value);
 
@@ -92,7 +92,7 @@ final class Length
         throw new RowBloomException("Invalid value '{$value}'");
     }
 
-    private function __construct(
+    final protected function __construct(
         private readonly float $value,
         private LengthUnit $readUnit,
         private readonly LengthUnit $sourceUnit
@@ -100,14 +100,14 @@ final class Length
         // TODO: if relative unit require a reference
     }
 
-    public function setUnit(LengthUnit $readUnit): self
+    public function setUnit(LengthUnit $readUnit): static
     {
         $this->readUnit = $readUnit;
 
         return $this;
     }
 
-    public function convert(LengthUnit $readUnit): self
+    public function convert(LengthUnit $readUnit): static
     {
         return (clone $this)->setUnit($readUnit);
     }
@@ -123,6 +123,6 @@ final class Length
             return $this->value;
         }
 
-        return $this->value * self::RATIOS_TABLE[$this->sourceUnit->value][$readUnit->value];
+        return $this->value * static::RATIOS_TABLE[$this->sourceUnit->value][$readUnit->value];
     }
 }

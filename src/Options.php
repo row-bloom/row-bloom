@@ -75,9 +75,7 @@ class Options
         return $this;
     }
 
-    /**
-     * @return array{0: float, 1: float} [width, height]
-     */
+    /** @return array{0: float, 1: float} [width, height] */
     public function resolvePaperSize(LengthUnit $unit): array
     {
         if (isset($this->format)) {
@@ -95,20 +93,18 @@ class Options
         return $this->landscape ? [$size[1], $size[0]] : $size;
     }
 
-    /**
-     * @throws RowBloomException
-     */
+    /** @throws RowBloomException */
     public function validateMargin(): void
     {
         $marginArr = Margin::fromOptions($this)->allRawIn(LengthUnit::PIXEL);
 
         $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL);
 
-        if (($marginArr['marginTop'] + $marginArr['marginBottom']) >= $pageSize[1]) {
+        if (($marginArr['top'] + $marginArr['bottom']) >= $pageSize[1]) {
             throw new RowBloomException('Margin top and bottom must not overlap');
         }
 
-        if (($marginArr['marginRight'] + $marginArr['marginLeft']) >= $pageSize[0]) {
+        if (($marginArr['right'] + $marginArr['left']) >= $pageSize[0]) {
             throw new RowBloomException('Margin right and left must not overlap');
         }
     }

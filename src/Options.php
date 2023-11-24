@@ -2,6 +2,7 @@
 
 namespace RowBloom\RowBloom;
 
+use RowBloom\RowBloom\Renderers\Sizing\Length;
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
 use RowBloom\RowBloom\Renderers\Sizing\Margin;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
@@ -9,6 +10,10 @@ use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options
 {
+    public ?Length $width = null;
+
+    public ?Length $height = null;
+
     /**
      * .
      *
@@ -34,8 +39,8 @@ class Options
 
         public bool $landscape = false,
         public ?PaperFormat $format = null,
-        public ?string $width = null,
-        public ?string $height = null,
+        string|length $width = null,
+        string|length $height = null,
 
         public array|string $margin = '1 in',
 
@@ -43,6 +48,15 @@ class Options
         // security ?
         // compression ?
     ) {
+        if (! is_null($width)) {
+            $this->width = $width instanceof Length ? $width :
+                Length::fromString($width, LengthUnit::PIXEL);
+        }
+
+        if (! is_null($height)) {
+            $this->height = $height instanceof Length ? $height :
+                Length::fromString($height, LengthUnit::PIXEL);
+        }
     }
 
     /** @param  array<string, mixed>  $options */
@@ -73,7 +87,7 @@ class Options
         }
 
         if (isset($this->width) && isset($this->height)) {
-            return [$this->width, $this->height];
+            return [$this->width->valueIn($unit), $this->height->valueIn($unit)];
         }
 
         $size = PaperFormat::FORMAT_A4->size($unit);

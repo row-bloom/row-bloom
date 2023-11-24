@@ -11,15 +11,15 @@ final class Margin
 
     private LengthUnit $unit;
 
-    /** @var Length[] */
-    private array $value = [];
+    /** @var array{marginTop: Length, marginRight: Length, marginBottom: Length, marginLeft: Length} */
+    private array $value;
 
     public static function fromOptions(Options $options, LengthUnit $unit = null): static
     {
         return new self($options->margin, $unit);
     }
 
-    public function __construct(array|string $margin, LengthUnit $unit = null)
+    final public function __construct(array|string $margin, LengthUnit $unit = null)
     {
         $this->unit = $unit ?? self::$defaultUnit;
 
@@ -36,43 +36,36 @@ final class Margin
 
     private function setValue(array $margin): void
     {
-        switch (count($margin)) {
-            case 1:
-                $this->setLength('marginTop', $margin[0]);
-                $this->setLength('marginRight', $margin[0]);
-                $this->setLength('marginBottom', $margin[0]);
-                $this->setLength('marginLeft', $margin[0]);
-
-                return;
-            case 2:
-                $this->setLength('marginTop', $margin[0]);
-                $this->setLength('marginRight', $margin[1]);
-                $this->setLength('marginBottom', $margin[0]);
-                $this->setLength('marginLeft', $margin[1]);
-
-                return;
-            case 3:
-                $this->setLength('marginTop', $margin[0]);
-                $this->setLength('marginRight', $margin[1]);
-                $this->setLength('marginBottom', $margin[2]);
-                $this->setLength('marginLeft', $margin[1]);
-
-                return;
-            case 4:
-                $this->setLength('marginTop', $margin[0]);
-                $this->setLength('marginRight', $margin[1]);
-                $this->setLength('marginBottom', $margin[2]);
-                $this->setLength('marginLeft', $margin[3]);
-
-                return;
+        if (count($margin) === 0 || count($margin) > 4) {
+            throw new RowBloomException('Invalid margin');
         }
 
-        throw new RowBloomException('Invalid margin');
-    }
-
-    private function setLength(string $key, int|float|string $value): void
-    {
-        $this->value[$key] = Length::fromValue($value, $this->unit);
+        $this->value = match (count($margin)) {
+            1 => [
+                'marginTop' => Length::fromValue($margin[0], $this->unit),
+                'marginRight' => Length::fromValue($margin[0], $this->unit),
+                'marginBottom' => Length::fromValue($margin[0], $this->unit),
+                'marginLeft' => Length::fromValue($margin[0], $this->unit),
+            ],
+            2 => [
+                'marginTop' => Length::fromValue($margin[0], $this->unit),
+                'marginRight' => Length::fromValue($margin[1], $this->unit),
+                'marginBottom' => Length::fromValue($margin[0], $this->unit),
+                'marginLeft' => Length::fromValue($margin[1], $this->unit),
+            ],
+            3 => [
+                'marginTop' => Length::fromValue($margin[0], $this->unit),
+                'marginRight' => Length::fromValue($margin[1], $this->unit),
+                'marginBottom' => Length::fromValue($margin[2], $this->unit),
+                'marginLeft' => Length::fromValue($margin[1], $this->unit),
+            ],
+            4 => [
+                'marginTop' => Length::fromValue($margin[0], $this->unit),
+                'marginRight' => Length::fromValue($margin[1], $this->unit),
+                'marginBottom' => Length::fromValue($margin[2], $this->unit),
+                'marginLeft' => Length::fromValue($margin[3], $this->unit),
+            ],
+        };
     }
 
     // ============================================================
@@ -100,11 +93,13 @@ final class Margin
         return $this->get($key)?->convert($to)->value();
     }
 
+    /** @return array{marginTop: Length, marginRight: Length, marginBottom: Length, marginLeft: Length} */
     public function all(): array
     {
         return $this->value;
     }
 
+    /** @return array{marginTop: Length, marginRight: Length, marginBottom: Length, marginLeft: Length} */
     public function allIn(LengthUnit $to): array
     {
         return array_map(
@@ -113,6 +108,7 @@ final class Margin
         );
     }
 
+    /** @return array{marginTop: float, marginRight: float, marginBottom: float, marginLeft: float} */
     public function allRaw(): array
     {
         return array_map(
@@ -121,6 +117,7 @@ final class Margin
         );
     }
 
+    /** @return array{marginTop: float, marginRight: float, marginBottom: float, marginLeft: float} */
     public function allRawIn(LengthUnit $to): array
     {
         return array_map(

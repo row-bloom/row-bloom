@@ -60,6 +60,7 @@ enum PaperFormat: string
     case FORMAT_Y = 'Y';
     case FORMAT_ROYAL = 'ROYAL';
 
+    /** @return array{0: float, 1: float} [width, height] */
     public function size(LengthUnit $to = LengthUnit::MILLIMETER): array
     {
         if ($to === LengthUnit::MILLIMETER) {
@@ -78,6 +79,7 @@ enum PaperFormat: string
 
     // ? pxSizes ...
 
+    /** @return array{0: float, 1: float} [width, height] */
     public function mmSize(): array
     {
         return match ($this) {
@@ -139,6 +141,7 @@ enum PaperFormat: string
         };
     }
 
+    /** @return array{0: float, 1: float} [width, height] */
     public function inSize(): array
     {
         return match ($this) {

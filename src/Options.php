@@ -62,7 +62,7 @@ class Options
     }
 
     /**
-     * return [<width>, <height>]
+     * @return array{0: float, 1: float} [width, height]
      */
     public function resolvePaperSize(LengthUnit $unit): array
     {
@@ -81,6 +81,9 @@ class Options
         return $this->landscape ? [$size[1], $size[0]] : $size;
     }
 
+    /**
+     * @throws RowBloomException
+     */
     public function validateMargin(): void
     {
         $marginArr = Margin::fromOptions($this)->allRawIn(LengthUnit::PIXEL);

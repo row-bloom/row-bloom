@@ -8,22 +8,12 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
 })->with([
     'Single value' => [
         'input' => '5',
-        'expected' => [
-            'top' => 5,
-            'right' => 5,
-            'bottom' => 5,
-            'left' => 5,
-        ],
+        'expected' => ['top' => 5, 'right' => 5, 'bottom' => 5, 'left' => 5],
         'unit' => LengthUnit::PIXEL,
     ],
     'Two value' => [
         'input' => ['5', 6.1],
-        'expected' => [
-            'top' => 5,
-            'right' => 6.1,
-            'bottom' => 5,
-            'left' => 6.1,
-        ],
+        'expected' => ['top' => 5, 'right' => 6.1, 'bottom' => 5, 'left' => 6.1],
         'unit' => LengthUnit::PIXEL,
     ],
     'For value' => [
@@ -38,12 +28,7 @@ it('constructs', function (array|string $input, array $expected, LengthUnit $uni
     ],
     'Picas unit' => [
         'input' => [1],
-        'expected' => [
-            'top' => 1,
-            'right' => 1,
-            'bottom' => 1,
-            'left' => 1,
-        ],
+        'expected' => ['top' => 1, 'right' => 1, 'bottom' => 1, 'left' => 1],
         'unit' => LengthUnit::PICA,
     ],
 ]);
@@ -52,13 +37,8 @@ it('constructs mixed units', function (array $input, array $expected, LengthUnit
     expect((new Margin($input, $unit))->allRaw())->toEqual($expected);
 })->with([
     'cm,in,pt,pc' => [
-        'input' => ['1 cm', '1 in', '1 pt', '1 pc'],
-        'expected' => [
-            'top' => 37.7953,
-            'right' => 96,
-            'bottom' => 1.3333,
-            'left' => 16,
-        ],
+        'input' => ['1cm', '1in', '1pt', '1pc'],
+        'expected' => ['top' => 37.7953, 'right' => 96, 'bottom' => 1.3333, 'left' => 16],
         'unit' => LengthUnit::PIXEL,
     ],
 ]);
@@ -68,23 +48,13 @@ it('converts', function (array $input, array $expected, LengthUnit $unit, Length
 })->with([
     'pc -> pc' => [
         'input' => [1],
-        'expected' => [
-            'top' => 1,
-            'right' => 1,
-            'bottom' => 1,
-            'left' => 1,
-        ],
+        'expected' => ['top' => 1, 'right' => 1, 'bottom' => 1, 'left' => 1],
         'unit' => LengthUnit::PICA,
         'outputUnit' => LengthUnit::PICA,
     ],
     'cm -> mm' => [
         'input' => [1, 2],
-        'expected' => [
-            'top' => 10,
-            'right' => 20,
-            'bottom' => 10,
-            'left' => 20,
-        ],
+        'expected' => ['top' => 10, 'right' => 20, 'bottom' => 10, 'left' => 20],
         'unit' => LengthUnit::CENTIMETER,
         'outputUnit' => LengthUnit::MILLIMETER,
     ],

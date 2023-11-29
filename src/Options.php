@@ -42,7 +42,7 @@ class Options
         string|length $width = null,
         string|length $height = null,
 
-        public array|string $margin = '1 in',
+        public array|string $margin = '1in',
 
         // scale ?
         // security ?

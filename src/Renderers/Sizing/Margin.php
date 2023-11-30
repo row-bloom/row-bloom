@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @see https://www.w3.org/TR/css-box-4
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model/Introduction_to_the_CSS_box_model
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/margin
+ */
+
 namespace RowBloom\RowBloom\Renderers\Sizing;
 
 use RowBloom\RowBloom\Options;
@@ -59,11 +65,28 @@ final class Margin
         };
     }
 
-    protected function parseStringMargin(string $margin): array
+    /**
+     * @return string[]
+     *
+     * @see https://www.w3.org/TR/css-values-3/#lengths
+     */
+    public function parseStringMargin(string $margin): array
     {
-        if (preg_match('/\d+(?:\.\d+)?(?:\s+[[:alpha:]]+)?/', $margin, $parsedMargin) === false) {
-            throw new RowBloomException("Invalid string margin {$margin}");
+        $regex = '/\d+(?:\.\d+)?(?:[ \t]*[[:alpha:]]+)?/';
+
+        $margin = trim($margin);
+        $valueComponents = preg_split('/\s/', $margin);
+
+        if($valueComponents === false) {
+            throw new RowBloomException("Couldn't parse: {$margin}");
         }
+
+        if(count($valueComponents) === 0 || count($valueComponents) > 4) {
+            throw new RowBloomException("Margin {$margin} must contain 1 to 4 components");
+        }
+
+        preg_match($regex, $margin, $parsedMargin) ?:
+            throw new RowBloomException("Invalid string margin {$margin}");
 
         return $parsedMargin;
     }

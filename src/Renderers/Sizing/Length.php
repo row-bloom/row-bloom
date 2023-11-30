@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * @see https://www.w3.org/TR/css-values-3
+ * @see https://www.w3.org/TR/css-sizing-3
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/length
+ *
+ * @see https://www.w3.org/TR/?filter-tr-name=&status%5B%5D=candidateStandard&status%5B%5D=standard&tags%5B%5D=css
+ * @see https://www.w3.org/TR/css-syntax-3
+ *
+ * TODO: support functional notation. calc(50% - 2em)
+ */
+
 namespace RowBloom\RowBloom\Renderers\Sizing;
 
 use RowBloom\RowBloom\RowBloomException;
@@ -11,7 +22,7 @@ class Length
      *
      * ? enum keys
      */
-    protected const RATIOS_TABLE = [
+    protected const ABSOLUTE_UNIT_EQUIVALENCE = [
         'px' => [
             'cm' => 0.02646,
             'mm' => 0.2646,
@@ -56,16 +67,16 @@ class Length
         ],
     ];
 
-    public static function fromValue(int|float|string $value, LengthUnit $readUnit): static
+    public static function fromValue(string $value, LengthUnit $readUnit): static
     {
         if (is_numeric($value)) {
-            return Length::fromNumber($value, $readUnit);
+            return Length::fromNumber((float)$value, $readUnit);
         }
 
         return Length::fromString($value, $readUnit);
     }
 
-    public static function fromNumber(float|int|string $value, LengthUnit $readUnit, LengthUnit $sourceUnit = null): static
+    public static function fromNumber(float|int $value, LengthUnit $readUnit, LengthUnit $sourceUnit = null): static
     {
         if (! is_numeric($value)) {
             throw new RowBloomException("Not numeric value '{$value}'");
@@ -73,7 +84,7 @@ class Length
 
         $sourceUnit ??= $readUnit;
 
-        return new static((float) $value, $readUnit, $sourceUnit);
+        return new static($value, $readUnit, $sourceUnit);
     }
 
     public static function fromString(string $value, LengthUnit $readUnit): static
@@ -81,23 +92,38 @@ class Length
         $value = trim((string) $value);
 
         if (is_numeric($value)) {
-            return Length::fromNumber($value, $readUnit);
+            return Length::fromNumber((float)$value, $readUnit);
         }
 
-        if (preg_match('/^(?<v>\d+(\.\d+)?)\s+(?<u>[[:alpha:]]+)$/', $value, $parsed)) {
-            return Length::fromNumber($parsed['v'], LengthUnit::from($parsed['u']))
-                ->setUnit($readUnit);
-        }
+        $parsed = static::parseLengthDimension($value);
 
-        throw new RowBloomException("Invalid value '{$value}'");
+        return Length::fromNumber($parsed['value'], LengthUnit::from($parsed['unit']))
+            ->setUnit($readUnit);
     }
 
     final protected function __construct(
-        private readonly float $value,
+        private readonly float|int $value,
         private LengthUnit $readUnit,
         private readonly LengthUnit $sourceUnit
     ) {
         // TODO: if relative unit require a reference
+    }
+
+    /**
+     * @return array{value: float, unit: string}
+     *
+     * @see https://www.w3.org/TR/css-values-3/#lengths
+     */
+    protected static function parseLengthDimension(string $value): array
+    {
+        $units = implode('|', array_keys(static::ABSOLUTE_UNIT_EQUIVALENCE));
+        $regex = "/^(?<value>\d+(\.\d+)?)(?<unit>{$units})$/";
+
+        preg_match($regex, $value, $parsed) ?:
+            throw new RowBloomException('Invalid CSS dimension: '.$value);
+
+        /** @phpstan-ignore-next-line */
+        return $parsed;
     }
 
     public function setUnit(LengthUnit $readUnit): static
@@ -123,6 +149,6 @@ class Length
             return $this->value;
         }
 
-        return $this->value * static::RATIOS_TABLE[$this->sourceUnit->value][$readUnit->value];
+        return $this->value * static::ABSOLUTE_UNIT_EQUIVALENCE[$this->sourceUnit->value][$readUnit->value];
     }
 }

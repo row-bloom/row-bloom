@@ -39,7 +39,7 @@ $r->setInterpolator('PHP')->setRenderer('Chrome')
     ')
     ->addCss('h1 {color: red;}')
     ->tapOptions(function (Options $options) {
-        $options->format = PaperFormat::FORMAT_A4;
+        $options->format = PaperFormat::_A4;
         $options->displayHeaderFooter = true;
         $options->margin = '1 in';
     })

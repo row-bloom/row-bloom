@@ -88,7 +88,7 @@ class Options
             return [$this->width->toFloat($unit), $this->height->toFloat($unit)];
         }
 
-        $size = PaperFormat::FORMAT_A4->size($unit);
+        $size = PaperFormat::_A4->size($unit);
 
         return $this->landscape ? [$size[1], $size[0]] : $size;
     }

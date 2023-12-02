@@ -13,57 +13,6 @@ use Stringable;
 
 class Length implements Stringable
 {
-    /**
-     * @var (int|float)[][] Absolute units only
-     *
-     * @see https://www.w3.org/TR/css-values-3/#absolute-lengths
-     */
-    protected const ABSOLUTE_UNIT_EQUIVALENCE = [
-        'in' => [
-            'cm' => 2.54,
-            'mm' => 25.4,
-            'px' => 96,
-            'pt' => 72,
-            'pc' => 6,
-        ],
-        'cm' => [
-            'in' => 1 / 2.54,
-            'mm' => 10,
-            'px' => 96 / 2.54,
-            'pt' => 72 / 2.54,
-            'pc' => 6 / 2.54,
-        ],
-        'mm' => [
-            'in' => 1 / 25.4,
-            'cm' => 1 / 10,
-            'px' => 96 / 25.4,
-            'pt' => 72 / 25.4,
-            'pc' => 6 / 25.4,
-        ],
-        'px' => [
-            'in' => 1 / 96,
-            'cm' => 2.54 / 96,
-            'mm' => 25.4 / 96,
-            'pt' => 72 / 96,
-            'pc' => 6 / 96,
-        ],
-        'pt' => [
-            'in' => 1 / 72,
-            'cm' => 2.54 / 72,
-            'mm' => 25.4 / 72,
-            'px' => 96 / 72,
-            'pc' => 12 / 72,
-        ],
-        'pc' => [
-            'in' => 1 / 6,
-            'cm' => 2.54 / 6,
-            'mm' => 25.4 / 6,
-            'px' => 96 / 6,
-            'pt' => 72 / 6,
-        ],
-        // TODO: Q
-    ];
-
     public static function fromDimension(string $value): static
     {
         $value = trim((string) $value);
@@ -106,7 +55,7 @@ class Length implements Stringable
             return ['value' => 0, 'unit' => 'px'];
         }
 
-        $units = implode('|', array_keys(static::ABSOLUTE_UNIT_EQUIVALENCE));
+        $units = implode('|', LengthUnit::absoluteUnits());
         $regex = "/^(?<value>\d+(\.\d+)?)(?<unit>{$units})$/";
 
         preg_match($regex, $value, $parsed) ?:
@@ -130,12 +79,10 @@ class Length implements Stringable
         }
 
         if (! is_null($readUnit)) {
-            return $this->value *
-                static::ABSOLUTE_UNIT_EQUIVALENCE[$this->unit->value][$readUnit->value];
+            return $this->value * LengthUnit::absoluteUnitsEquivalence($this->unit, $readUnit);
         }
 
-        return $this->value *
-            static::ABSOLUTE_UNIT_EQUIVALENCE[$this->unit->value][$this->readUnit->value];
+        return $this->value * LengthUnit::absoluteUnitsEquivalence($this->unit, $this->readUnit);
     }
 
     public function convert(LengthUnit $readUnit): static

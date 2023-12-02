@@ -10,20 +10,69 @@ enum LengthUnit: string
     case INCH = 'in';
     case POINT = 'pt';
     case PICA = 'pc';
+    // TODO: Q
 
     /**
-     * Relative:
-     * - To font:
-     *   - em: Relative to the font-size of the parent element.
-     *   - rem: Relative to the font-size of the root element (usually the <html> element).
-     *   - ex: Relative to the x-height of the current font. The x-height is typically the height of lowercase letters.
-     *   - ch: Relative to the width of the "0" (zero) character of the current font.
-     * - To screen:
-     *   - vw: Relative to 1% of the viewport's width.
-     *   - vh: Relative to 1% of the viewport's height.
-     *   - vmin: Relative to 1% of the viewport's smaller dimension (width or height).
-     *   - vmax: Relative to 1% of the viewport's larger dimension (width or height).
-     * - To page size:
-     *   - percent: Represents a percentage relative to the parent element.
+     * @var (int|float)[][] Absolute units only
+     *
+     * @see https://www.w3.org/TR/css-values-3/#absolute-lengths
      */
+    protected const ABSOLUTE_UNIT_EQUIVALENCE = [
+        'in' => [
+            'cm' => 2.54,
+            'mm' => 25.4,
+            'px' => 96,
+            'pt' => 72,
+            'pc' => 6,
+        ],
+        'cm' => [
+            'in' => 1 / 2.54,
+            'mm' => 10,
+            'px' => 96 / 2.54,
+            'pt' => 72 / 2.54,
+            'pc' => 6 / 2.54,
+        ],
+        'mm' => [
+            'in' => 1 / 25.4,
+            'cm' => 1 / 10,
+            'px' => 96 / 25.4,
+            'pt' => 72 / 25.4,
+            'pc' => 6 / 25.4,
+        ],
+        'px' => [
+            'in' => 1 / 96,
+            'cm' => 2.54 / 96,
+            'mm' => 25.4 / 96,
+            'pt' => 72 / 96,
+            'pc' => 6 / 96,
+        ],
+        'pt' => [
+            'in' => 1 / 72,
+            'cm' => 2.54 / 72,
+            'mm' => 25.4 / 72,
+            'px' => 96 / 72,
+            'pc' => 12 / 72,
+        ],
+        'pc' => [
+            'in' => 1 / 6,
+            'cm' => 2.54 / 6,
+            'mm' => 25.4 / 6,
+            'px' => 96 / 6,
+            'pt' => 72 / 6,
+        ],
+    ];
+
+    public static function absoluteUnitsEquivalence(self|string $from, self|string $to): float
+    {
+        $from = $from instanceof self ? $from->value : $from;
+        $to = $to instanceof self ? $to->value : $to;
+
+        return self::ABSOLUTE_UNIT_EQUIVALENCE[$from][$to];
+    }
+
+    /** @return string[] */
+    public static function absoluteUnits(): array
+    {
+        return array_keys(self::ABSOLUTE_UNIT_EQUIVALENCE);
+    }
 }

@@ -64,7 +64,7 @@ class Length implements Stringable
         // TODO: Q
     ];
 
-    public static function fromString(string $value): static
+    public static function fromDimension(string $value): static
     {
         $value = trim((string) $value);
 

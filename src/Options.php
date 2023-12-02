@@ -51,11 +51,11 @@ class Options
         $this->margin = BoxArea::new($margin);
 
         if (! is_null($width)) {
-            $this->width = $width instanceof Length ? $width : Length::fromString($width);
+            $this->width = $width instanceof Length ? $width : Length::fromDimension($width);
         }
 
         if (! is_null($height)) {
-            $this->height = $height instanceof Length ? $height : Length::fromString($height);
+            $this->height = $height instanceof Length ? $height : Length::fromDimension($height);
         }
     }
 

@@ -40,10 +40,10 @@ class BoxArea
             throw new RowBloomException(json_encode($value).' must contain all the following keys: top, right, bottom, left.');
         }
 
-        $this->top = Length::fromString($value['top']);
-        $this->right = Length::fromString($value['right']);
-        $this->bottom = Length::fromString($value['bottom']);
-        $this->left = Length::fromString($value['left']);
+        $this->top = Length::fromDimension($value['top']);
+        $this->right = Length::fromDimension($value['right']);
+        $this->bottom = Length::fromDimension($value['bottom']);
+        $this->left = Length::fromDimension($value['left']);
     }
 
     /**

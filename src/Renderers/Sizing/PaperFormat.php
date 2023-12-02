@@ -60,8 +60,7 @@ enum PaperFormat: string
     case _Y = 'Y';
     case _ROYAL = 'ROYAL';
 
-    /** @return array{0: float, 1: float} [width, height] */
-    public function size(LengthUnit $to = LengthUnit::MILLIMETER): array
+    public function size(LengthUnit $to = LengthUnit::MILLIMETER): BoxSize
     {
         if ($to === LengthUnit::MILLIMETER) {
             return $this->mmSize();
@@ -69,20 +68,16 @@ enum PaperFormat: string
             return $this->inSize();
         }
 
-        $size = $this->mmSize();
+        $mmSize = $this->inSize();
 
-        return [
-            Length::fromNumberUnit($size[0], LengthUnit::MILLIMETER)->toFloat($to),
-            Length::fromNumberUnit($size[1], LengthUnit::MILLIMETER)->toFloat($to),
-        ];
+        return new BoxSize($mmSize->width->convert($to), $mmSize->height->convert($to));
     }
 
     // ? pxSizes ...
 
-    /** @return array{0: float, 1: float} [width, height] */
-    public function mmSize(): array
+    public function mmSize(): BoxSize
     {
-        return match ($this) {
+        $size = match ($this) {
             self::_4A0 => [1682, 2378],
             self::_2A0 => [1189, 1682],
             self::_A0 => [841, 1189],
@@ -139,12 +134,16 @@ enum PaperFormat: string
             self::_Y => [330, 430],
             self::_ROYAL => [432, 559],
         };
+
+        return new BoxSize(
+            Length::fromNumberUnit($size[0], LengthUnit::MILLIMETER),
+            Length::fromNumberUnit($size[1], LengthUnit::MILLIMETER),
+        );
     }
 
-    /** @return array{0: float, 1: float} [width, height] */
-    public function inSize(): array
+    public function inSize(): BoxSize
     {
-        return match ($this) {
+        $size = match ($this) {
             self::_4A0 => [66.14, 93.70],
             self::_2A0 => [46.81, 66.14],
             self::_A0 => [33.11, 46.81],
@@ -201,5 +200,10 @@ enum PaperFormat: string
             self::_Y => [13.00, 16.93],
             self::_ROYAL => [17.00, 22.01]
         };
+
+        return new BoxSize(
+            Length::fromNumberUnit($size[0], LengthUnit::INCH),
+            Length::fromNumberUnit($size[1], LengthUnit::INCH),
+        );
     }
 }

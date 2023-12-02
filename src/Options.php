@@ -3,6 +3,7 @@
 namespace RowBloom\RowBloom;
 
 use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
+use RowBloom\RowBloom\Renderers\Sizing\BoxSize;
 use RowBloom\RowBloom\Renderers\Sizing\Length;
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
@@ -75,22 +76,21 @@ class Options
         return $this;
     }
 
-    /** @return array{0: float, 1: float} [width, height] */
-    public function resolvePaperSize(LengthUnit $unit): array
+    public function resolvePaperSize(LengthUnit $unit): BoxSize
     {
         if (isset($this->format)) {
             $size = $this->format->size($unit);
 
-            return $this->landscape ? [$size[1], $size[0]] : $size;
+            return $this->landscape ? $size->toLandscape() : $size;
         }
 
         if (isset($this->width) && isset($this->height)) {
-            return [$this->width->toFloat($unit), $this->height->toFloat($unit)];
+            return new BoxSize($this->width, $this->height);
         }
 
         $size = PaperFormat::_A4->size($unit);
 
-        return $this->landscape ? [$size[1], $size[0]] : $size;
+        return $this->landscape ? $size->toLandscape() : $size;
     }
 
     /** @throws RowBloomException */
@@ -104,11 +104,11 @@ class Options
         $height = $this->margin->top->toFloat(LengthUnit::PIXEL) +
             $this->margin->bottom->toFloat(LengthUnit::PIXEL);
 
-        if ($height >= $pageSize[1]) {
+        if ((int) $height >= (int) $pageSize->height->toFloat()) {
             throw new RowBloomException('Margin top and bottom must not overlap');
         }
 
-        if ($width >= $pageSize[0]) {
+        if ((int) $width >= (int) $pageSize->width->toFloat()) {
             throw new RowBloomException('Margin right and left must not overlap');
         }
     }

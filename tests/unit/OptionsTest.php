@@ -25,7 +25,7 @@ test('validateMargin: fails', function (PaperFormat $paperFormat, string|array $
 
     expect(fn () => $options->validateMargin())->toThrow(RowBloomException::class);
 })->with([
-    ['paperFormat' => PaperFormat::_A5, 'margin' => '74mm'],
+    ['paperFormat' => PaperFormat::_A5, 'margin' => '0mm 74mm'], // A5:w = 148mm
 ]);
 
 test('validateMargin: passes', function (PaperFormat $paperFormat, string|array $margin) {

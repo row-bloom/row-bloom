@@ -72,8 +72,8 @@ enum PaperFormat: string
         $size = $this->mmSize();
 
         return [
-            Length::fromNumber($size[0], LengthUnit::MILLIMETER)->valueIn($to),
-            Length::fromNumber($size[1], LengthUnit::MILLIMETER)->valueIn($to),
+            Length::fromNumberUnit($size[0], LengthUnit::MILLIMETER)->toFloat($to),
+            Length::fromNumberUnit($size[1], LengthUnit::MILLIMETER)->toFloat($to),
         ];
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use RowBloom\RowBloom\Options;
+use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\RowBloomException;
 
@@ -20,7 +21,7 @@ test('setFromArray()', function () {
 test('validateMargin: fails', function (PaperFormat $paperFormat, string|array $margin) {
     $options = new Options;
     $options->format = $paperFormat;
-    $options->margin = $margin;
+    $options->margin = BoxArea::new($margin);
 
     expect(fn () => $options->validateMargin())->toThrow(RowBloomException::class);
 })->with([
@@ -30,7 +31,7 @@ test('validateMargin: fails', function (PaperFormat $paperFormat, string|array $
 test('validateMargin: passes', function (PaperFormat $paperFormat, string|array $margin) {
     $options = new Options;
     $options->format = $paperFormat;
-    $options->margin = $margin;
+    $options->margin = BoxArea::new($margin);
 
     expect(fn () => $options->validateMargin())->not->toThrow(RowBloomException::class);
 })->with([

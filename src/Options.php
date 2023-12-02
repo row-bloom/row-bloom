@@ -2,9 +2,9 @@
 
 namespace RowBloom\RowBloom;
 
+use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
 use RowBloom\RowBloom\Renderers\Sizing\Length;
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
-use RowBloom\RowBloom\Renderers\Sizing\Margin;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Utils\CaseConverter;
 
@@ -14,13 +14,13 @@ class Options
 
     public ?Length $height = null;
 
+    public BoxArea $margin;
+
     /**
      * .
      *
-     * **Default unit** for `$margin`, `$width`, and `$height` is millimeter (mm)
-     *
-     * @param  (float|int|string)[]|string  $margin
-     * - Format like CSS (all_sides)|(top_bottom right_left)|(top right_left bottom)|(number number number number).
+     * @param  string[]|string  $margin
+     * - Format like CSS (all_sides)|(top_bottom right_left)|(top right_left bottom)|(top right bottom left).
      * - Only string types support adding unit, numerical types fallback to *default unit*.
      * @param  ?PaperFormat  $format
      * - Takes precedence over `$width` and `$height`
@@ -42,20 +42,20 @@ class Options
         string|length $width = null,
         string|length $height = null,
 
-        public array|string $margin = '1 in',
+        array|string $margin = '1in',
 
         // scale ?
         // security ?
         // compression ?
     ) {
+        $this->margin = BoxArea::new($margin);
+
         if (! is_null($width)) {
-            $this->width = $width instanceof Length ? $width :
-                Length::fromString($width, LengthUnit::PIXEL);
+            $this->width = $width instanceof Length ? $width : Length::fromDimension($width);
         }
 
         if (! is_null($height)) {
-            $this->height = $height instanceof Length ? $height :
-                Length::fromString($height, LengthUnit::PIXEL);
+            $this->height = $height instanceof Length ? $height : Length::fromDimension($height);
         }
     }
 
@@ -85,7 +85,7 @@ class Options
         }
 
         if (isset($this->width) && isset($this->height)) {
-            return [$this->width->valueIn($unit), $this->height->valueIn($unit)];
+            return [$this->width->toFloat($unit), $this->height->toFloat($unit)];
         }
 
         $size = PaperFormat::FORMAT_A4->size($unit);
@@ -96,15 +96,19 @@ class Options
     /** @throws RowBloomException */
     public function validateMargin(): void
     {
-        $marginArr = Margin::fromOptions($this)->allRawIn(LengthUnit::PIXEL);
-
         $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL);
 
-        if (($marginArr['top'] + $marginArr['bottom']) >= $pageSize[1]) {
+        $width = $this->margin->right->toFloat(LengthUnit::PIXEL) +
+            $this->margin->left->toFloat(LengthUnit::PIXEL);
+
+        $height = $this->margin->top->toFloat(LengthUnit::PIXEL) +
+            $this->margin->bottom->toFloat(LengthUnit::PIXEL);
+
+        if ($height >= $pageSize[1]) {
             throw new RowBloomException('Margin top and bottom must not overlap');
         }
 
-        if (($marginArr['right'] + $marginArr['left']) >= $pageSize[0]) {
+        if ($width >= $pageSize[0]) {
             throw new RowBloomException('Margin right and left must not overlap');
         }
     }

@@ -91,17 +91,17 @@ class Options
     {
         $pageSize = $this->resolvePaperSize();
 
-        $width = $this->margin->right->toFloat() +
-            $this->margin->left->toFloat();
+        $width = $this->margin->right->toPxFloat() +
+            $this->margin->left->toPxFloat();
 
-        $height = $this->margin->top->toFloat() +
-            $this->margin->bottom->toFloat();
+        $height = $this->margin->top->toPxFloat() +
+            $this->margin->bottom->toPxFloat();
 
-        if ((int) $height >= (int) $pageSize->height->toFloat()) {
+        if ((int) $height >= (int) $pageSize->height->toPxFloat()) {
             throw new RowBloomException('Margin top and bottom must not overlap');
         }
 
-        if ((int) $width >= (int) $pageSize->width->toFloat()) {
+        if ((int) $width >= (int) $pageSize->width->toPxFloat()) {
             throw new RowBloomException('Margin right and left must not overlap');
         }
     }

@@ -95,6 +95,11 @@ class Length implements Stringable
         return $this->value($readUnit);
     }
 
+    public function toPxFloat(): float
+    {
+        return $this->value(LengthUnit::PIXEL);
+    }
+
     public function toString(LengthUnit $readUnit = null): string
     {
         return $this->value($readUnit).($readUnit?->value ?? $this->readUnit->value);

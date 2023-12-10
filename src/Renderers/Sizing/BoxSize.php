@@ -17,8 +17,8 @@ class BoxSize
 
     public function toLandscape(): static
     {
-        $pxHeight = $this->height->toFloat(LengthUnit::PIXEL);
-        $pxWidth = $this->width->toFloat(LengthUnit::PIXEL);
+        $pxHeight = $this->height->toPxFloat();
+        $pxWidth = $this->width->toPxFloat();
 
         if ($pxWidth > $pxHeight) {
             return new static($this->width, $this->height);
@@ -29,8 +29,8 @@ class BoxSize
 
     public function toPortrait(): static
     {
-        $pxHeight = $this->height->toFloat(LengthUnit::PIXEL);
-        $pxWidth = $this->width->toFloat(LengthUnit::PIXEL);
+        $pxHeight = $this->height->toPxFloat();
+        $pxWidth = $this->width->toPxFloat();
 
         if ($pxHeight > $pxWidth) {
             return new static($this->width, $this->height);

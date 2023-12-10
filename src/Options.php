@@ -90,13 +90,13 @@ class Options
     /** @throws RowBloomException */
     public function validateMargin(): void
     {
-        $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL);
+        $pageSize = $this->resolvePaperSize();
 
-        $width = $this->margin->right->toFloat(LengthUnit::PIXEL) +
-            $this->margin->left->toFloat(LengthUnit::PIXEL);
+        $width = $this->margin->right->toFloat() +
+            $this->margin->left->toFloat();
 
-        $height = $this->margin->top->toFloat(LengthUnit::PIXEL) +
-            $this->margin->bottom->toFloat(LengthUnit::PIXEL);
+        $height = $this->margin->top->toFloat() +
+            $this->margin->bottom->toFloat();
 
         if ((int) $height >= (int) $pageSize->height->toFloat()) {
             throw new RowBloomException('Margin top and bottom must not overlap');

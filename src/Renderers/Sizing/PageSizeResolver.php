@@ -14,7 +14,7 @@ class PageSizeResolver
         if (isset($paperFormat)) {
             $size = $paperFormat->size();
 
-            return $landscape ? $size->toLandscape() : $size;
+            return $landscape ? $size->toLandscape() : $size->toPortrait();
         }
 
         if (! is_null($size)) {
@@ -27,6 +27,6 @@ class PageSizeResolver
 
         $size = PaperFormat::_A4->size();
 
-        return $landscape ? $size->toLandscape() : $size;
+        return $landscape ? $size->toLandscape() : $size->toPortrait();
     }
 }

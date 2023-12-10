@@ -6,6 +6,7 @@ use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
 use RowBloom\RowBloom\Renderers\Sizing\BoxSize;
 use RowBloom\RowBloom\Renderers\Sizing\Length;
 use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
+use RowBloom\RowBloom\Renderers\Sizing\PageSizeResolver;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Utils\CaseConverter;
 
@@ -76,21 +77,14 @@ class Options
         return $this;
     }
 
-    public function resolvePaperSize(LengthUnit $unit): BoxSize
+    public function resolvePaperSize(): BoxSize
     {
-        if (isset($this->format)) {
-            $size = $this->format->size($unit);
-
-            return $this->landscape ? $size->toLandscape() : $size;
-        }
-
-        if (isset($this->width) && isset($this->height)) {
-            return new BoxSize($this->width, $this->height);
-        }
-
-        $size = PaperFormat::_A4->size($unit);
-
-        return $this->landscape ? $size->toLandscape() : $size;
+        return PageSizeResolver::resolve(
+            width: $this->width,
+            height: $this->height,
+            paperFormat: $this->format,
+            landscape: $this->landscape,
+        );
     }
 
     /** @throws RowBloomException */

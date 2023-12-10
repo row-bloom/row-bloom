@@ -5,10 +5,10 @@ namespace RowBloom\RowBloom\Renderers\Sizing;
 class PageSizeResolver
 {
     public static function resolve(
-        PaperFormat $paperFormat = null,
-        BoxSize $size = null,
-        Length $width = null,
-        Length $height = null,
+        ?PaperFormat $paperFormat = null,
+        ?BoxSize $size = null,
+        ?Length $width = null,
+        ?Length $height = null,
         bool $landscape = false
     ): BoxSize {
         if (isset($paperFormat)) {

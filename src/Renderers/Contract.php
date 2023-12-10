@@ -17,7 +17,7 @@ interface Contract
 
     // ? echo()
 
-    public function render(Html $template, Css $css, Options $options, Config $config = null): static;
+    public function render(Html $template, Css $css, Options $options, ?Config $config = null): static;
 
     public static function getOptionsSupport(): array;
 }

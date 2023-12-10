@@ -36,7 +36,7 @@ class HtmlRenderer implements Contract
             ->save($this->rendering);
     }
 
-    public function render(Html $html, Css $css, Options $options, Config $config = null): static
+    public function render(Html $html, Css $css, Options $options, ?Config $config = null): static
     {
         $this->html = $html;
         $this->css = $css;

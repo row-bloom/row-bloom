@@ -15,7 +15,7 @@ class JsonDataLoader implements FsContract
     {
     }
 
-    public function getTable(TableLocation $tableLocation, Config $config = null): Table
+    public function getTable(TableLocation $tableLocation, ?Config $config = null): Table
     {
         $this->config = $config ?? $this->config;
 

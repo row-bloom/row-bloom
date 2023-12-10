@@ -5,7 +5,6 @@ namespace RowBloom\RowBloom;
 use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
 use RowBloom\RowBloom\Renderers\Sizing\BoxSize;
 use RowBloom\RowBloom\Renderers\Sizing\Length;
-use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
 use RowBloom\RowBloom\Renderers\Sizing\PageSizeResolver;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Utils\CaseConverter;

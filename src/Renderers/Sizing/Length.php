@@ -72,6 +72,11 @@ class Length implements Stringable
         return $this;
     }
 
+    public function convert(LengthUnit $readUnit): static
+    {
+        return (clone $this)->setReadUnit($readUnit);
+    }
+
     public function value(LengthUnit $readUnit = null): float
     {
         if ($this->unit === $this->readUnit & is_null($readUnit)) {
@@ -85,14 +90,19 @@ class Length implements Stringable
         return $this->value * LengthUnit::absoluteUnitsEquivalence($this->unit, $this->readUnit);
     }
 
-    public function convert(LengthUnit $readUnit): static
-    {
-        return (clone $this)->setReadUnit($readUnit);
-    }
-
     public function toFloat(LengthUnit $readUnit = null): float
     {
         return $this->value($readUnit);
+    }
+
+    public function toString(LengthUnit $readUnit = null): string
+    {
+        return $this->value($readUnit).($readUnit?->value ?? $this->readUnit->value);
+    }
+
+    public function __toString(): string
+    {
+        return $this->value().$this->readUnit->value;
     }
 
     public function toPxFloat(): float
@@ -125,38 +135,28 @@ class Length implements Stringable
         return $this->toFloat(LengthUnit::PICA);
     }
 
-    public function toString(LengthUnit $readUnit = null): string
-    {
-        return $this->value($readUnit).($readUnit?->value ?? $this->readUnit->value);
-    }
-
-    public function toMmString(): float
+    public function toMmString(): string
     {
         return $this->toString(LengthUnit::MILLIMETER);
     }
 
-    public function toCmString(): float
+    public function toCmString(): string
     {
         return $this->toString(LengthUnit::CENTIMETER);
     }
 
-    public function toInString(): float
+    public function toInString(): string
     {
         return $this->toString(LengthUnit::INCH);
     }
 
-    public function toPtString(): float
+    public function toPtString(): string
     {
         return $this->toString(LengthUnit::POINT);
     }
 
-    public function toPcString(): float
+    public function toPcString(): string
     {
         return $this->toString(LengthUnit::PICA);
-    }
-
-    public function __toString(): string
-    {
-        return $this->value().$this->readUnit->value;
     }
 }

@@ -8,5 +8,5 @@ use RowBloom\RowBloom\Types\TableLocation;
 
 interface Contract
 {
-    public function getTable(TableLocation $tableLocation, Config $config = null): Table;
+    public function getTable(TableLocation $tableLocation, ?Config $config = null): Table;
 }

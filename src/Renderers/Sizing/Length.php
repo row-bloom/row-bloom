@@ -72,7 +72,12 @@ class Length implements Stringable
         return $this;
     }
 
-    public function value(LengthUnit $readUnit = null): float
+    public function convert(LengthUnit $readUnit): static
+    {
+        return (clone $this)->setReadUnit($readUnit);
+    }
+
+    public function value(?LengthUnit $readUnit = null): float
     {
         if ($this->unit === $this->readUnit & is_null($readUnit)) {
             return $this->value;
@@ -85,17 +90,12 @@ class Length implements Stringable
         return $this->value * LengthUnit::absoluteUnitsEquivalence($this->unit, $this->readUnit);
     }
 
-    public function convert(LengthUnit $readUnit): static
-    {
-        return (clone $this)->setReadUnit($readUnit);
-    }
-
-    public function toFloat(LengthUnit $readUnit = null): float
+    public function toFloat(?LengthUnit $readUnit = null): float
     {
         return $this->value($readUnit);
     }
 
-    public function toString(LengthUnit $readUnit = null): string
+    public function toString(?LengthUnit $readUnit = null): string
     {
         return $this->value($readUnit).($readUnit?->value ?? $this->readUnit->value);
     }
@@ -103,5 +103,60 @@ class Length implements Stringable
     public function __toString(): string
     {
         return $this->value().$this->readUnit->value;
+    }
+
+    public function toPxFloat(): float
+    {
+        return $this->toFloat(LengthUnit::PIXEL);
+    }
+
+    public function toMmFloat(): float
+    {
+        return $this->toFloat(LengthUnit::MILLIMETER);
+    }
+
+    public function toCmFloat(): float
+    {
+        return $this->toFloat(LengthUnit::CENTIMETER);
+    }
+
+    public function toInFloat(): float
+    {
+        return $this->toFloat(LengthUnit::INCH);
+    }
+
+    public function toPtFloat(): float
+    {
+        return $this->toFloat(LengthUnit::POINT);
+    }
+
+    public function toPcFloat(): float
+    {
+        return $this->toFloat(LengthUnit::PICA);
+    }
+
+    public function toMmString(): string
+    {
+        return $this->toString(LengthUnit::MILLIMETER);
+    }
+
+    public function toCmString(): string
+    {
+        return $this->toString(LengthUnit::CENTIMETER);
+    }
+
+    public function toInString(): string
+    {
+        return $this->toString(LengthUnit::INCH);
+    }
+
+    public function toPtString(): string
+    {
+        return $this->toString(LengthUnit::POINT);
+    }
+
+    public function toPcString(): string
+    {
+        return $this->toString(LengthUnit::PICA);
     }
 }

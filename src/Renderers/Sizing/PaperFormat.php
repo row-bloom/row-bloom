@@ -59,6 +59,8 @@ enum PaperFormat: string
     case _ADEM = 'ADEM';
     case _Y = 'Y';
     case _ROYAL = 'ROYAL';
+    // case _JIS_B5 = 'JIS-B5';
+    // case _JIS_B4 = 'JIS-B4';
 
     public function size(LengthUnit $to = LengthUnit::MILLIMETER): BoxSize
     {
@@ -133,6 +135,8 @@ enum PaperFormat: string
             self::_ADEM => [216, 356],
             self::_Y => [330, 430],
             self::_ROYAL => [432, 559],
+            // self::_JIS_B4 => [257, 364],
+            // self::_JIS_B5 => [182, 257],
         };
 
         return new BoxSize(

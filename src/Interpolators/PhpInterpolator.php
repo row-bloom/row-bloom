@@ -15,7 +15,7 @@ class PhpInterpolator implements Contract
     {
     }
 
-    public function interpolate(Html $template, Table $table, int $perPage = null, Config $config = null): Html
+    public function interpolate(Html $template, Table $table, ?int $perPage = null, ?Config $config = null): Html
     {
         $this->config = $config ?? $this->config;
 

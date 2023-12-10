@@ -5,7 +5,7 @@ namespace RowBloom\RowBloom;
 use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
 use RowBloom\RowBloom\Renderers\Sizing\BoxSize;
 use RowBloom\RowBloom\Renderers\Sizing\Length;
-use RowBloom\RowBloom\Renderers\Sizing\LengthUnit;
+use RowBloom\RowBloom\Renderers\Sizing\PageSizeResolver;
 use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\Utils\CaseConverter;
 
@@ -40,8 +40,8 @@ class Options
 
         public bool $landscape = false,
         public ?PaperFormat $format = null,
-        string|length $width = null,
-        string|length $height = null,
+        string|length|null $width = null,
+        string|length|null $height = null,
 
         array|string $margin = '1in',
 
@@ -76,39 +76,32 @@ class Options
         return $this;
     }
 
-    public function resolvePaperSize(LengthUnit $unit): BoxSize
+    public function resolvePaperSize(): BoxSize
     {
-        if (isset($this->format)) {
-            $size = $this->format->size($unit);
-
-            return $this->landscape ? $size->toLandscape() : $size;
-        }
-
-        if (isset($this->width) && isset($this->height)) {
-            return new BoxSize($this->width, $this->height);
-        }
-
-        $size = PaperFormat::_A4->size($unit);
-
-        return $this->landscape ? $size->toLandscape() : $size;
+        return PageSizeResolver::resolve(
+            width: $this->width,
+            height: $this->height,
+            paperFormat: $this->format,
+            landscape: $this->landscape,
+        );
     }
 
     /** @throws RowBloomException */
     public function validateMargin(): void
     {
-        $pageSize = $this->resolvePaperSize(LengthUnit::PIXEL);
+        $pageSize = $this->resolvePaperSize();
 
-        $width = $this->margin->right->toFloat(LengthUnit::PIXEL) +
-            $this->margin->left->toFloat(LengthUnit::PIXEL);
+        $width = $this->margin->right->toPxFloat() +
+            $this->margin->left->toPxFloat();
 
-        $height = $this->margin->top->toFloat(LengthUnit::PIXEL) +
-            $this->margin->bottom->toFloat(LengthUnit::PIXEL);
+        $height = $this->margin->top->toPxFloat() +
+            $this->margin->bottom->toPxFloat();
 
-        if ((int) $height >= (int) $pageSize->height->toFloat()) {
+        if ((int) $height >= (int) $pageSize->height->toPxFloat()) {
             throw new RowBloomException('Margin top and bottom must not overlap');
         }
 
-        if ((int) $width >= (int) $pageSize->width->toFloat()) {
+        if ((int) $width >= (int) $pageSize->width->toPxFloat()) {
             throw new RowBloomException('Margin right and left must not overlap');
         }
     }

@@ -121,7 +121,7 @@ class BoxArea
     }
 
     /** @return array{top: string, right: string, bottom: string, left: string} */
-    public function toStringsMap(LengthUnit $reaUnit = null): array
+    public function toStringsMap(?LengthUnit $reaUnit = null): array
     {
         return [
             'top' => $this->top->toString($reaUnit),
@@ -138,7 +138,7 @@ class BoxArea
     }
 
     /** @return string[] */
-    public function toStringsList(LengthUnit $reaUnit = null): array
+    public function toStringsList(?LengthUnit $reaUnit = null): array
     {
         return array_values($this->toStringsMap($reaUnit));
     }

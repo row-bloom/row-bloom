@@ -97,12 +97,62 @@ class Length implements Stringable
 
     public function toPxFloat(): float
     {
-        return $this->value(LengthUnit::PIXEL);
+        return $this->toFloat(LengthUnit::PIXEL);
+    }
+
+    public function toMmFloat(): float
+    {
+        return $this->toFloat(LengthUnit::MILLIMETER);
+    }
+
+    public function toCmFloat(): float
+    {
+        return $this->toFloat(LengthUnit::CENTIMETER);
+    }
+
+    public function toInFloat(): float
+    {
+        return $this->toFloat(LengthUnit::INCH);
+    }
+
+    public function toPtFloat(): float
+    {
+        return $this->toFloat(LengthUnit::POINT);
+    }
+
+    public function toPcFloat(): float
+    {
+        return $this->toFloat(LengthUnit::PICA);
     }
 
     public function toString(LengthUnit $readUnit = null): string
     {
         return $this->value($readUnit).($readUnit?->value ?? $this->readUnit->value);
+    }
+
+    public function toMmString(): float
+    {
+        return $this->toString(LengthUnit::MILLIMETER);
+    }
+
+    public function toCmString(): float
+    {
+        return $this->toString(LengthUnit::CENTIMETER);
+    }
+
+    public function toInString(): float
+    {
+        return $this->toString(LengthUnit::INCH);
+    }
+
+    public function toPtString(): float
+    {
+        return $this->toString(LengthUnit::POINT);
+    }
+
+    public function toPcString(): float
+    {
+        return $this->toString(LengthUnit::PICA);
     }
 
     public function __toString(): string

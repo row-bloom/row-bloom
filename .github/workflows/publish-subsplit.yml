@@ -20,11 +20,11 @@ jobs:
               with:
                   fetch-depth: '0'
                   persist-credentials: 'false'
-            # - uses: frankdejonge/use-github-token@1.0.2
-            #   with:
-            #       authentication: 'medilies:${{ secrets.PERSONAL_ACCESS_TOKEN }}'
-            #       user_name: 'medilies'
-            #       user_email: 'medilies.contact@gmail.com'
+            - uses: frankdejonge/use-github-token@1.0.2
+              with:
+                  authentication: 'medilies:${{ secrets.PERSONAL_ACCESS_TOKEN }}'
+                  user_name: 'medilies'
+                  user_email: 'medilies.contact@gmail.com'
             - name: Cache splitsh-lite
               id: splitsh-cache
               uses: actions/cache@v3

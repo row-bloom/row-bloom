@@ -1,0 +1,9 @@
+{
+    "sub-splits": [
+        {
+            "name": "css-sizing",
+            "directory": "src/Renderers/Sizing",
+            "target": "git@github.com:row-bloom/css-sizing.git"
+        }
+    ]
+}

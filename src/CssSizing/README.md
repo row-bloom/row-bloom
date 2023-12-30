@@ -7,7 +7,7 @@
 
 Provides simple and intuitive classes to manage CSS sizing in PHP.
 
-> [!WARNING]
+> [!IMPORTANT]
 > This is a sub-split, for development, pull requests and issues, visit: <https://github.com/row-bloom/row-bloom>
 
 ## Installation

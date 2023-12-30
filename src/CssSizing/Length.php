@@ -76,7 +76,7 @@ class Length implements Stringable
         return (clone $this)->setReadUnit($readUnit);
     }
 
-    public function value(LengthUnit $readUnit = null): float
+    public function value(?LengthUnit $readUnit = null): float
     {
         if ($this->unit === $this->readUnit & is_null($readUnit)) {
             return $this->value;
@@ -89,12 +89,12 @@ class Length implements Stringable
         return $this->value * LengthUnit::absoluteUnitsEquivalence($this->unit, $this->readUnit);
     }
 
-    public function toFloat(LengthUnit $readUnit = null): float
+    public function toFloat(?LengthUnit $readUnit = null): float
     {
         return $this->value($readUnit);
     }
 
-    public function toString(LengthUnit $readUnit = null): string
+    public function toString(?LengthUnit $readUnit = null): string
     {
         return $this->value($readUnit).($readUnit?->value ?? $this->readUnit->value);
     }

@@ -40,8 +40,8 @@ class Options
 
         public bool $landscape = false,
         public ?PaperFormat $format = null,
-        string|length $width = null,
-        string|length $height = null,
+        string|length|null $width = null,
+        string|length|null $height = null,
 
         array|string $margin = '1in',
 

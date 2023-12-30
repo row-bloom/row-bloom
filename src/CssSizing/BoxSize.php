@@ -13,7 +13,6 @@ class BoxSize
         return new static($width, $height);
     }
 
-    /** @param array{width: string, height: string}|array{0: string, 1: string} $size */
     public static function fromArray(array $size): static
     {
         if (! is_string($size['width']) && ! is_string($size[0])) {

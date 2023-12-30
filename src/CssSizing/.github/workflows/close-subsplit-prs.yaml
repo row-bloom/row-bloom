@@ -9,7 +9,7 @@ on:
         branches:
             - main
     schedule:
-        - cron: '30 7 * * *'
+        - cron: "30 7 * * *"
 
 jobs:
     close_subsplit_prs:
@@ -18,8 +18,9 @@ jobs:
         steps:
             - uses: frankdejonge/action-close-subsplit-pr@0.1.0
               with:
-                  close_pr: 'yes'
-                  target_branch_match: '^(?!main).+$'
+                  close_pr: "yes"
+                  # access_token: '{{ secrets.GH_PAT }}' // Uncomment to use self-defined access token, default: ${{ github.token }}
+                  # target_branch_match: '.+' // Uncomment to supply your own PR target branch filter
                   message: |
                       Hi :wave:,
 

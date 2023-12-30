@@ -8,8 +8,22 @@
 
 namespace RowBloom\CssSizing;
 
+use BadMethodCallException;
 use Stringable;
 
+/**
+ * @method float toPxFloat()
+ * @method float toMmFloat()
+ * @method float toCmFloat()
+ * @method float toInFloat()
+ * @method float toPtFloat()
+ * @method float toPcFloat()
+ * @method string toMmString()
+ * @method string toCmString()
+ * @method string toInString()
+ * @method string toPtString()
+ * @method string toPcString()
+ */
 class Length implements Stringable
 {
     public static function fromDimension(string $value): static
@@ -104,58 +118,25 @@ class Length implements Stringable
         return $this->value().$this->readUnit->value;
     }
 
-    public function toPxFloat(): float
+    /** @phpstan-ignore-next-line */
+    public function __call($name, $arguments): float|string
     {
-        return $this->toFloat(LengthUnit::PIXEL);
-    }
+        if (preg_match('/^to(?<unit>..)Float$/', $name, $matchedUnit) === 1) {
+            $readUnit = LengthUnit::tryFrom(strtolower($matchedUnit['unit']));
 
-    public function toMmFloat(): float
-    {
-        return $this->toFloat(LengthUnit::MILLIMETER);
-    }
+            if (! is_null($readUnit)) {
+                return $this->toFloat($readUnit);
+            }
+        }
 
-    public function toCmFloat(): float
-    {
-        return $this->toFloat(LengthUnit::CENTIMETER);
-    }
+        if (preg_match('/^to(?<unit>..)String$/', $name, $matchedUnit) === 1) {
+            $readUnit = LengthUnit::tryFrom(strtolower($matchedUnit['unit']));
 
-    public function toInFloat(): float
-    {
-        return $this->toFloat(LengthUnit::INCH);
-    }
+            if (! is_null($readUnit)) {
+                return $this->toString($readUnit);
+            }
+        }
 
-    public function toPtFloat(): float
-    {
-        return $this->toFloat(LengthUnit::POINT);
-    }
-
-    public function toPcFloat(): float
-    {
-        return $this->toFloat(LengthUnit::PICA);
-    }
-
-    public function toMmString(): string
-    {
-        return $this->toString(LengthUnit::MILLIMETER);
-    }
-
-    public function toCmString(): string
-    {
-        return $this->toString(LengthUnit::CENTIMETER);
-    }
-
-    public function toInString(): string
-    {
-        return $this->toString(LengthUnit::INCH);
-    }
-
-    public function toPtString(): string
-    {
-        return $this->toString(LengthUnit::POINT);
-    }
-
-    public function toPcString(): string
-    {
-        return $this->toString(LengthUnit::PICA);
+        throw new BadMethodCallException('Call to undefined method '.static::class.'::'.$name.'().');
     }
 }

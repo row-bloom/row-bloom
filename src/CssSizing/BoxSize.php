@@ -8,6 +8,24 @@ class BoxSize
 
     public readonly Length $height;
 
+    public static function new(string|Length $width, string|Length $height): static
+    {
+        return new static($width, $height);
+    }
+
+    public static function fromArray(array $size): static
+    {
+        if (! is_string($size['width']) && ! is_string($size[0])) {
+            throw new CssSizingException('Box size as an array must have a width value as string at key "width" or index 0.');
+        }
+
+        if (! is_string($size['height']) && ! is_string($size[1])) {
+            throw new CssSizingException('Box size as an array must have a height value as string at key "height" or index 1.');
+        }
+
+        return new static($size['width'] ?? $size[0], $size['height'] ?? $size[1]);
+    }
+
     final public function __construct(string|Length $width, string|Length $height)
     {
         $this->width = $width instanceof Length ? $width : Length::fromDimension($width);

@@ -5,8 +5,8 @@ namespace RowBloom\RowBloom;
 use RowBloom\CssSizing\BoxArea;
 use RowBloom\CssSizing\BoxSize;
 use RowBloom\CssSizing\Length;
-use RowBloom\CssSizing\PageSizeResolver;
 use RowBloom\CssSizing\PaperFormat;
+use RowBloom\CssSizing\PaperSizeResolver;
 use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options
@@ -78,12 +78,12 @@ class Options
 
     public function resolvePaperSize(): BoxSize
     {
-        return PageSizeResolver::resolve(
+        return PaperSizeResolver::init(
             width: $this->width,
             height: $this->height,
             paperFormat: $this->format,
             landscape: $this->landscape,
-        );
+        )->resolve();
     }
 
     /** @throws RowBloomException */

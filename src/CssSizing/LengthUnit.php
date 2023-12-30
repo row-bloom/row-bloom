@@ -10,14 +10,14 @@ enum LengthUnit: string
     case INCH = 'in';
     case POINT = 'pt';
     case PICA = 'pc';
-    // TODO: Q
+    // TODO: Q (impact RowBloom\CssSizing\Length::__call)
 
     /**
      * @var (int|float)[][] Absolute units only
      *
      * @see https://www.w3.org/TR/css-values-3/#absolute-lengths
      */
-    protected const ABSOLUTE_UNIT_EQUIVALENCE = [
+    protected const ABSOLUTE_UNITS_EQUIVALENCE = [
         'in' => [
             'cm' => 2.54,
             'mm' => 25.4,
@@ -67,12 +67,12 @@ enum LengthUnit: string
         $from = $from instanceof self ? $from->value : $from;
         $to = $to instanceof self ? $to->value : $to;
 
-        return self::ABSOLUTE_UNIT_EQUIVALENCE[$from][$to];
+        return self::ABSOLUTE_UNITS_EQUIVALENCE[$from][$to];
     }
 
     /** @return string[] */
     public static function absoluteUnits(): array
     {
-        return array_keys(self::ABSOLUTE_UNIT_EQUIVALENCE);
+        return array_keys(self::ABSOLUTE_UNITS_EQUIVALENCE);
     }
 }

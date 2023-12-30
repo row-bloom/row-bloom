@@ -17,7 +17,7 @@ class FolderDataLoader implements FsContract, RecursiveContract
     {
     }
 
-    public function getTable(TableLocation $tableLocation, ?Config $config = null): Table
+    public function getTable(TableLocation $tableLocation, Config $config = null): Table
     {
         if (! isset($this->factory)) {
             throw new RowBloomException('Use setFactory to set '.Factory::class.' on: '.static::class);

@@ -35,7 +35,8 @@
             "src/helpers.php"
         ],
         "psr-4": {
-            "RowBloom\\RowBloom\\": "src/"
+            "RowBloom\\RowBloom\\": "src/",
+            "RowBloom\\CssSizing\\": "src/CssSizing/"
         }
     },
     "autoload-dev": {

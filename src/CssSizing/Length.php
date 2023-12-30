@@ -6,9 +6,8 @@
  * @see https://www.w3.org/TR/css-syntax-3
  */
 
-namespace RowBloom\RowBloom\Renderers\Sizing;
+namespace RowBloom\CssSizing;
 
-use RowBloom\RowBloom\RowBloomException;
 use Stringable;
 
 class Length implements Stringable
@@ -25,7 +24,7 @@ class Length implements Stringable
     public static function fromNumberUnit(float|int $value, LengthUnit $unit): static
     {
         if (! is_numeric($value)) {
-            throw new RowBloomException("Not numeric value '{$value}'");
+            throw new CssSizingException("Not numeric value '{$value}'");
         }
 
         return new static($value, $unit);
@@ -59,7 +58,7 @@ class Length implements Stringable
         $regex = "/^(?<value>\d+(\.\d+)?)(?<unit>{$units})$/";
 
         preg_match($regex, $value, $parsed) ?:
-            throw new RowBloomException("{Invalid CSS dimension: '{$value}' (must be in <number><unit> format).");
+            throw new CssSizingException("{Invalid CSS dimension: '{$value}' (must be in <number><unit> format).");
 
         /** @phpstan-ignore-next-line */
         return $parsed;
@@ -77,7 +76,7 @@ class Length implements Stringable
         return (clone $this)->setReadUnit($readUnit);
     }
 
-    public function value(?LengthUnit $readUnit = null): float
+    public function value(LengthUnit $readUnit = null): float
     {
         if ($this->unit === $this->readUnit & is_null($readUnit)) {
             return $this->value;
@@ -90,12 +89,12 @@ class Length implements Stringable
         return $this->value * LengthUnit::absoluteUnitsEquivalence($this->unit, $this->readUnit);
     }
 
-    public function toFloat(?LengthUnit $readUnit = null): float
+    public function toFloat(LengthUnit $readUnit = null): float
     {
         return $this->value($readUnit);
     }
 
-    public function toString(?LengthUnit $readUnit = null): string
+    public function toString(LengthUnit $readUnit = null): string
     {
         return $this->value($readUnit).($readUnit?->value ?? $this->readUnit->value);
     }

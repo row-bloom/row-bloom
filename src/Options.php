@@ -2,11 +2,11 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
-use RowBloom\RowBloom\Renderers\Sizing\BoxSize;
-use RowBloom\RowBloom\Renderers\Sizing\Length;
-use RowBloom\RowBloom\Renderers\Sizing\PageSizeResolver;
-use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
+use RowBloom\CssSizing\BoxArea;
+use RowBloom\CssSizing\BoxSize;
+use RowBloom\CssSizing\Length;
+use RowBloom\CssSizing\PageSizeResolver;
+use RowBloom\CssSizing\PaperFormat;
 use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options
@@ -40,8 +40,8 @@ class Options
 
         public bool $landscape = false,
         public ?PaperFormat $format = null,
-        string|length|null $width = null,
-        string|length|null $height = null,
+        string|length $width = null,
+        string|length $height = null,
 
         array|string $margin = '1in',
 

@@ -9,7 +9,7 @@ use RowBloom\RowBloom\RowBloom;
 use RowBloom\RowBloom\Support;
 use RowBloom\RowBloom\Types\Context;
 
-function rowBloom(?Support $support = null, ?Config $defaultConfig = null, ?Options $defaultOptions = null): Context
+function rowBloom(Support $support = null, Config $defaultConfig = null, Options $defaultOptions = null): Context
 {
     $support ??= new Support;
 

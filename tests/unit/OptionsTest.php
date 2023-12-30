@@ -1,8 +1,8 @@
 <?php
 
+use RowBloom\CssSizing\BoxArea;
+use RowBloom\CssSizing\PaperFormat;
 use RowBloom\RowBloom\Options;
-use RowBloom\RowBloom\Renderers\Sizing\BoxArea;
-use RowBloom\RowBloom\Renderers\Sizing\PaperFormat;
 use RowBloom\RowBloom\RowBloomException;
 
 test('setFromArray()', function () {

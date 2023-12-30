@@ -4,9 +4,7 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model/Introduction_to_the_CSS_box_model
  */
 
-namespace RowBloom\RowBloom\Renderers\Sizing;
-
-use RowBloom\RowBloom\RowBloomException;
+namespace RowBloom\CssSizing;
 
 class BoxArea
 {
@@ -37,7 +35,7 @@ class BoxArea
             ! isset($value['bottom']) ||
             ! isset($value['left'])
         ) {
-            throw new RowBloomException(json_encode($value).' must contain all the following keys: top, right, bottom, left.');
+            throw new CssSizingException(json_encode($value).' must contain all the following keys: top, right, bottom, left.');
         }
 
         $this->top = Length::fromDimension($value['top']);
@@ -58,11 +56,11 @@ class BoxArea
         $valueComponents = preg_split('/\s/', $value);
 
         if ($valueComponents === false) {
-            throw new RowBloomException("Couldn't parse: {$value}");
+            throw new CssSizingException("Couldn't parse: {$value}");
         }
 
         if (count($valueComponents) === 0 || count($valueComponents) > 4) {
-            throw new RowBloomException("{$value} must contain 1 to 4 components");
+            throw new CssSizingException("{$value} must contain 1 to 4 components");
         }
 
         return $valueComponents;
@@ -79,7 +77,7 @@ class BoxArea
         $componentsCount = count($valueComponents);
 
         if (! array_is_list($valueComponents) || $componentsCount === 0 || $componentsCount > 4) {
-            throw new RowBloomException(json_encode($valueComponents).' must be a list with max index of 3');
+            throw new CssSizingException(json_encode($valueComponents).' must be a list with max index of 3');
         }
 
         $labeledValue = [];
@@ -121,7 +119,7 @@ class BoxArea
     }
 
     /** @return array{top: string, right: string, bottom: string, left: string} */
-    public function toStringsMap(?LengthUnit $reaUnit = null): array
+    public function toStringsMap(LengthUnit $reaUnit = null): array
     {
         return [
             'top' => $this->top->toString($reaUnit),
@@ -138,7 +136,7 @@ class BoxArea
     }
 
     /** @return string[] */
-    public function toStringsList(?LengthUnit $reaUnit = null): array
+    public function toStringsList(LengthUnit $reaUnit = null): array
     {
         return array_values($this->toStringsMap($reaUnit));
     }

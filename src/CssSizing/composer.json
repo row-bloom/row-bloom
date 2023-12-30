@@ -1,0 +1,39 @@
+{
+    "name": "row-bloom/css-sizing",
+    "description": "Standard CSS sizing",
+    "keywords": [
+        "CSS",
+        "Sizing"
+    ],
+    "homepage": "https://github.com/row-bloom/css-sizing",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "medilies",
+            "email": "medilies.contact@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "RowBloom\\CssSizing\\": "/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {}
+    },
+    "scripts": {},
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

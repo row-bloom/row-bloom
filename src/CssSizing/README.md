@@ -34,10 +34,10 @@ composer require row-bloom/css-sizing
 
 `RowBloom\CssSizing\Length` object.
 
-### CSS box model areas
+### CSS box model areas (Margin/Border/Padding)
 
 `RowBloom\CssSizing\BoxArea` object.
 
-### CSS box model sizing
+### CSS box model sizing (Content/Box)
 
 `RowBloom\CssSizing\BoxSize` object.

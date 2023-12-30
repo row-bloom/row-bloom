@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @see https://www.w3.org/TR/css-page-3/#page-size
+ */
+
 namespace RowBloom\CssSizing;
 
 class BoxSize

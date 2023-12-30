@@ -2,7 +2,7 @@
     "sub-splits": [
         {
             "name": "css-sizing",
-            "directory": "src/Renderers/Sizing",
+            "directory": "src/CssSizing",
             "target": "git@github.com:row-bloom/css-sizing.git"
         }
     ]

@@ -4,12 +4,12 @@ on:
     push:
         branches:
             - main
-    # create:
-    #     tags:
-    #         - '7.*'
-    # delete:
-    #     tags:
-    #         - '7.*'
+    create:
+        tags:
+            - '0.*'
+    delete:
+        tags:
+            - '0.*'
 
 jobs:
     publish_subsplits:

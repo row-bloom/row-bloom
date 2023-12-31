@@ -18,13 +18,13 @@ it('fromNumberUnit', function () {
 });
 
 it('convert > toString > toFloat', function () {
-    $length = Length::fromDimension('10px')->convert(LengthUnit::INCH);
+    $length = Length::fromDimension('10cm')->convert(LengthUnit::MILLIMETER);
 
     expect($length->value)->toEqual(10);
-    expect($length->unit)->toEqual(LengthUnit::PIXEL);
+    expect($length->unit)->toEqual(LengthUnit::CENTIMETER);
 
-    expect($length->toFloat())->toEqual(10 * (1 / 96));
-    expect($length->toString())->toEqual((10 * (1 / 96)).'in');
+    expect($length->toFloat())->toEqual(100);
+    expect($length->toString())->toEqual('100mm');
 });
 
 it('throws an exception when calling an undefined method')

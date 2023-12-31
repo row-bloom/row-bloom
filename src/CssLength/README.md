@@ -10,7 +10,7 @@ Value objects and enums to manipulate CSS sizing and ensure valid values in your
 > [!IMPORTANT]
 > This is a sub-split, for development, pull requests and issues, visit: <https://github.com/row-bloom/row-bloom>
 
-This package adheres to the [CSS Values and Units Module Level 3](https://www.w3.org/TR/css-values-3/#lengths) standards, particularly focusing on length values. It also encompasses related elements like standard paper sizes and facets of the box model, providing cohesive support for length applications.
+This package adheres to the [CSS Values and Units Module Level 3 Candidate Recommendation](https://www.w3.org/TR/css-values-3/#lengths), particularly focusing on length values. It also encompasses related elements like standard paper sizes and facets of the box model, providing cohesive support for length applications.
 
 Notably, it proves particularly beneficial for tasks involving PDF generation from HTML.
 

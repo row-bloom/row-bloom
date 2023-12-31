@@ -4,6 +4,6 @@ namespace RowBloom\CssLength;
 
 use Exception;
 
-class CssSizingException extends Exception
+class CssLengthException extends Exception
 {
 }

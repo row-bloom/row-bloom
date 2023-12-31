@@ -35,7 +35,7 @@ class BoxArea
             ! isset($value['bottom']) ||
             ! isset($value['left'])
         ) {
-            throw new CssSizingException(json_encode($value).' must contain all the following keys: top, right, bottom, left.');
+            throw new CssLengthException(json_encode($value).' must contain all the following keys: top, right, bottom, left.');
         }
 
         $this->top = Length::fromDimension($value['top']);
@@ -56,11 +56,11 @@ class BoxArea
         $valueComponents = preg_split('/\s/', $value);
 
         if ($valueComponents === false) {
-            throw new CssSizingException("Couldn't parse: {$value}");
+            throw new CssLengthException("Couldn't parse: {$value}");
         }
 
         if (count($valueComponents) === 0 || count($valueComponents) > 4) {
-            throw new CssSizingException("{$value} must contain 1 to 4 components");
+            throw new CssLengthException("{$value} must contain 1 to 4 components");
         }
 
         return $valueComponents;
@@ -77,7 +77,7 @@ class BoxArea
         $componentsCount = count($valueComponents);
 
         if (! array_is_list($valueComponents) || $componentsCount === 0 || $componentsCount > 4) {
-            throw new CssSizingException(json_encode($valueComponents).' must be a list with max index of 3');
+            throw new CssLengthException(json_encode($valueComponents).' must be a list with max index of 3');
         }
 
         $labeledValue = [];

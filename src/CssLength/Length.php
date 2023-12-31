@@ -38,7 +38,7 @@ class Length implements Stringable
     public static function fromNumberUnit(float|int $value, LengthUnit $unit): static
     {
         if (! is_numeric($value)) {
-            throw new CssSizingException("Not numeric value '{$value}'");
+            throw new CssLengthException("Not numeric value '{$value}'");
         }
 
         return new static($value, $unit);
@@ -72,7 +72,7 @@ class Length implements Stringable
         $regex = "/^(?<value>\d+(\.\d+)?)(?<unit>{$units})$/";
 
         preg_match($regex, $value, $parsed) ?:
-            throw new CssSizingException("{Invalid CSS dimension: '{$value}' (must be in <number><unit> format).");
+            throw new CssLengthException("{Invalid CSS dimension: '{$value}' (must be in <number><unit> format).");
 
         /** @phpstan-ignore-next-line */
         return $parsed;

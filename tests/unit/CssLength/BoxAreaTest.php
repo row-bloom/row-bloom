@@ -46,7 +46,7 @@ it('list -> toStringsList', function (array|string $input, array $expected) {
 ]);
 
 it('Invalid values', function (array|string $input) {
-    expect(fn() => BoxArea::new($input)->toStringsList())->toThrow(CssBoxException::class);
+    expect(fn () => BoxArea::new($input)->toStringsList())->toThrow(CssBoxException::class);
 })->with([
     [['x' => '1px']],
     ['1px 2pc 3mm 4cm 5cm'],

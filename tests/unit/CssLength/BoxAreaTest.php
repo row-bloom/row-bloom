@@ -1,9 +1,10 @@
 <?php
 
 use RowBloom\CssLength\BoxArea;
+use RowBloom\CssLength\CssBoxException;
 
 it('string -> toStringsMap', function (array|string $input, array $expected) {
-    expect((BoxArea::new($input))->toStringsMap())->toEqual($expected);
+    expect(BoxArea::new($input)->toStringsMap())->toEqual($expected);
 })->with([
     'String of one components' => [
         'input' => '1px',
@@ -24,7 +25,7 @@ it('string -> toStringsMap', function (array|string $input, array $expected) {
 ]);
 
 it('list -> toStringsList', function (array|string $input, array $expected) {
-    expect((BoxArea::new($input))->toStringsList())->toEqual($expected);
+    expect(BoxArea::new($input)->toStringsList())->toEqual($expected);
 })->with([
     'List of one components' => [
         'input' => ['1px'],
@@ -42,4 +43,11 @@ it('list -> toStringsList', function (array|string $input, array $expected) {
         'input' => ['1px', '2pc', '3mm', '4cm'],
         'expected' => ['1px', '2pc', '3mm', '4cm'],
     ],
+]);
+
+it('Invalid values', function (array|string $input) {
+    expect(fn() => BoxArea::new($input)->toStringsList())->toThrow(CssBoxException::class);
+})->with([
+    [['x' => '1px']],
+    ['1px 2pc 3mm 4cm 5cm'],
 ]);

@@ -37,10 +37,6 @@ class Length implements Stringable
 
     public static function fromNumberUnit(float|int $value, LengthUnit $unit): static
     {
-        if (! is_numeric($value)) {
-            throw new CssLengthException("Not numeric value '{$value}'");
-        }
-
         return new static($value, $unit);
     }
 

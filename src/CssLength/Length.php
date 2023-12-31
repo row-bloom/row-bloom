@@ -2,11 +2,11 @@
 
 /**
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/length
- * @see https://www.w3.org/TR/css-sizing-3
+ * @see https://www.w3.org/TR/css-length-3
  * @see https://www.w3.org/TR/css-syntax-3
  */
 
-namespace RowBloom\CssSizing;
+namespace RowBloom\CssLength;
 
 use BadMethodCallException;
 use Stringable;

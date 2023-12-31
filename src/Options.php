@@ -2,11 +2,11 @@
 
 namespace RowBloom\RowBloom;
 
-use RowBloom\CssSizing\BoxArea;
-use RowBloom\CssSizing\BoxSize;
-use RowBloom\CssSizing\Length;
-use RowBloom\CssSizing\PaperFormat;
-use RowBloom\CssSizing\PaperSizeResolver;
+use RowBloom\CssLength\BoxArea;
+use RowBloom\CssLength\BoxSize;
+use RowBloom\CssLength\Length;
+use RowBloom\CssLength\PaperFormat;
+use RowBloom\CssLength\PaperSizeResolver;
 use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options

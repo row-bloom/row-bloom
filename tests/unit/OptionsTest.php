@@ -1,7 +1,7 @@
 <?php
 
-use RowBloom\CssSizing\BoxArea;
-use RowBloom\CssSizing\PaperFormat;
+use RowBloom\CssLength\BoxArea;
+use RowBloom\CssLength\PaperFormat;
 use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\RowBloomException;
 

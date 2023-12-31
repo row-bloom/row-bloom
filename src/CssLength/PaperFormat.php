@@ -8,7 +8,7 @@
  * @ee https://webstore.ansi.org/standards/asme/asmey142020 ASME Y14.1-2020
  */
 
-namespace RowBloom\CssSizing;
+namespace RowBloom\CssLength;
 
 enum PaperFormat: string
 {

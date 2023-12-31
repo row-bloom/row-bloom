@@ -1,9 +1,9 @@
 {
     "sub-splits": [
         {
-            "name": "css-sizing",
-            "directory": "src/CssSizing",
-            "target": "git@github.com:row-bloom/css-sizing.git"
+            "name": "css-length",
+            "directory": "src/CssLength",
+            "target": "git@github.com:row-bloom/css-length.git"
         }
     ]
 }

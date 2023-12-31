@@ -4,7 +4,7 @@
  * @see https://www.w3.org/TR/css-page-3/#page-size
  */
 
-namespace RowBloom\CssSizing;
+namespace RowBloom\CssLength;
 
 class BoxSize
 {

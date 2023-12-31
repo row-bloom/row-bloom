@@ -16,7 +16,7 @@ use RowBloom\ChromePhpRenderer\ChromePhpRenderer;
 use RowBloom\RowBloom\DataLoaders\FolderDataLoader;
 use RowBloom\RowBloom\DataLoaders\JsonDataLoader;
 use RowBloom\RowBloom\Interpolators\PhpInterpolator;
-use RowBloom\CssSizing\PaperFormat;
+use RowBloom\CssLength\PaperFormat;
 use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Support;
 

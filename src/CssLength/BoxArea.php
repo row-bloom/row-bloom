@@ -4,7 +4,7 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model/Introduction_to_the_CSS_box_model
  */
 
-namespace RowBloom\CssSizing;
+namespace RowBloom\CssLength;
 
 class BoxArea
 {

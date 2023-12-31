@@ -1,11 +1,11 @@
 {
-    "name": "row-bloom/css-sizing",
+    "name": "row-bloom/css-length",
     "description": "Standard CSS sizing",
     "keywords": [
         "CSS",
         "Sizing"
     ],
-    "homepage": "https://github.com/row-bloom/css-sizing",
+    "homepage": "https://github.com/row-bloom/css-length",
     "license": "MIT",
     "authors": [
         {
@@ -20,7 +20,7 @@
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "RowBloom\\CssSizing\\": "/"
+            "RowBloom\\CssLength\\": "/"
         }
     },
     "autoload-dev": {

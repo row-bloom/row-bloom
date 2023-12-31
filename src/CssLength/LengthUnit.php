@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\CssSizing;
+namespace RowBloom\CssLength;
 
 enum LengthUnit: string
 {
@@ -10,7 +10,7 @@ enum LengthUnit: string
     case INCH = 'in';
     case POINT = 'pt';
     case PICA = 'pc';
-    // TODO: Q (impact RowBloom\CssSizing\Length::__call)
+    // TODO: Q (impact RowBloom\CssLength\Length::__call)
 
     /**
      * @var (int|float)[][] Absolute units only

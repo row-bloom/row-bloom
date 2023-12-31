@@ -1,6 +1,6 @@
 <?php
 
-use RowBloom\CssSizing\BoxArea;
+use RowBloom\CssLength\BoxArea;
 
 it('string -> toStringsMap', function (array|string $input, array $expected) {
     expect((BoxArea::new($input))->toStringsMap())->toEqual($expected);

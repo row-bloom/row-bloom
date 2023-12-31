@@ -1,6 +1,6 @@
 <?php
 
-namespace RowBloom\CssSizing;
+namespace RowBloom\CssLength;
 
 /**
  * .

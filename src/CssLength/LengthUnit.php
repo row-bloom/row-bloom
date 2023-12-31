@@ -63,6 +63,10 @@ enum LengthUnit: string
         $from = $from instanceof self ? $from->value : $from;
         $to = $to instanceof self ? $to->value : $to;
 
+        if($from === $to) {
+            return $value;
+        }
+
         $result = $absoluteUnitsEquivalence[$from][$to]($value);
 
         if (! is_null($decimals)) {

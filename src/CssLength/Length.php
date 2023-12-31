@@ -18,6 +18,7 @@ use Stringable;
  * @method float toInFloat()
  * @method float toPtFloat()
  * @method float toPcFloat()
+ * @method string toPxString()
  * @method string toMmString()
  * @method string toCmString()
  * @method string toInString()

@@ -10,11 +10,9 @@ Value objects and enums to manipulate CSS sizing and ensure valid values in your
 > [!IMPORTANT]
 > This is a sub-split, for development, pull requests and issues, visit: <https://github.com/row-bloom/row-bloom>
 
-The premise of this package is focused on covering CSS3 sizing according to ... and extends covering some box models due to the high cohesion.
+This package adheres to the [CSS Values and Units Module Level 3](https://www.w3.org/TR/css-values-3/#lengths) standards, particularly focusing on length values. It also encompasses related elements like standard paper sizes and facets of the box model, providing cohesive support for length applications.
 
-- <https://www.w3.org/TR/css-values-3/#lengths>
-- <https://www.w3.org/TR/css-sizing-3/>
-- <https://www.w3.org/TR/css-page-3/>
+Notably, it proves particularly beneficial for tasks involving PDF generation from HTML.
 
 ## Installation
 
@@ -30,7 +28,11 @@ composer require row-bloom/css-length
 
 ### PaperFormat enum
 
-...
+- ISO 216:2007 `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A7`, `A8`, `A9`, `A10`, `B0`, `B1`, `B2`, `B3`, `B4`, `B5`, `B6`, `B7`, `B8`, `B9`, `B10`.
+- ISO 269:1985 `C0`, `C1`, `C2`, `C3`, `C4`, `C5`, `C6`, `C7`, `C8`, `C9`, `C10`.
+- ASME Y14.1-2020 US Paper Sizes `LETTER`, `LEGAL`, `LEDGER`, `TABLOID`.
+
+> Precede any official paper format name with an underscore to get the enum case.
 
 ### LengthUnit enum
 
@@ -41,12 +43,14 @@ composer require row-bloom/css-length
 
 ### Length object
 
-...
+- Create value object by parsing a dimension string or providing a pair of value and unit.
 
 ### BoxArea object
 
-...
+- Value object for representing Padding areas, Margin areas, and border areas.
+- Create and object by providing a valid CSS value string.
+- Access value of each of the for sides (`top`, `right`, `bottom`, `left`).
 
 ### BoxSize object
 
-...
+Encompasses a pair of width and height.

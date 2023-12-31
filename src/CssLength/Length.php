@@ -52,7 +52,7 @@ class Length implements Stringable
         $this->readUnit ??= $this->unit;
     }
 
-    // TODO: setReference
+    // TODO: setReference for relative units
     // TODO: support functional notation. calc(50% - 2em)
 
     /**

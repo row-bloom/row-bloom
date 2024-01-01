@@ -7,7 +7,6 @@ use RowBloom\CssLength\BoxSize;
 use RowBloom\CssLength\Length;
 use RowBloom\CssLength\PaperFormat;
 use RowBloom\CssLength\PaperSizeResolver;
-use RowBloom\RowBloom\Utils\CaseConverter;
 
 class Options
 {
@@ -16,6 +15,8 @@ class Options
     public ?Length $height = null;
 
     public BoxArea $margin;
+
+    public ?PaperFormat $format = null;
 
     /**
      * .
@@ -39,7 +40,7 @@ class Options
         public ?int $perPage = null,
 
         public bool $landscape = false,
-        public ?PaperFormat $format = null,
+        null|string|PaperFormat $format = null,
         string|length|null $width = null,
         string|length|null $height = null,
 
@@ -49,9 +50,23 @@ class Options
         // security ?
         // compression ?
     ) {
-        $this->setMargin($margin)
+        $this->setFormat($format)
+            ->setMargin($margin)
             ->setWidth($width)
             ->setHeight($height);
+    }
+
+    public function setFormat(null|string|PaperFormat $format): static
+    {
+        if ($format instanceof PaperFormat || is_null($format)) {
+            $this->format = $format;
+
+            return $this;
+        }
+
+        $this->format = PaperFormat::from($format);
+
+        return $this;
     }
 
     public function setMargin(array|string|BoxArea $margin): static
@@ -97,23 +112,20 @@ class Options
     public function setFromArray(array $options): static
     {
         foreach ($options as $key => $value) {
-            $key = CaseConverter::snakeToCamel($key);
-
-            if (! property_exists($this, $key)) {
-                continue;
-            }
-
-            if (in_array($key, ['margin', 'width', 'height'], true)) {
-                match ($key) {
-                    'margin' => $this->setMargin($value),
-                    'width' => $this->setWidth($value),
-                    'height' => $this->setHeight($value),
-                };
-
-                continue;
-            }
-
-            $this->$key = $value;
+            match ($key) {
+                'displayHeaderFooter', 'display_header_footer' => $this->displayHeaderFooter = $value,
+                'headerTemplate', 'header_template' => $this->headerTemplate = $value,
+                'footerTemplate', 'footer_template' => $this->footerTemplate = $value,
+                'printBackground', 'print_background' => $this->printBackground = $value,
+                'preferCssPageSize', 'prefer_css_page_size' => $this->preferCssPageSize = $value,
+                'perPage', 'per_page' => $this->perPage = $value,
+                'format' => $this->setFormat($value),
+                'landscape' => $this->landscape = $value,
+                'width' => $this->setWidth($value),
+                'height' => $this->setHeight($value),
+                'margin' => $this->setMargin($value),
+                default => null,
+            };
         }
 
         return $this;

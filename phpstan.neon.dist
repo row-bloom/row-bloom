@@ -5,6 +5,8 @@ parameters:
     level: 7
     paths:
         - src
+    excludePaths:
+        - */tests/*
     tmpDir: build/phpstan
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false

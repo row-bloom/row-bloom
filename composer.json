@@ -29,6 +29,7 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
+        "spatie/browsershot": "^3.58",
         "symfony/var-dumper": "^6.3"
     },
     "autoload": {
@@ -42,6 +43,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "RowBloom\\BrowsershotRenderer\\": "src/_drivers/BrowsershotRenderer",
             "RowBloom\\ChromePhpRenderer\\": "src/_drivers/ChromePhpRenderer",
             "RowBloom\\RowBloom\\Tests\\": "tests/"
         }

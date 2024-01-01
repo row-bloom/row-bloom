@@ -1,0 +1,38 @@
+{
+    "name": "row-bloom/browsershot-renderer",
+    "description": "Table rows to pdf cards",
+    "keywords": [
+        "pdf",
+        "rendering"
+    ],
+    "homepage": "https://github.com/row-bloom/browsershot-renderer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "medilies",
+            "email": "medilies.contact@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "spatie/browsershot": "^3.58"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "RowBloom\\BrowsershotRenderer\\": "/"
+        }
+    },
+    "autoload-dev": {},
+    "scripts": {},
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

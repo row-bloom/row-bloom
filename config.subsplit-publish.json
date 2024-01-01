@@ -9,6 +9,11 @@
             "name": "chrome-php-renderer",
             "directory": "src/_drivers/ChromePhpRenderer",
             "target": "git@github.com:row-bloom/chrome-php-renderer.git"
+        },
+        {
+            "name": "browsershot-renderer",
+            "directory": "src/_drivers/BrowsershotRenderer",
+            "target": "git@github.com:row-bloom/browsershot-renderer.git"
         }
     ]
 }

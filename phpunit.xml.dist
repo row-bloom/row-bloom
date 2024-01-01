@@ -3,7 +3,7 @@
   <testsuites>
     <testsuite name="RowBloom Test Suite">
       <directory>tests</directory>
-      <directory>src/CssLength/tests</directory>
+      <directory>src/_cssLength/tests</directory>
       <directory>src/_drivers/BrowsershotRenderer/tests</directory>
       <directory>src/_drivers/ChromePhpRenderer/tests</directory>
       <directory>src/_drivers/MpdfRenderer/tests</directory>

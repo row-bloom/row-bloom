@@ -17,7 +17,7 @@ class TwigInterpolator implements InterpolatorsContract
     {
     }
 
-    public function interpolate(Html $template, Table $table, int $perPage = null, Config $config = null): Html
+    public function interpolate(Html $template, Table $table, ?int $perPage = null, ?Config $config = null): Html
     {
         $loader = new ArrayLoader(['template' => $template]);
         $twig = new Environment($loader);

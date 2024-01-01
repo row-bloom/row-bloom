@@ -41,16 +41,16 @@
         ],
         "psr-4": {
             "RowBloom\\RowBloom\\": "src/",
-            "RowBloom\\CssLength\\": "src/CssLength/"
+            "RowBloom\\CssLength\\": "src/_cssLength/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RowBloom\\BrowsershotRenderer\\": "src/_drivers/BrowsershotRenderer",
-            "RowBloom\\ChromePhpRenderer\\": "src/_drivers/ChromePhpRenderer",
-            "RowBloom\\MpdfRenderer\\": "src/_drivers/MpdfRenderer",
-            "RowBloom\\SpreadsheetDataLoader\\": "src/_drivers/SpreadsheetDataLoader",
-            "RowBloom\\TwigInterpolator\\": "src/_drivers/TwigInterpolator",
+            "RowBloom\\BrowsershotRenderer\\": "src/_drivers/BrowsershotRenderer/",
+            "RowBloom\\ChromePhpRenderer\\": "src/_drivers/ChromePhpRenderer/",
+            "RowBloom\\MpdfRenderer\\": "src/_drivers/MpdfRenderer/",
+            "RowBloom\\SpreadsheetDataLoader\\": "src/_drivers/SpreadsheetDataLoader/",
+            "RowBloom\\TwigInterpolator\\": "src/_drivers/TwigInterpolator/",
             "RowBloom\\RowBloom\\Tests\\": "tests/"
         }
     },

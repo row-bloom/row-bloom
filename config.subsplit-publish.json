@@ -2,7 +2,7 @@
     "sub-splits": [
         {
             "name": "css-length",
-            "directory": "src/CssLength",
+            "directory": "src/_cssLength",
             "target": "git@github.com:row-bloom/css-length.git"
         },
         {

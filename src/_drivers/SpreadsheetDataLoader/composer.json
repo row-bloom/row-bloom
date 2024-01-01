@@ -1,0 +1,38 @@
+{
+    "name": "row-bloom/spreadsheet-data-loader",
+    "description": "row-bloom Spreadsheet data loader driver",
+    "keywords": [
+        "html",
+        "templating"
+    ],
+    "homepage": "https://github.com/row-bloom/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "medilies",
+            "email": "medilies.contact@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "phpoffice/phpspreadsheet": "^1.28"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "RowBloom\\SpreadsheetDataLoader\\": "src/"
+        }
+    },
+    "autoload-dev": {},
+    "scripts": {},
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

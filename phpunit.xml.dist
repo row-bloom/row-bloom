@@ -6,6 +6,7 @@
       <directory>src/CssLength/tests</directory>
       <directory>src/_drivers/BrowsershotRenderer/tests</directory>
       <directory>src/_drivers/ChromePhpRenderer/tests</directory>
+      <directory>src/_drivers/SpreadsheetDataLoader/tests</directory>
     </testsuite>
   </testsuites>
   <coverage>

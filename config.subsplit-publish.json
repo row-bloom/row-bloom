@@ -14,6 +14,11 @@
             "name": "browsershot-renderer",
             "directory": "src/_drivers/BrowsershotRenderer",
             "target": "git@github.com:row-bloom/browsershot-renderer.git"
+        },
+        {
+            "name": "spreadsheet-data-loader",
+            "directory": "src/_drivers/SpreadsheetDataLoader",
+            "target": "git@github.com:row-bloom/spreadsheet-data-loader.git"
         }
     ]
 }

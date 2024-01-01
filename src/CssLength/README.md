@@ -2,10 +2,10 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/row-bloom/css-length.svg?style=flat-square)](https://packagist.org/packages/row-bloom/css-length)
 [![Total Downloads](https://img.shields.io/packagist/dt/row-bloom/css-length.svg?style=flat-square)](https://packagist.org/packages/row-bloom/css-length)
-<!-- [![Pest Action](https://img.shields.io/github/actions/workflow/status/row-bloom/css-length/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/row-bloom/css-length/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![Pint action](https://img.shields.io/github/actions/workflow/status/row-bloom/css-length/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/row-bloom/css-length/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain) -->
+[![Pest Action](https://img.shields.io/github/actions/workflow/status/row-bloom/row-bloom/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/row-bloom/row-bloom/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Pint action](https://img.shields.io/github/actions/workflow/status/row-bloom/row-bloom/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/row-bloom/row-bloom/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 
-Value objects and enums to manipulate CSS sizing and ensure valid values in your PHP code.
+Value objects and enums to manipulate CSS lengths and ensure valid values in your PHP code.
 
 > [!IMPORTANT]
 > This is a sub-split, for development, pull requests and issues, visit: <https://github.com/row-bloom/row-bloom>
@@ -25,14 +25,6 @@ composer require row-bloom/css-length
 - PHP 8.1
 
 ## Usage
-
-### PaperFormat enum
-
-- ISO 216:2007 `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A7`, `A8`, `A9`, `A10`, `B0`, `B1`, `B2`, `B3`, `B4`, `B5`, `B6`, `B7`, `B8`, `B9`, `B10`.
-- ISO 269:1985 `C0`, `C1`, `C2`, `C3`, `C4`, `C5`, `C6`, `C7`, `C8`, `C9`, `C10`.
-- ASME Y14.1-2020 US Paper Sizes `LETTER`, `LEGAL`, `LEDGER`, `TABLOID`.
-
-> Precede any official paper format name with an underscore to get the enum case.
 
 ### LengthUnit enum
 
@@ -54,3 +46,11 @@ composer require row-bloom/css-length
 ### BoxSize object
 
 Encompasses a pair of width and height.
+
+### PaperFormat enum
+
+- ISO 216:2007 `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `A6`, `A7`, `A8`, `A9`, `A10`, `B0`, `B1`, `B2`, `B3`, `B4`, `B5`, `B6`, `B7`, `B8`, `B9`, `B10`.
+- ISO 269:1985 `C0`, `C1`, `C2`, `C3`, `C4`, `C5`, `C6`, `C7`, `C8`, `C9`, `C10`.
+- ASME Y14.1-2020 US Paper Sizes `LETTER`, `LEGAL`, `LEDGER`, `TABLOID`.
+
+> Precede any official paper format name with an underscore to get the enum case.

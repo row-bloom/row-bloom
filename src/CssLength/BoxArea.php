@@ -129,15 +129,32 @@ class BoxArea
         ];
     }
 
-    /** @return Length[] */
+    /** @return array{top: float, right: float, bottom: float, left: float} */
+    public function toFloatMap(?LengthUnit $reaUnit = null): array
+    {
+        return [
+            'top' => $this->top->toFloat($reaUnit),
+            'right' => $this->right->toFloat($reaUnit),
+            'bottom' => $this->bottom->toFloat($reaUnit),
+            'left' => $this->left->toFloat($reaUnit),
+        ];
+    }
+
+    /** @return array{Length, Length, Length, Length} */
     public function toList(): array
     {
         return array_values($this->toMap());
     }
 
-    /** @return string[] */
+    /** @return array{string, string, string, string} */
     public function toStringsList(?LengthUnit $reaUnit = null): array
     {
         return array_values($this->toStringsMap($reaUnit));
+    }
+
+    /** @return array{float, float, float, float} */
+    public function toFloatList(?LengthUnit $reaUnit = null): array
+    {
+        return array_values($this->toFloatMap($reaUnit));
     }
 }

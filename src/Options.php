@@ -49,15 +49,48 @@ class Options
         // security ?
         // compression ?
     ) {
+        $this->setMargin($margin)
+            ->setWidth($width)
+            ->setHeight($height);
+    }
+
+    public function setMargin(array|string|BoxArea $margin): static
+    {
+        if ($margin instanceof BoxArea) {
+            $this->margin = $margin;
+
+            return $this;
+        }
+
         $this->margin = BoxArea::new($margin);
 
-        if (! is_null($width)) {
-            $this->width = $width instanceof Length ? $width : Length::fromDimension($width);
+        return $this;
+    }
+
+    public function setWidth(null|string|Length $width): static
+    {
+        if ($width instanceof Length || is_null($width)) {
+            $this->width = $width;
+
+            return $this;
         }
 
-        if (! is_null($height)) {
-            $this->height = $height instanceof Length ? $height : Length::fromDimension($height);
+        $this->width = Length::fromDimension($width);
+
+        return $this;
+    }
+
+    public function setHeight(null|string|Length $height): static
+    {
+        if ($height instanceof Length || is_null($height)) {
+            $this->height = $height;
+
+            return $this;
         }
+
+        $this->height = Length::fromDimension($height);
+
+        return $this;
     }
 
     /** @param  array<string, mixed>  $options */
@@ -67,6 +100,16 @@ class Options
             $key = CaseConverter::snakeToCamel($key);
 
             if (! property_exists($this, $key)) {
+                continue;
+            }
+
+            if (in_array($key, ['margin', 'width', 'height'], true)) {
+                match ($key) {
+                    'margin' => $this->setMargin($value),
+                    'width' => $this->setWidth($value),
+                    'height' => $this->setHeight($value),
+                };
+
                 continue;
             }
 

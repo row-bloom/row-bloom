@@ -43,6 +43,9 @@ test('setFromArray()')
         'table' => [['name' => 'mohamed'], ['name' => 'ilies']],
         'options' => [
             'header_template' => 'the Prime',
+            'margin' => '13mm',
+            'width' => '13cm',
+            'height' => '20cm',
         ],
     ])->get())
     ->toBeString()

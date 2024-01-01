@@ -7,7 +7,6 @@ use RowBloom\RowBloom\Config;
 use RowBloom\RowBloom\Fs\File;
 use RowBloom\RowBloom\Options;
 use RowBloom\RowBloom\Renderers\Contract as RenderersContract;
-use RowBloom\CssLength\LengthUnit;
 use RowBloom\RowBloom\Types\Css;
 use RowBloom\RowBloom\Types\Html;
 
@@ -42,7 +41,7 @@ class ChromePhpRenderer implements RenderersContract
             ->save($this->rendering);
     }
 
-    public function render(Html $html, Css $css, Options $options, Config $config = null): static
+    public function render(Html $html, Css $css, Options $options, ?Config $config = null): static
     {
         $this->html = $html;
         $this->css = $css;

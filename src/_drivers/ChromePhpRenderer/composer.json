@@ -1,0 +1,38 @@
+{
+    "name": "row-bloom/chrome-php-renderer",
+    "description": "row-bloom renderer driver",
+    "keywords": [
+        "pdf",
+        "rendering"
+    ],
+    "homepage": "https://github.com/row-bloom/chrome-php-renderer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "medilies",
+            "email": "medilies.contact@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "chrome-php/chrome": "^1.9"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "RowBloom\\ChromePhpRenderer\\": "/"
+        }
+    },
+    "autoload-dev": {},
+    "scripts": {},
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

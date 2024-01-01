@@ -4,6 +4,11 @@
             "name": "css-length",
             "directory": "src/CssLength",
             "target": "git@github.com:row-bloom/css-length.git"
+        },
+        {
+            "name": "chrome-php-renderer",
+            "directory": "src/_drivers/ChromePhpRenderer",
+            "target": "git@github.com:row-bloom/chrome-php-renderer.git"
         }
     ]
 }

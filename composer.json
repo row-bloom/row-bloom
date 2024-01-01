@@ -24,6 +24,7 @@
         "illuminate/container": "*",
         "laravel/pint": "^1.0",
         "mockery/mockery": "^1.6",
+        "mpdf/mpdf": "^8.1",
         "pestphp/pest": "^2.0",
         "pestphp/pest-plugin-arch": "^2.0",
         "phpoffice/phpspreadsheet": "^1.28",
@@ -46,6 +47,7 @@
         "psr-4": {
             "RowBloom\\BrowsershotRenderer\\": "src/_drivers/BrowsershotRenderer",
             "RowBloom\\ChromePhpRenderer\\": "src/_drivers/ChromePhpRenderer",
+            "RowBloom\\MpdfRenderer\\": "src/_drivers/MpdfRenderer",
             "RowBloom\\SpreadsheetDataLoader\\": "src/_drivers/SpreadsheetDataLoader",
             "RowBloom\\RowBloom\\Tests\\": "tests/"
         }

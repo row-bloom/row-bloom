@@ -6,14 +6,19 @@
             "target": "git@github.com:row-bloom/css-length.git"
         },
         {
+            "name": "browsershot-renderer",
+            "directory": "src/_drivers/BrowsershotRenderer",
+            "target": "git@github.com:row-bloom/browsershot-renderer.git"
+        },
+        {
             "name": "chrome-php-renderer",
             "directory": "src/_drivers/ChromePhpRenderer",
             "target": "git@github.com:row-bloom/chrome-php-renderer.git"
         },
         {
-            "name": "browsershot-renderer",
-            "directory": "src/_drivers/BrowsershotRenderer",
-            "target": "git@github.com:row-bloom/browsershot-renderer.git"
+            "name": "mpdf-renderer",
+            "directory": "src/_drivers/MpdfRenderer",
+            "target": "git@github.com:row-bloom/mpdf-renderer.git"
         },
         {
             "name": "spreadsheet-data-loader",

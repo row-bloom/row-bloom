@@ -1,11 +1,11 @@
 {
-    "name": "row-bloom/spreadsheet-data-loader",
-    "description": "row-bloom Spreadsheet data loader driver",
+    "name": "row-bloom/mpdf-renderer",
+    "description": "row-bloom mPDF renderer driver",
     "keywords": [
-        "html",
-        "templating"
+        "pdf",
+        "rendering"
     ],
-    "homepage": "https://github.com/row-bloom/",
+    "homepage": "https://github.com/row-bloom/mpdf-renderer",
     "license": "MIT",
     "authors": [
         {
@@ -16,12 +16,12 @@
     ],
     "require": {
         "php": "^8.1",
-        "phpoffice/phpspreadsheet": "^1.28"
+        "mpdf/mpdf": "^8.1"
     },
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "RowBloom\\SpreadsheetDataLoader\\": "/"
+            "RowBloom\\MpdfRenderer\\": "/"
         }
     },
     "autoload-dev": {},

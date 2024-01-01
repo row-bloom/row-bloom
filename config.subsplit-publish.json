@@ -24,6 +24,11 @@
             "name": "spreadsheet-data-loader",
             "directory": "src/_drivers/SpreadsheetDataLoader",
             "target": "git@github.com:row-bloom/spreadsheet-data-loader.git"
+        },
+        {
+            "name": "twig-interpolator",
+            "directory": "src/_drivers/TwigInterpolator",
+            "target": "git@github.com:row-bloom/twig-interpolator.git"
         }
     ]
 }

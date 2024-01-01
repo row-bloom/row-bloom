@@ -1,0 +1,37 @@
+{
+    "name": "row-bloom/twig-interpolator",
+    "description": "row-bloom Twig interpolator driver",
+    "keywords": [
+        "html",
+        "templating"
+    ],
+    "homepage": "https://github.com/row-bloom/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "medilies",
+            "email": "medilies.contact@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.6"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "RowBloom\\TwigInterpolator\\": "/"
+        }
+    },
+    "autoload-dev": {},
+    "scripts": {},
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -32,7 +32,8 @@
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
         "spatie/browsershot": "^3.58",
-        "symfony/var-dumper": "^6.3"
+        "symfony/var-dumper": "^6.3",
+        "twig/twig": "^3.6"
     },
     "autoload": {
         "files": [
@@ -49,6 +50,7 @@
             "RowBloom\\ChromePhpRenderer\\": "src/_drivers/ChromePhpRenderer",
             "RowBloom\\MpdfRenderer\\": "src/_drivers/MpdfRenderer",
             "RowBloom\\SpreadsheetDataLoader\\": "src/_drivers/SpreadsheetDataLoader",
+            "RowBloom\\TwigInterpolator\\": "src/_drivers/TwigInterpolator",
             "RowBloom\\RowBloom\\Tests\\": "tests/"
         }
     },

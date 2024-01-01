@@ -8,6 +8,7 @@
       <directory>src/_drivers/ChromePhpRenderer/tests</directory>
       <directory>src/_drivers/MpdfRenderer/tests</directory>
       <directory>src/_drivers/SpreadsheetDataLoader/tests</directory>
+      <directory>src/_drivers/TwigInterpolator/tests</directory>
     </testsuite>
   </testsuites>
   <coverage>
